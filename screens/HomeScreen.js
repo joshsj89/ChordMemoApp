@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { FAB } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /*
@@ -29,6 +31,7 @@ const songs = [
 
 function HomeScreen({ navigation }) {
     const [songs, setSongs] = useState([]);
+    const { navigate } = useNavigation();
 
     useEffect(() => {
         loadSongs();
@@ -71,6 +74,12 @@ function HomeScreen({ navigation }) {
                 </TouchableOpacity>
                 )}
             />
+            <FAB 
+                style={{ position: 'absolute', right: 0, top: 600 }}
+                icon="plus"
+                onPress={() => navigate('AddSong')}
+            />
+
         </View>
     );
 }
