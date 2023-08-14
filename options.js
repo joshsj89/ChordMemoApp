@@ -93,3 +93,25 @@ export const sectionTypeOptions = [
     { label: 'Section C', value: 'Section C'},
     { label: 'Section D', value: 'Section D'}
 ]
+
+export const genreOptions = [
+    { label: 'Pop', value: 'Pop'},
+    { label: 'Rock', value: 'Rock'},
+    { label: 'Metal', value: 'Metal'},
+    { label: 'Jazz', value: 'Jazz'},
+    { label: 'Jazz Standards', value: 'Jazz Standards'},
+    /*
+    { label: 'Country', value: 'Country'},
+    { label: 'R&B', value: 'R&B'},
+    { label: 'Hip Hop', value: 'Hip Hop'},
+    { label: 'Blues', value: 'Blues'},
+    { label: 'Funk', value: 'Funk'},
+    { label: 'Soul', value: 'Soul'},
+    { label: 'Reggae', value: 'Reggae'},
+    { label: 'Metal', value: 'Metal'},
+    { label: 'Punk', value: 'Punk'},
+    { label: 'Folk', value: 'Folk'},
+    { label: 'Classical', value: 'Classical'},
+    { label: 'Electronic', value: 'Electronic'},
+    */
+]

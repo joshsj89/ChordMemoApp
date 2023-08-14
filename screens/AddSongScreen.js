@@ -3,12 +3,12 @@ import { View, ScrollView, Text, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions } from '../options';
+import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
 
 function AddSongScreen() {
     const [title, setTitle] = useState('');
     const [artist, setArtist] = useState('');
-    const [genres, setGenres] = useState('');
+    const [genres, setGenres] = useState([]);
     const [sections, setSections] = useState([]);
     const [sectionTitle, setSectionTitle] = useState('');
     const [keyTonic, setKeyTonic] = useState('');
@@ -17,6 +17,23 @@ function AddSongScreen() {
     const [chords, setChords] = useState('');
 
     const { navigate } = useNavigation();
+
+    const addGenre = () => {
+        const newGenres = [...genres, ''];
+        setGenres(newGenres);
+    }
+
+    const updateGenre = (index, value) => {
+        const updatedGenres = [...genres];
+        updatedGenres[index] = value;
+        setGenres(updatedGenres);
+    }
+
+    const removeGenre = (index) => {
+        const updatedGenres = [...genres];
+        updatedGenres.splice(index, 1);
+        setGenres(updatedGenres);
+    }
 
     const addSection = () => {
         const newSection = { sectionTitle, keyTonic, keySymbol, keyMode, chords};
@@ -41,7 +58,7 @@ function AddSongScreen() {
                 id: Date.now().toString(),
                 title,
                 artist,
-                genres: genres.split(',').map((genre) => genre.trim()),
+                genres: genres.filter((genre) => genre.trim() !== ''),
                 sections: sections.map((section) => {
                     return {
                         sectionTitle: section.sectionTitle,
@@ -82,12 +99,23 @@ function AddSongScreen() {
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
             />
-            <TextInput
-                style={{ fontSize: 16, padding: 10, marginVertical: 10, borderWidth: 1, borderColor: '#ccc' }}
-                placeholder='Genres (comma-separated)'
-                value={genres}
-                onChangeText={(text) => setGenres(text)}
-            />
+            <Button title='Add Genre'onPress={addGenre} />
+            {genres.length !== 0 && (
+                <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
+                    {genres.map((genre, index) => (
+                        <View key={index}>
+                            <Picker
+                                selectedValue={genre}
+                                style={{ height: 50, width: 120 }}
+                                onValueChange={(itemValue) => updateGenre(index, itemValue)}
+                            >
+                                {genreOptions.map((option) => (
+                                    <Picker.Item key={option.value} label={option.label} value={option.value} />
+                                ))}
+                            </Picker>
+                        </View>
+                    ))}
+                </ScrollView>)}
             <Button title="Add Section" onPress={addSection} />
             {sections.map((section, index) => (
                 <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
