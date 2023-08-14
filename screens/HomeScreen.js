@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LongPressGestureHandlerEvent, State } from 'react-native-gesture-handler';
 
 /*
 const songs = [
@@ -34,19 +35,23 @@ function HomeScreen({ navigation }) {
     const { navigate } = useNavigation();
 
     useEffect(() => {
-        loadSongs();
-    }, []);
-
-    const loadSongs = async () => {
-        try {
-            const savedSongs = await AsyncStorage.getItem('songs');
-            if (savedSongs != null) {
-                setSongs(JSON.parse(savedSongs));
+        const loadSongs = async () => {
+            try {
+                const savedSongs = await AsyncStorage.getItem('songs');
+                if (savedSongs != null) {
+                    setSongs(JSON.parse(savedSongs));
+                }
+            } catch (error) {
+                console.error('Error loading songs:', error);
             }
-        } catch (error) {
-            console.error('Error loading songs:', error);
         }
-    }
+
+        const unsubscribe = navigation.addListener('focus', loadSongs); // This is the key to refreshing the list when navigating back to the HomeScreen
+
+        return () => unsubscribe();
+        
+    }, [navigation]);
+
 
     const addSong = async (song) => {
         try {
@@ -59,19 +64,30 @@ function HomeScreen({ navigation }) {
         }
     }
 
+    const deleteSong = async (songId) => {
+        try {
+            const updatedSongs = songs.filter((song) => song.id !== songId);
+            setSongs(updatedSongs);
+            await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
+            console.log('Song deleted successfully');
+        } catch (error) {
+            console.error('Error deleting song:', error);
+        }
+    }
+
     return (
         <View>
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('SongDetails', { song: item })}
-                    style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
-                >
-                    <Text>{item.title}</Text>
-                    <Text>{item.artist}</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('SongDetails', { song: item })}
+                        style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
+                    >
+                        <Text>{item.title}</Text>
+                        <Text>{item.artist}</Text>
+                    </TouchableOpacity>
                 )}
             />
             <FAB 
