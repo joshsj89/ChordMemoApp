@@ -64,17 +64,6 @@ function HomeScreen({ navigation }) {
         }
     }
 
-    const deleteSong = async (songId) => {
-        try {
-            const updatedSongs = songs.filter((song) => song.id !== songId);
-            setSongs(updatedSongs);
-            await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
-            console.log('Song deleted successfully');
-        } catch (error) {
-            console.error('Error deleting song:', error);
-        }
-    }
-
     return (
         <View>
             <FlatList

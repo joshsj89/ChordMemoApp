@@ -10,8 +10,8 @@ function AddSongScreen() {
     const [artist, setArtist] = useState('');
     const [genres, setGenres] = useState([]);
     const [sections, setSections] = useState([]);
-    const [sectionTitle, setSectionTitle] = useState('');
-    const [keyTonic, setKeyTonic] = useState('');
+    const [sectionTitle, setSectionTitle] = useState('Verse');
+    const [keyTonic, setKeyTonic] = useState('C');
     const [keySymbol, setKeySymbol] = useState('');
     const [keyMode, setKeyMode] = useState('Major');
     const [chords, setChords] = useState('');
