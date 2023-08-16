@@ -52,18 +52,6 @@ function HomeScreen({ navigation }) {
         
     }, [navigation]);
 
-
-    const addSong = async (song) => {
-        try {
-            const updatedSongs = [...songs, song];
-            setSongs(updatedSongs);
-            await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
-            console.log('Song saved successfully');
-        } catch (error) {
-            console.error('Error saving song:', error);
-        }
-    }
-
     return (
         <View>
             <FlatList
