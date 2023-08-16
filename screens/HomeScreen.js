@@ -68,7 +68,8 @@ function HomeScreen({ navigation }) {
                 )}
             />
             <FAB 
-                style={{ position: 'absolute', right: 0, top: 600 }}
+                style={{ position: 'absolute', right: 0, top: 600, backgroundColor: '#009788' }}
+                color="white"
                 icon="plus"
                 onPress={() => navigate('AddSong')}
             />

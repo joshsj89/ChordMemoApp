@@ -99,7 +99,7 @@ function AddSongScreen() {
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
             />
-            <Button title='Add Genre'onPress={addGenre} />
+            <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
                     {genres.map((genre, index) => (
@@ -116,7 +116,7 @@ function AddSongScreen() {
                         </View>
                     ))}
                 </ScrollView>)}
-            <Button title="Add Section" onPress={addSection} />
+            <Button title="Add Section" onPress={addSection} color='#009788' />
             {sections.map((section, index) => (
                 <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
                     <Picker
@@ -168,7 +168,8 @@ function AddSongScreen() {
                 <Button 
                     title="Add Song"
                     disabled={!title || !sections.length}
-                    onPress={addSong} 
+                    onPress={addSong}
+                    color='#009788' 
                 />
             </View>
         </ScrollView>

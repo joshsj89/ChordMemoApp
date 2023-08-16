@@ -47,10 +47,14 @@ function SongDetailsScreen({ route }) {
             ))}
             <View style={{ position: 'absolute', right: 0, top: 550, flexDirection: 'row' }}>
                 <FAB
+                    style={{ marginRight: 10, backgroundColor: '#009788' }}
+                    color="white"
                     icon='pencil'
                     onPress={() => console.log('Edit Pressed')}
                 />
                 <FAB
+                    style={{ backgroundColor: '#009788' }}
+                    color="white"
                     icon='delete'
                     onPress={confirmDelete}
                 />
