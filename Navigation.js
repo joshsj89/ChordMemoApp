@@ -29,10 +29,55 @@ function SocialMediaButtons() {
 function Navigation() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator initialRouteName="HomeStack" screenOptions={{  headerShown: false}}>
+            <Stack.Navigator initialRouteName='Home'>
+                <Stack.Screen 
+                    name="Home" 
+                    component={HomeDrawer} 
+                    options={({ navigation }) => ({
+                        title: 'ChordMemo',
+                        headerStyle: {
+                            backgroundColor: '#009788',
+                        },
+                        headerTintColor: '#fff',
+                        headerLeft: () => (
+                            <DrawerToggleButton tintColor="white" onPress={() => navigation.toggleDrawer()} />
+                        ),
+                        headerRight: () => <SocialMediaButtons />
+                    })} 
+                    />
+                <Stack.Screen 
+                    name="SongDetails" 
+                    component={SongDetailsScreen} 
+                    options={({ route }) => ({ 
+                        title: route.params.song.title,
+                        headerStyle: {
+                            backgroundColor: '#009788',
+                        },
+                        headerTintColor: '#fff'
+                    })} 
+                    />
+                <Stack.Screen 
+                    name="AddSong" 
+                    component={AddSongScreen} 
+                    options={{ 
+                        title: 'Add Song',
+                        headerStyle: {
+                            backgroundColor: '#009788',
+                        },
+                        headerTintColor: '#fff' 
+                    }} 
+                    />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
+
+function HomeDrawer() {
+    return (
+            <Drawer.Navigator initialRouteName="HomeDrawer" screenOptions={{ headerShown: false }}>
                 <Drawer.Screen 
-                    name="HomeStack" 
-                    component={HomeStack} 
+                    name="HomeDrawer" 
+                    component={HomeScreen} 
                     options={({ navigation }) => ({
                         title: 'ChordMemo',
                         headerStyle: {
@@ -42,51 +87,6 @@ function Navigation() {
                     })} 
                 />
             </Drawer.Navigator>
-        </NavigationContainer>
-    );
-}
-
-function HomeStack() {
-    return (
-        <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen 
-                name="Home" 
-                component={HomeScreen} 
-                options={({ navigation }) => ({
-                    title: 'ChordMemo',
-                    headerStyle: {
-                        backgroundColor: '#009788',
-                    },
-                    headerTintColor: '#fff',
-                    headerLeft: () => (
-                        <DrawerToggleButton tintColor="white" onPress={() => navigation.toggleDrawer()} />
-                    ),
-                    headerRight: () => <SocialMediaButtons />
-                })} 
-            />
-            <Stack.Screen 
-                name="SongDetails" 
-                component={SongDetailsScreen} 
-                options={({ route }) => ({ 
-                    title: route.params.song.title,
-                    headerStyle: {
-                        backgroundColor: '#009788',
-                    },
-                    headerTintColor: '#fff'
-                })} 
-            />
-            <Stack.Screen 
-                name="AddSong" 
-                component={AddSongScreen} 
-                options={{ 
-                    title: 'Add Song',
-                    headerStyle: {
-                        backgroundColor: '#009788',
-                    },
-                    headerTintColor: '#fff' 
-                }} 
-            />
-        </Stack.Navigator>
     );
 }
 
