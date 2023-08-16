@@ -11,9 +11,9 @@ const Drawer = createDrawerNavigator();
 function Navigation() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator initialRouteName="Home" screenOptions={{  headerShown: false}}>
+            <Drawer.Navigator initialRouteName="HomeStack" screenOptions={{  headerShown: false}}>
                 <Drawer.Screen 
-                    name="Home" 
+                    name="HomeStack" 
                     component={HomeStack} 
                     options={({ navigation }) => ({
                         title: 'ChordMemo',
