@@ -88,10 +88,12 @@ export const sectionTypeOptions = [
     { label: 'Solo', value: 'Solo'},
     { label: 'Instrumental', value: 'Instrumental'},
     { label: 'Pre-Chorus', value: 'Pre-Chorus'},
+    { label: 'Post-Chorus', value: 'Post-Chorus'},
+    { label: 'Whole', value: 'Whole'},
     { label: 'Section A', value: 'Section A'},
     { label: 'Section B', value: 'Section B'},
     { label: 'Section C', value: 'Section C'},
-    { label: 'Section D', value: 'Section D'}
+    { label: 'Section D', value: 'Section D'},
 ]
 
 export const genreOptions = [
