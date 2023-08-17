@@ -14,13 +14,13 @@ function SocialMediaButtons() {
     return (
         <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity onPress={() => Linking.openURL('https://www.github.com/joshsj89')}>
-                <Image source={require('./assets/images/github-mark-white.png')} style={{ width: 30, height: 30, marginRight: 10 }} />
+                <Image source={require('./assets/images/github-mark-white.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => Linking.openURL('https://joshsj89.github.io')}>
-                <Image source={require('./assets/images/website_logo.png')} style={{ width: 30, height: 30, marginRight: 10 }} />
+                <Image source={require('./assets/images/website_logo.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
-                <Image source={require('./assets/images/email.png')} style={{ width: 30, height: 22, marginRight: 10, marginTop: 4 }} />
+                <Image source={require('./assets/images/email.png')} style={{ width: 25, height: 18, marginRight: 10, marginTop: 4 }} />
             </TouchableOpacity>
         </View>
     );
@@ -34,7 +34,7 @@ function Navigation() {
                     name="Home" 
                     component={HomeDrawer} 
                     options={({ navigation }) => ({
-                        title: 'Chord Memo',
+                        title: 'ChordMemo',
                         headerStyle: {
                             backgroundColor: '#009788',
                         },
