@@ -34,7 +34,7 @@ function Navigation() {
                     name="Home" 
                     component={HomeDrawer} 
                     options={({ navigation }) => ({
-                        title: 'ChordMemo',
+                        title: 'Chord Memo',
                         headerStyle: {
                             backgroundColor: '#009788',
                         },
@@ -44,7 +44,7 @@ function Navigation() {
                         ),
                         headerRight: () => <SocialMediaButtons />
                     })} 
-                    />
+                />
                 <Stack.Screen 
                     name="SongDetails" 
                     component={SongDetailsScreen} 
@@ -55,7 +55,7 @@ function Navigation() {
                         },
                         headerTintColor: '#fff'
                     })} 
-                    />
+                />
                 <Stack.Screen 
                     name="AddSong" 
                     component={AddSongScreen} 
@@ -66,7 +66,7 @@ function Navigation() {
                         },
                         headerTintColor: '#fff' 
                     }} 
-                    />
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -78,13 +78,13 @@ function HomeDrawer() {
                 <Drawer.Screen 
                     name="HomeDrawer" 
                     component={HomeScreen} 
-                    options={({ navigation }) => ({
-                        title: 'ChordMemo',
+                    options={{
+                        title: 'Home',
                         headerStyle: {
                             backgroundColor: '#009788',
                         },
                         headerTintColor: '#fff'
-                    })} 
+                    }} 
                 />
             </Drawer.Navigator>
     );
