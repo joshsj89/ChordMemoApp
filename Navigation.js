@@ -1,17 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import SongDetailsScreen from './screens/SongDetailsScreen';
 import AddSongScreen from './screens/AddSongScreen';
+import ExportImportScreen from './screens/ExportImportScreen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Image, Linking, View, Text } from 'react-native';
 import { Tooltip } from 'react-native-paper';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+const LeftDrawer = createDrawerNavigator();
+const RightDrawer = createDrawerNavigator();
 
 function SocialMediaButtons({ navigation }) {
     return (
@@ -40,6 +42,35 @@ function SocialMediaButtons({ navigation }) {
     );
 }
 
+function RightSideDrawerContent({ navigation }) {
+    return (
+        <View style={{ flex: 1, backgroundColor: '#009788' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ color: 'white', fontSize: 20 }}>ChordMemo</Text>
+            </View>
+            <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('ExportImport')}>
+                    <Text style={{ color: 'white', fontSize: 20 }}>Export/Import</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+//     return (
+//         <DrawerContentScrollView>
+//             <View style={{ flex: 1, backgroundColor: '#009788' }}>
+//                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//                     <Text style={{ color: 'white', fontSize: 20 }}>ChordMemo</Text>
+//                 </View>
+//                 <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+//                     <TouchableOpacity onPress={() => navigation.navigate('About')}>
+//                         <Text style={{ color: 'white', fontSize: 20 }}>About</Text>
+//                     </TouchableOpacity>
+//                 </View>
+//             </View>
+//         </DrawerContentScrollView>
+//     );
+}
+
 function Navigation() {
     return (
         <PaperProvider>
@@ -56,7 +87,7 @@ function Navigation() {
                             headerTintColor: '#fff',
                             headerLeft: () => (
                                 <DrawerToggleButton tintColor="white" onPress={() => navigation.toggleDrawer()} />
-                                ),
+                            ),
                             headerRight: () => <SocialMediaButtons navigation={navigation} />
                         })} 
                     />
@@ -69,7 +100,6 @@ function Navigation() {
                                 backgroundColor: '#009788'
                             },
                             headerTintColor: '#fff',
-                            // headerRight: () => <SocialMediaButtons />
                         }}
                     />
                     <Stack.Screen 
@@ -94,27 +124,56 @@ function Navigation() {
                             headerTintColor: '#fff' 
                         }} 
                     />
+                    <Stack.Screen
+                        name="ExportImport"
+                        component={ExportImportScreen}
+                        options={{
+                            title: 'Export/Import',
+                            headerStyle: {
+                                backgroundColor: '#009788'
+                            },
+                            headerTintColor: '#fff'
+                        }}
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>
     );
 }
 
+function RightDrawerScreen() {
+    return (
+        <RightDrawer.Navigator 
+            initialRouteName="RightDrawer"
+            drawerContent={({ navigation }) => <RightSideDrawerContent navigation={navigation} />}
+            screenOptions={{ headerShown: false }}
+        >
+            <RightDrawer.Screen 
+                name="RightDrawer" 
+                component={HomeScreen}
+                options={{
+                    drawerPosition: 'right',
+                }}
+            />
+        </RightDrawer.Navigator>
+    );
+}
+
 function HomeDrawer() {
     return (
-            <Drawer.Navigator initialRouteName="HomeDrawer" screenOptions={{ headerShown: false }}>
-                <Drawer.Screen 
-                    name="HomeDrawer" 
-                    component={HomeScreen} 
-                    options={{
-                        title: 'Home',
-                        headerStyle: {
-                            backgroundColor: '#009788',
-                        },
-                        headerTintColor: '#fff'
-                    }} 
-                />
-            </Drawer.Navigator>
+        <LeftDrawer.Navigator initialRouteName="HomeDrawer" screenOptions={{ headerShown: false }}>
+            <LeftDrawer.Screen 
+                name="HomeDrawer" 
+                component={RightDrawerScreen} 
+                options={{
+                    title: 'Home',
+                    headerStyle: {
+                        backgroundColor: '#009788',
+                    },
+                    headerTintColor: '#fff'
+                }} 
+            />
+        </LeftDrawer.Navigator>
     );
 }
 
