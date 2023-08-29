@@ -11,7 +11,8 @@ function ExportImportScreen() {
                 const fileName = 'songs.json';
                 const filePath = FileSystem.documentDirectory + fileName;
 
-                await FileSystem.writeAsStringAsync(filePath, savedSongs);
+                const parsedSongs = JSON.parse(savedSongs);
+                await FileSystem.writeAsStringAsync(filePath, JSON.stringify(parsedSongs, null, 4));
                 shareAsync(filePath);
                 alert('Exporting songs...');
 
@@ -28,11 +29,29 @@ function ExportImportScreen() {
 
     const importSongs = async () => {
         try {
-            const savedSongs = await AsyncStorage.getItem('songs');
-            if (savedSongs != null) {
-                //
+            // find if there's a way to decrypt (in a sense)
+
+            const fileName = 'songs.json';
+            const filePath = FileSystem.documentDirectory + fileName;
+
+            const importedSongs = await FileSystem.readAsStringAsync(filePath);
+            if (importedSongs != null && importedSongs != '[]') {
+                const savedSongs = await AsyncStorage.getItem('songs');
+                const updatedSongs = savedSongs ? JSON.parse(savedSongs) : [];
+                const parsedImportedSongs = JSON.parse(importedSongs);
+                parsedImportedSongs.forEach((song) => {
+                    // if song ID doesn't  already exist in updatedSongs, add it
+                    if (!updatedSongs.some((s) => s.id === song.id)) {
+                        updatedSongs.push(song);
+                    }
+                })
+
+                await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
+                alert('Importing songs...');
             } else {
-                //
+                //Tell user that there are no songs
+                alert('There are no songs to import.');
+                //but also check when .getItem() returns null
             }
         } catch (error) {
             console.error('Error loading songs:', error);
