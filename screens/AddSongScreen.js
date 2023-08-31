@@ -143,7 +143,10 @@ function AddSongScreen() {
                     <Picker
                         selectedValue={isChecked ? sections[0].keyTonic : section.keyTonic}
                         style={{ height: 50, width: 100 }}
-                        onValueChange={(itemValue) => updateSection(index, 'keyTonic', itemValue)}
+                        onValueChange={(itemValue) => {
+                            updateSection(index, 'keyTonic', itemValue);
+                            setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
+                        }}
                         enabled={isChecked && index > 0 ? false : true}
                     >
                         {keyTonicOptions.map((option) => (
@@ -153,7 +156,10 @@ function AddSongScreen() {
                     <Picker
                         selectedValue={isChecked ? sections[0].keySymbol : section.keySymbol}
                         style={{ height: 50, width: 100 }}
-                        onValueChange={(itemValue) => updateSection(index, 'keySymbol', itemValue)}
+                        onValueChange={(itemValue) => {
+                            updateSection(index, 'keySymbol', itemValue);
+                            setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
+                        }}
                         enabled={isChecked && index > 0 ? false : true}
                     >
                         {keySymbolOptions.map((option) => (
@@ -163,7 +169,10 @@ function AddSongScreen() {
                     <Picker
                         selectedValue={isChecked ? sections[0].keyMode : section.keyMode}
                         style={{ height: 50, width: 125 }}
-                        onValueChange={(itemValue) => updateSection(index, 'keyMode', itemValue)}
+                        onValueChange={(itemValue) => {
+                            updateSection(index, 'keyMode', itemValue);
+                            setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
+                        }}
                         enabled={isChecked && index > 0 ? false : true}
                     >
                         {keyModeOptions.map((option) => (
