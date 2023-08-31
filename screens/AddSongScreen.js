@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
+import { CheckBox } from 'react-native-btr';
 
 function AddSongScreen() {
     const [title, setTitle] = useState('');
@@ -15,6 +16,7 @@ function AddSongScreen() {
     const [keySymbol, setKeySymbol] = useState('');
     const [keyMode, setKeyMode] = useState('Major');
     const [chords, setChords] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
 
     const { navigate } = useNavigation();
 
@@ -117,6 +119,16 @@ function AddSongScreen() {
                     ))}
                 </ScrollView>)}
             <Button title="Add Section" onPress={addSection} color='#009788' />
+            {sections.length > 0 && (
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, justifyContent: 'space-between' }}>
+                    <CheckBox
+                        checked={isChecked}
+                        onPress={() => setIsChecked(!isChecked)}
+                        color='#009788'
+                    />
+                    <Text style={{ fontSize: 16 }}>Same Key For All Sections</Text>
+                </View>
+            )}
             {sections.map((section, index) => (
                 <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
                     <Picker
@@ -129,27 +141,30 @@ function AddSongScreen() {
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={section.keyTonic}
+                        selectedValue={isChecked ? sections[0].keyTonic : section.keyTonic}
                         style={{ height: 50, width: 100 }}
                         onValueChange={(itemValue) => updateSection(index, 'keyTonic', itemValue)}
+                        enabled={isChecked && index > 0 ? false : true}
                     >
                         {keyTonicOptions.map((option) => (
                             <Picker.Item key={option.value} label={option.label} value={option.value} />
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={section.keySymbol}
+                        selectedValue={isChecked ? sections[0].keySymbol : section.keySymbol}
                         style={{ height: 50, width: 100 }}
                         onValueChange={(itemValue) => updateSection(index, 'keySymbol', itemValue)}
+                        enabled={isChecked && index > 0 ? false : true}
                     >
                         {keySymbolOptions.map((option) => (
                             <Picker.Item key={option.value} label={option.label} value={option.value} />
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={section.keyMode}
+                        selectedValue={isChecked ? sections[0].keyMode : section.keyMode}
                         style={{ height: 50, width: 125 }}
                         onValueChange={(itemValue) => updateSection(index, 'keyMode', itemValue)}
+                        enabled={isChecked && index > 0 ? false : true}
                     >
                         {keyModeOptions.map((option) => (
                             <Picker.Item key={option.value} label={option.label} value={option.value} />
