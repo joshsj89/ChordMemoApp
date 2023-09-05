@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.joshsj89.ChordMemo"
+      "package": "com.joshsj89.ChordMemo",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +32,12 @@
       "eas": {
         "projectId": "2d65ac9e-072f-47a6-990d-a7cd3d113127"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2d65ac9e-072f-47a6-990d-a7cd3d113127"
     }
   }
 }
