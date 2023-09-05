@@ -53,7 +53,7 @@ function HomeScreen({ navigation }) {
     }, [navigation]);
 
     return (
-        <View>
+        <View style={{ backgroundColor: "#F2F2F2" }} /*style={{ backgroundColor: !darkMode ? "#F2F2F2" : "black" }} */ >
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
@@ -68,12 +68,11 @@ function HomeScreen({ navigation }) {
                 )}
             />
             <FAB 
-                style={{ position: 'absolute', right: 0, top: 600, backgroundColor: '#009788' }}
-                color="white"
+                style={{ position: 'absolute', right: 5, bottom: 10, backgroundColor: '#009788' }}
+                color="white" // {darkMode ? "white" : "black"}
                 icon="plus"
                 onPress={() => navigate('AddSong')}
             />
-
         </View>
     );
 }

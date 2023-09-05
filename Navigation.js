@@ -15,6 +15,8 @@ const Stack = createStackNavigator();
 const LeftDrawer = createDrawerNavigator();
 const RightDrawer = createDrawerNavigator();
 
+let darkMode = false; // will change later (probably to useState)
+
 function SocialMediaButtons({ navigation }) {
     return (
         <View style={{ flexDirection: 'row' }}>
@@ -46,12 +48,15 @@ function RightSideDrawerContent({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: '#009788' }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: 'white', fontSize: 20 }}>ChordMemo</Text>
+                <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 28 }}>ChordMemo</Text>
             </View>
-            <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', gap: 10 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ExportImport')}>
-                    <Text style={{ color: 'white', fontSize: 20 }}>Export/Import</Text>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Export/Import</Text>
                 </TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => {}}>
+                    <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Dark Mode: {!darkMode ? 'Off' : 'On'} </Text>
+                </TouchableOpacity> */}
             </View>
         </View>
     );
@@ -84,9 +89,12 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: '#fff',
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */,
                             headerLeft: () => (
-                                <DrawerToggleButton tintColor="white" onPress={() => navigation.toggleDrawer()} />
+                                <DrawerToggleButton 
+                                    tintColor="white" /* {!darkMode ? "white" : "black"} */ 
+                                    onPress={() => navigation.toggleDrawer()} 
+                                />
                             ),
                             headerRight: () => <SocialMediaButtons navigation={navigation} />
                         })} 
@@ -132,7 +140,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: '#fff'
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
                         }}
                     />
                 </Stack.Navigator>
@@ -152,7 +160,7 @@ function RightDrawerScreen() {
                 name="RightDrawer" 
                 component={HomeScreen}
                 options={{
-                    drawerPosition: 'right',
+                    drawerPosition: 'right'
                 }}
             />
         </RightDrawer.Navigator>
@@ -166,11 +174,7 @@ function HomeDrawer() {
                 name="HomeDrawer" 
                 component={RightDrawerScreen} 
                 options={{
-                    title: 'Home',
-                    headerStyle: {
-                        backgroundColor: '#009788',
-                    },
-                    headerTintColor: '#fff'
+                    title: 'Home'
                 }} 
             />
         </LeftDrawer.Navigator>

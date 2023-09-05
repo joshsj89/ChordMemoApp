@@ -1,4 +1,4 @@
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, ScrollView } from 'react-native';
 import { FAB } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,6 @@ function SongDetailsScreen({ route }) {
             if (savedSongs != null) {
                 const updatedSongs = JSON.parse(savedSongs).filter((s) => s.id !== songId);
                 await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
-                console.log('Song deleted successfully');
                 goBack();
             }
         } catch (error) {
@@ -34,32 +33,33 @@ function SongDetailsScreen({ route }) {
     }
 
     return (
-        <View style={{ padding: 20 }}>
-            <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{song.title}</Text>
-            <Text style={{ fontSize: 16 }}>{song.artist}</Text>
-            <Text style={{ fontSize: 16 }}>{song.genres.join(', ')}</Text>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Sections:</Text>
-            {song.sections.map((section) => (
-                <View key={section.sectionTitle}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{section.sectionTitle}</Text>
-                    <Text style={{ fontSize: 16 }}>{section.key.tonic}{section.key.symbol} {section.key.mode} - {section.chords}</Text>
-                </View>
-            ))}
-            <View style={{ position: 'absolute', right: 0, top: 550, flexDirection: 'row' }}>
+        <View style={{ flex: 1, backgroundColor: "#F2F2F2" /* backgroundColor: !darkMode ? "#F2F2F2" : "black" */ }}>
+            <ScrollView style={{ padding: 20 }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{song.title}</Text>
+                <Text style={{ fontSize: 16 }}>{song.artist}</Text>
+                <Text style={{ fontSize: 16 }}>{song.genres.join(', ')}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Sections:</Text>
+                {song.sections.map((section) => (
+                    <View key={section.sectionTitle}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{section.sectionTitle}</Text>
+                        <Text style={{ fontSize: 16 }}>{section.key.tonic}{section.key.symbol} {section.key.mode} - {section.chords}</Text>
+                    </View>
+                ))}
+            </ScrollView>
+            <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'row', gap: 10 }}>
                 <FAB
-                    style={{ marginRight: 10, backgroundColor: '#009788' }}
-                    color="white"
-                    icon='pencil'
+                    style={{ backgroundColor: '#009788' }}
+                    color="white" // {darkMode ? "white" : "black"}
+                    icon="pencil"
                     onPress={() => console.log('Edit Pressed')}
                 />
                 <FAB
                     style={{ backgroundColor: '#009788' }}
-                    color="white"
-                    icon='delete'
+                    color="white" // {darkMode ? "white" : "black"}
+                    icon="delete"
                     onPress={confirmDelete}
                 />
             </View>
-
         </View>
     );
 }
