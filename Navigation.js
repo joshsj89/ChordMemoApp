@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import SongDetailsScreen from './screens/SongDetailsScreen';
 import AddSongScreen from './screens/AddSongScreen';
+import EditSongScreen from './screens/EditSongScreen';
 import ExportImportScreen from './screens/ExportImportScreen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Image, Linking, View, Text } from 'react-native';
@@ -107,7 +108,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: '#fff',
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
                         }}
                     />
                     <Stack.Screen 
@@ -118,7 +119,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: '#fff'
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
                         })} 
                         />
                     <Stack.Screen 
@@ -129,8 +130,19 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: '#fff' 
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */ 
                         }} 
+                    />
+                    <Stack.Screen 
+                        name="EditSong"
+                        component={EditSongScreen}
+                        options={{
+                            title: 'Edit Song',
+                            headerStyle: {
+                                backgroundColor: '#009788'
+                            },
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
+                        }}
                     />
                     <Stack.Screen
                         name="ExportImport"

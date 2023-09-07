@@ -6,11 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
 import { CheckBox } from 'react-native-btr';
 
-function AddSongScreen() {
-    const [title, setTitle] = useState('');
-    const [artist, setArtist] = useState('');
-    const [genres, setGenres] = useState([]);
-    const [sections, setSections] = useState([]);
+function EditSongScreen({ route }) {
+    const { song } = route.params;
+    const [title, setTitle] = useState(song.title);
+    const [artist, setArtist] = useState(song.artist);
+    const [genres, setGenres] = useState(song.genres);
+    const [sections, setSections] = useState(song.sections);
     const [sectionTitle, setSectionTitle] = useState('Verse');
     const [keyTonic, setKeyTonic] = useState('C');
     const [keySymbol, setKeySymbol] = useState('');
@@ -48,47 +49,58 @@ function AddSongScreen() {
         setSections(updatedSections);
     }
 
+    const updateSectionKey = (index, key, value) => {
+        const updatedSections = [...sections];
+        updatedSections[index].key[key] = value;
+        setSections(updatedSections);
+    }
+
     const removeSection = (index) => {
         const updatedSections = [...sections];
         updatedSections.splice(index, 1);
         setSections(updatedSections);
     }
 
-    const addSong = async () => {
+    const editSong = async () => {
         try {
-            const newSong = {
-                id: Date.now().toString(),
+            const updatedSong = {
+                id: song.id,
                 title,
                 artist,
-                genres: genres.filter((genre) => genre.trim() !== ''),
+                genres,
                 sections: sections.map((section) => {
                     return {
                         sectionTitle: section.sectionTitle,
                         key: {
-                            tonic: section.keyTonic,
-                            symbol: section.keySymbol,
-                            mode: section.keyMode
+                            tonic: section.key.tonic,
+                            symbol: section.key.symbol,
+                            mode: section.key.mode
                         },
                         chords: section.chords.trim()
                     };
                 })
-            };
+            }
 
             const savedSongs = await AsyncStorage.getItem('songs');
-            const updatedSongs = savedSongs ? JSON.parse(savedSongs) : [];
-            updatedSongs.push(newSong);
-
-            await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
-
-            navigate('Home');
+            if (savedSongs != null) {
+                const updatedSongs = JSON.parse(savedSongs).map((s) => {
+                    if (s.id === song.id) {
+                        return updatedSong;
+                    } else {
+                        return s;
+                    }
+                });
+                await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
+                navigate('SongDetails', { song: updatedSong });
+            }
         } catch (error) {
-            console.error('Error adding song:', error);
+            console.error('Error updating song:', error);
         }
     }
 
     return (
         <ScrollView style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: '#fff' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Add Song</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Edit Song</Text>
             <TextInput
                 style={{ fontSize: 16, padding: 10, marginVertical: 10, borderWidth: 1, borderColor: '#ccc' }}
                 placeholder="Title"
@@ -141,10 +153,10 @@ function AddSongScreen() {
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={isChecked ? sections[0].keyTonic : section.keyTonic}
+                        selectedValue={isChecked ? sections[0].key.tonic : section.key.tonic}
                         style={{ height: 50, width: 100 }}
                         onValueChange={(itemValue) => {
-                            updateSection(index, 'keyTonic', itemValue);
+                            updateSectionKey(index, 'tonic', itemValue);
                             setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
                         }}
                         enabled={isChecked && index > 0 ? false : true}
@@ -154,10 +166,10 @@ function AddSongScreen() {
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={isChecked ? sections[0].keySymbol : section.keySymbol}
+                        selectedValue={isChecked ? sections[0].key.symbol : section.key.symbol}
                         style={{ height: 50, width: 100 }}
                         onValueChange={(itemValue) => {
-                            updateSection(index, 'keySymbol', itemValue);
+                            updateSectionKey(index, 'symbol', itemValue);
                             setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
                         }}
                         enabled={isChecked && index > 0 ? false : true}
@@ -167,10 +179,10 @@ function AddSongScreen() {
                         ))}
                     </Picker>
                     <Picker
-                        selectedValue={isChecked ? sections[0].keyMode : section.keyMode}
+                        selectedValue={isChecked ? sections[0].key.mode : section.key.mode}
                         style={{ height: 50, width: 125 }}
                         onValueChange={(itemValue) => {
-                            updateSection(index, 'keyMode', itemValue);
+                            updateSectionKey(index, 'mode', itemValue);
                             setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
                         }}
                         enabled={isChecked && index > 0 ? false : true}
@@ -190,9 +202,9 @@ function AddSongScreen() {
             ))}
             <View style={{ padding: 20, marginBottom: 20 }}>
                 <Button 
-                    title="Add Song"
+                    title="Edit Song"
                     disabled={!title || !sections.length}
-                    onPress={addSong}
+                    onPress={editSong}
                     color='#009788' 
                 />
             </View>
@@ -200,4 +212,4 @@ function AddSongScreen() {
     );
 }
 
-export default AddSongScreen;
+export default EditSongScreen;

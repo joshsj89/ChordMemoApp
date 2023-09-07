@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 function SongDetailsScreen({ route }) {
     const { song } = route.params;
+    const { navigate } = useNavigation();
     const { goBack } = useNavigation();
 
     const deleteSong = async (songId) => {
@@ -51,7 +52,7 @@ function SongDetailsScreen({ route }) {
                     style={{ backgroundColor: '#009788' }}
                     color="white" // {darkMode ? "white" : "black"}
                     icon="pencil"
-                    onPress={() => console.log('Edit Pressed')}
+                    onPress={() => navigate('EditSong', { song })}
                 />
                 <FAB
                     style={{ backgroundColor: '#009788' }}
