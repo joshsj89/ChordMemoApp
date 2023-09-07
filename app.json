@@ -1,47 +1,47 @@
 {
-  "expo": {
-    "name": "ChordMemo",
-    "slug": "ChordMemo",
-    "version": "1.0.3",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#00a7a0"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#00a7a0"
-      },
-      "package": "com.joshsj89.ChordMemo",
-      "versionCode": 4,
-      "permissions": [
-        "WRITE_EXTERNAL_STORAGE",
-        "READ_EXTERNAL_STORAGE"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "2d65ac9e-072f-47a6-990d-a7cd3d113127"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/2d65ac9e-072f-47a6-990d-a7cd3d113127"
+    "expo": {
+        "name": "ChordMemo",
+        "slug": "ChordMemo",
+        "version": "1.0.3",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#00a7a0"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#00a7a0"
+            },
+            "package": "com.joshsj89.ChordMemo",
+            "versionCode": 4,
+            "permissions": [
+                "WRITE_EXTERNAL_STORAGE",
+                "READ_EXTERNAL_STORAGE"
+            ]
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "2d65ac9e-072f-47a6-990d-a7cd3d113127"
+            }
+        },
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "url": "https://u.expo.dev/2d65ac9e-072f-47a6-990d-a7cd3d113127"
+        }
     }
-  }
 }
