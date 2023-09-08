@@ -1,4 +1,4 @@
-import { Button, View } from "react-native";
+import { Button, StyleSheet, View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from 'expo-file-system';
 import { shareAsync } from "expo-sharing";
@@ -46,7 +46,7 @@ function ExportImportScreen() {
                 const updatedSongs = savedSongs ? JSON.parse(savedSongs) : [];
                 const parsedImportedSongs = JSON.parse(importedSongs);
                 parsedImportedSongs.forEach((song) => {
-                    // if song ID doesn't  already exist in updatedSongs, add it
+                    // if song ID doesn't already exist in updatedSongs, add it
                     if (!updatedSongs.some((s) => s.id === song.id)) {
                         updatedSongs.push(song);
                     }
@@ -70,11 +70,43 @@ function ExportImportScreen() {
     }
 
     return (
-        <View>
-            <Button title="Export" onPress={exportSongs} color="#009788" />
-            <Button title="Import" onPress={importSongs} color="#009788" />
+        <View style={styles.container}>
+            <Text style={styles.header}>Export/Import Songs</Text>
+            <View style={{ marginBottom: 20 }}>
+                <Text style={styles.description}>
+                    <Text style={styles.boldText}>Export Your Songs as JSON:</Text> This feature allows you to export all your saved songs into a JSON file. Once exported, you can easily share this file with yourself or others by various means, such as email or messaging apps. To access your exported songs, simply download the JSON file outside of the app.
+                </Text>
+                <Button title="Export" onPress={exportSongs} color="#009788" />
+            </View>
+            <View style={{ marginBottom: 20 }}>
+                <Text style={styles.description}>
+                    <Text style={styles.boldText}>Import Songs from JSON File:</Text> With this option, you can import songs from a JSON file stored anywhere on your device. Whether the file is in your downloads folder or a specific directory, you can select and import it here. This makes it convenient to add new songs or restore your previously exported songs.
+                </Text>
+                <Button title="Import" onPress={importSongs} color="#009788" />
+            </View>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#fff'
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center'
+    },
+    description: {
+        fontSize: 16,
+        marginBottom: 10
+    },
+    boldText: {
+        fontWeight: 'bold'
+    }
+});
 
 export default ExportImportScreen;
