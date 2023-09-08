@@ -1,7 +1,5 @@
-import { Image, Linking, View, Text } from 'react-native';
+import { Linking, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Tooltip } from 'react-native-paper';
-import { Provider as PaperProvider } from 'react-native-paper';
 
 function RightSideDrawerContent({ navigation }) {
     return (
@@ -11,7 +9,22 @@ function RightSideDrawerContent({ navigation }) {
             </View>
             <View style={{ flex: 1, alignItems: 'center', gap: 10 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ExportImport')}>
-                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Export/Import</Text>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Export/Import Songs</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('About')}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>About</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('https://joshsj89.github.io/ChordMemo')}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>My Website</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('https://www.github.com/joshsj89')}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>GitHub</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('https://joshsj89.github.io/#contact')}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Contact Me</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Email Me</Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity onPress={() => {}}>
                     <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Dark Mode: {!darkMode ? 'Off' : 'On'} </Text>
