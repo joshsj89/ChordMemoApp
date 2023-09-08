@@ -3,6 +3,7 @@ import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/dra
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
+import SearchResultsScreen from './screens/SearchResultsScreen';
 import AboutScreen from './screens/AboutScreen';
 import SongDetailsScreen from './screens/SongDetailsScreen';
 import AddSongScreen from './screens/AddSongScreen';
@@ -39,6 +40,17 @@ function Navigation() {
                             ),
                             headerRight: () => <SocialMediaButtons navigation={navigation} />
                         })} 
+                    />
+                    <Stack.Screen
+                        name="SearchResults"
+                        component={SearchResultsScreen}
+                        options={{
+                            title: 'Search Results',
+                            headerStyle: {
+                                backgroundColor: '#009788'
+                            },
+                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */,
+                        }}
                     />
                     <Stack.Screen
                         name="About"
