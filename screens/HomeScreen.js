@@ -53,7 +53,7 @@ function HomeScreen({ navigation }) {
     }, [navigation]);
 
     return (
-        <View style={{ backgroundColor: "#F2F2F2" }} /*style={{ backgroundColor: !darkMode ? "#F2F2F2" : "black" }} */ >
+        <View style={{ flex: 1, /*backgroundColor: !darkMode ? "#F2F2F2" : "black"*/ }}>
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
