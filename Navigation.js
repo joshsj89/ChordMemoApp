@@ -1,81 +1,21 @@
+import { Provider as PaperProvider } from 'react-native-paper';
+import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerContentScrollView, DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import SongDetailsScreen from './screens/SongDetailsScreen';
 import AddSongScreen from './screens/AddSongScreen';
 import EditSongScreen from './screens/EditSongScreen';
 import ExportImportScreen from './screens/ExportImportScreen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Image, Linking, View, Text } from 'react-native';
-import { Tooltip } from 'react-native-paper';
-import { Provider as PaperProvider } from 'react-native-paper';
+import SocialMediaButtons from './components/SocialMediaButtons';
+import RightSideDrawerContent from './components/RightSideDrawerContent';
 
 const Stack = createStackNavigator();
 const LeftDrawer = createDrawerNavigator();
 const RightDrawer = createDrawerNavigator();
 
 let darkMode = false; // will change later (probably to useState)
-
-function SocialMediaButtons({ navigation }) {
-    return (
-        <View style={{ flexDirection: 'row' }}>
-            <Tooltip title ="GitHub" leaveTouchDelay={250}>
-                <TouchableOpacity onPress={() => Linking.openURL('https://www.github.com/joshsj89')}>
-                    <Image source={require('./assets/images/github-mark-white.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
-                </TouchableOpacity>
-            </Tooltip>
-            <Tooltip title ="My Website" leaveTouchDelay={250}>
-                <TouchableOpacity onPress={() => Linking.openURL('https://joshsj89.github.io')}>
-                    <Image source={require('./assets/images/website_logo.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
-                </TouchableOpacity>
-            </Tooltip>
-            <Tooltip title ="Email" leaveTouchDelay={250}>
-                <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
-                    <Image source={require('./assets/images/email.png')} style={{ width: 25, height: 18, marginRight: 10, marginTop: 4 }} />
-                </TouchableOpacity>
-            </Tooltip>
-            <Tooltip title ="About" leaveTouchDelay={250}>
-                <TouchableOpacity onPress={() => navigation.navigate('About')}>
-                    <Image source={require('./assets/images/Infobox_info_icon.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
-                </TouchableOpacity>
-            </Tooltip>
-        </View>
-    );
-}
-
-function RightSideDrawerContent({ navigation }) {
-    return (
-        <View style={{ flex: 1, backgroundColor: '#009788' }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 28 }}>ChordMemo</Text>
-            </View>
-            <View style={{ flex: 1, alignItems: 'center', gap: 10 }}>
-                <TouchableOpacity onPress={() => navigation.navigate('ExportImport')}>
-                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Export/Import</Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity onPress={() => {}}>
-                    <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Dark Mode: {!darkMode ? 'Off' : 'On'} </Text>
-                </TouchableOpacity> */}
-            </View>
-        </View>
-    );
-//     return (
-//         <DrawerContentScrollView>
-//             <View style={{ flex: 1, backgroundColor: '#009788' }}>
-//                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//                     <Text style={{ color: 'white', fontSize: 20 }}>ChordMemo</Text>
-//                 </View>
-//                 <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-//                     <TouchableOpacity onPress={() => navigation.navigate('About')}>
-//                         <Text style={{ color: 'white', fontSize: 20 }}>About</Text>
-//                     </TouchableOpacity>
-//                 </View>
-//             </View>
-//         </DrawerContentScrollView>
-//     );
-}
 
 function Navigation() {
     return (
