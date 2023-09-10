@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Text, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,12 +17,30 @@ function AddSongScreen() {
     const [keyMode, setKeyMode] = useState('Major');
     const [chords, setChords] = useState('');
     const [isChecked, setIsChecked] = useState(false);
+    const [availableGenres, setAvailableGenres] = useState(genreOptions);
+    // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
 
     const { navigate } = useNavigation();
 
+    useEffect(() => {
+        const usedGenres = genres.map((genre) => genre);
+        const updatedAvailableGenres = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
+        setAvailableGenres(updatedAvailableGenres);
+    }, [genres]);
+
+    // useEffect(() => {
+    //     const usedSectionTitles = sections.map((section) => section.sectionTitle);
+    //     const updatedAvailableSectionTitles = sectionTypeOptions.filter((section) => !usedSectionTitles.includes(section.value));
+    //     setAvailableSectionTitles(updatedAvailableSectionTitles);
+    // }, [sections]);
+
     const addGenre = () => {
-        const newGenres = [...genres, ''];
-        setGenres(newGenres);
+        if (availableGenres.length === 0) return;
+
+        if (availableGenres.length > 0) {
+            const newGenre = availableGenres[0].value;
+            setGenres([...genres, newGenre]);
+        }
     }
 
     const updateGenre = (index, value) => {

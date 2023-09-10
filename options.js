@@ -102,7 +102,7 @@ export const genreOptions = [
     { label: 'Metal', value: 'Metal'},
     { label: 'Jazz', value: 'Jazz'},
     { label: 'Jazz Standards', value: 'Jazz Standards'},
-    /*
+    { label: 'Classical', value: 'Classical'},
     { label: 'Country', value: 'Country'},
     { label: 'R&B', value: 'R&B'},
     { label: 'Hip Hop', value: 'Hip Hop'},
@@ -110,10 +110,7 @@ export const genreOptions = [
     { label: 'Funk', value: 'Funk'},
     { label: 'Soul', value: 'Soul'},
     { label: 'Reggae', value: 'Reggae'},
-    { label: 'Metal', value: 'Metal'},
     { label: 'Punk', value: 'Punk'},
     { label: 'Folk', value: 'Folk'},
-    { label: 'Classical', value: 'Classical'},
     { label: 'Electronic', value: 'Electronic'},
-    */
 ]

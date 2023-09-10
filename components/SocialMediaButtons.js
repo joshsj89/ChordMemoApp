@@ -41,6 +41,7 @@ function SocialMediaButtons({ navigation }) {
                                     return false;
                                 }
                             });
+                        //Find a way to search flats and sharps (maybe b's and #'s)
                         case 'chords': // case-sensitive
                             return song.sections.some(section => section.chords.includes(searchText));
                         default: // default to searching by title

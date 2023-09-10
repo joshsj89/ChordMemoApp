@@ -57,9 +57,9 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                         layout='row'
                         containerStyle={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap',  }} 
                         radioButtons={radioButtonsData}
-                        onPress={(data) => {
-                            setSelectedRadioButton(data.find(e => e.selected).id);
-                            setSearchOptions(data.find(e => e.selected).value);
+                        onPress={(selectedId) => {
+                            setSelectedRadioButton(selectedId);
+                            setSearchOptions(radioButtonsData.find(radioButton => radioButton.id === selectedId).value);
                         }}
                         selectedId={selectedRadioButton}
                     />
