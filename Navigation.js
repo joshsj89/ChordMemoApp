@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,30 +12,31 @@ import EditSongScreen from './screens/EditSongScreen';
 import ExportImportScreen from './screens/ExportImportScreen';
 import SocialMediaButtons from './components/SocialMediaButtons';
 import RightSideDrawerContent from './components/RightSideDrawerContent';
+import { useTheme } from './components/ThemeContext';
 
 const Stack = createStackNavigator();
 const LeftDrawer = createDrawerNavigator();
 const RightDrawer = createDrawerNavigator();
 
-let darkMode = false; // will change later (probably to useState)
-
 function Navigation() {
+    const darkMode = useTheme();
+
     return (
         <PaperProvider>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName='Home'>
                     <Stack.Screen 
                         name="Home" 
-                        component={HomeDrawer} 
+                        component={HomeDrawer}
                         options={({ navigation }) => ({
                             title: 'ChordMemo',
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */,
+                            headerTintColor: !darkMode ? "white" : "black",
                             headerLeft: () => (
                                 <DrawerToggleButton 
-                                    tintColor="white" /* {!darkMode ? "white" : "black"} */ 
+                                    tintColor={!darkMode ? "white" : "black"} 
                                     onPress={() => navigation.toggleDrawer()} 
                                 />
                             ),
@@ -49,7 +51,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */,
+                            headerTintColor: !darkMode ? "white" : "black",
                         }}
                     />
                     <Stack.Screen
@@ -60,7 +62,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
+                            headerTintColor: !darkMode ? "white" : "black"
                         }}
                     />
                     <Stack.Screen 
@@ -71,7 +73,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
+                            headerTintColor: !darkMode ? "white" : "black"
                         })} 
                         />
                     <Stack.Screen 
@@ -82,7 +84,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */ 
+                            headerTintColor: !darkMode ? "white" : "black" 
                         }} 
                     />
                     <Stack.Screen 
@@ -93,7 +95,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
+                            headerTintColor: !darkMode ? "white" : "black"
                         }}
                     />
                     <Stack.Screen
@@ -104,7 +106,7 @@ function Navigation() {
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },
-                            headerTintColor: 'white' /* !darkMode ? "white" : "black" */
+                            headerTintColor: !darkMode ? "white" : "black"
                         }}
                     />
                 </Stack.Navigator>
@@ -132,14 +134,18 @@ function RightDrawerScreen() {
 }
 
 function HomeDrawer() {
+    const darkMode = useTheme();
+
     return (
         <LeftDrawer.Navigator initialRouteName="HomeDrawer" screenOptions={{ headerShown: false }}>
             <LeftDrawer.Screen 
                 name="HomeDrawer" 
                 component={RightDrawerScreen} 
                 options={{
-                    title: 'Home'
-                }} 
+                    title: 'Home',
+                    drawerStyle: {backgroundColor: !darkMode ? 'white' : 'black' },
+                    drawerActiveTintColor: !darkMode ? '#0077FF' : '#009788',
+                }}
             />
         </LeftDrawer.Navigator>
     );

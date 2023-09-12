@@ -4,9 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Tooltip } from 'react-native-paper';
 import SearchDialog from './SearchDialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTheme } from './ThemeContext';
 
 function SocialMediaButtons({ navigation }) {
     const [searchDialogVisible, setSearchDialogVisible] = useState(false);
+
+    const darkMode = useTheme();
 
     const handleSearchButtonClick = () => {
         setSearchDialogVisible(true);
@@ -49,7 +52,7 @@ function SocialMediaButtons({ navigation }) {
                     }
                 });
 
-                const sortedSongs = filteredSongs.sort((a, b) => a.title.localeCompare(b.title)); // sort alphabetically by title
+                filteredSongs.sort((a, b) => a.title.localeCompare(b.title)); // sort alphabetically by title
 
                 navigation.navigate('SearchResults', { songs: filteredSongs });
             }
@@ -63,14 +66,17 @@ function SocialMediaButtons({ navigation }) {
             <Tooltip title ="Search" leaveTouchDelay={250}>
                 <TouchableOpacity onPress={handleSearchButtonClick}>
                     <Image 
-                        source={/*!darkMode ? */ require('../assets/images/search_icon_white.png') /*: require('../assets/images/search_icon_black.png')*/ } 
+                        source={!darkMode ? require('../assets/images/search_icon_white.png') : require('../assets/images/search_icon_black.png')} 
                         style={{ width: 25, height: 25, marginRight: 10 }} 
                     />
                 </TouchableOpacity>
             </Tooltip>
             <Tooltip title ="About" leaveTouchDelay={250}>
                 <TouchableOpacity onPress={() => navigation.navigate('About')}>
-                    <Image source={require('../assets/images/Infobox_info_icon.png')} style={{ width: 25, height: 25, marginRight: 10 }} />
+                    <Image 
+                        source={!darkMode ? require('../assets/images/Infobox_info_icon.png') : require('../assets/images/Infobox_info_icon_black.png')} 
+                        style={{ width: 25, height: 25, marginRight: 10 }} 
+                    />
                 </TouchableOpacity>
             </Tooltip>
             <SearchDialog 

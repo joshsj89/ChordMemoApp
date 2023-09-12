@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
 import { CheckBox } from 'react-native-btr';
+import { useTheme } from '../components/ThemeContext';
 
 function AddSongScreen() {
     const [title, setTitle] = useState('');
@@ -19,6 +20,8 @@ function AddSongScreen() {
     const [isChecked, setIsChecked] = useState(false);
     const [availableGenres, setAvailableGenres] = useState(genreOptions);
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
+
+    const darkMode = useTheme();
 
     const { navigate } = useNavigation();
 
@@ -105,28 +108,31 @@ function AddSongScreen() {
     }
 
     return (
-        <ScrollView style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: '#fff' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Add Song</Text>
+        <ScrollView style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: !darkMode ? '#fff' : 'black' }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Add Song</Text>
             <TextInput
-                style={{ fontSize: 16, padding: 10, marginVertical: 10, borderWidth: 1, borderColor: '#ccc' }}
+                style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
                 placeholder="Title"
+                placeholderTextColor='gray'
                 value={title}
                 onChangeText={(text) => setTitle(text)}
             />
             <TextInput
-                style={{ fontSize: 16, padding: 10, marginVertical: 10, borderWidth: 1, borderColor: '#ccc' }}
+                style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
                 placeholder='Artist'
+                placeholderTextColor='gray'
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
             />
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
-                <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
+                <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
                     {genres.map((genre, index) => (
                         <View key={index}>
                             <Picker
                                 selectedValue={genre}
-                                style={{ height: 50, width: 120 }}
+                                style={{ height: 50, width: 120, color: !darkMode ? 'black' : 'white' }}
+                                dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => updateGenre(index, itemValue)}
                             >
                                 {genreOptions.map((option) => (
@@ -144,14 +150,15 @@ function AddSongScreen() {
                         onPress={() => setIsChecked(!isChecked)}
                         color='#009788'
                     />
-                    <Text style={{ fontSize: 16 }}>Same Key For All Sections</Text>
+                    <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>Same Key For All Sections</Text>
                 </View>
             )}
             {sections.map((section, index) => (
-                <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: '#ccc' }}>
+                <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
                     <Picker
                         selectedValue={section.sectionTitle}
-                        style={{ height: 50, width: 150 }}
+                        style={{ height: 50, width: 150, color: !darkMode ? 'black' : 'white' }}
+                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
                         onValueChange={(itemValue) => updateSection(index, 'sectionTitle', itemValue)}
                     >
                         {sectionTypeOptions.map((option) => (
@@ -160,7 +167,8 @@ function AddSongScreen() {
                     </Picker>
                     <Picker
                         selectedValue={isChecked ? sections[0].keyTonic : section.keyTonic}
-                        style={{ height: 50, width: 100 }}
+                        style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
+                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
                         onValueChange={(itemValue) => {
                             updateSection(index, 'keyTonic', itemValue);
                             setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
@@ -173,7 +181,8 @@ function AddSongScreen() {
                     </Picker>
                     <Picker
                         selectedValue={isChecked ? sections[0].keySymbol : section.keySymbol}
-                        style={{ height: 50, width: 100 }}
+                        style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
+                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
                         onValueChange={(itemValue) => {
                             updateSection(index, 'keySymbol', itemValue);
                             setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
@@ -186,7 +195,8 @@ function AddSongScreen() {
                     </Picker>
                     <Picker
                         selectedValue={isChecked ? sections[0].keyMode : section.keyMode}
-                        style={{ height: 50, width: 125 }}
+                        style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
+                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
                         onValueChange={(itemValue) => {
                             updateSection(index, 'keyMode', itemValue);
                             setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
@@ -198,8 +208,9 @@ function AddSongScreen() {
                         ))}
                     </Picker>
                     <TextInput
-                        style={{ fontSize: 16, height: 50, padding: 10, borderWidth: 1, borderColor: '#ccc', marginRight: 20 }}
+                        style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 20 }}
                         placeholder='Chords'
+                        placeholderTextColor='gray'
                         value={section.chords}
                         onChangeText={(text) => updateSection(index, 'chords', text)}
                     />

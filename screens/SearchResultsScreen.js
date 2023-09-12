@@ -1,10 +1,13 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { useTheme } from '../components/ThemeContext';
 
 function SearchResultsScreen({ navigation, route }) {
     const { songs } = route.params;
 
+    const darkMode = useTheme();
+
     return (
-        <View style={{ flex: 1, /*backgroundColor: !darkMode ? "#F2F2F2" : "black"*/ }}>
+        <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
@@ -13,8 +16,8 @@ function SearchResultsScreen({ navigation, route }) {
                         onPress={() => navigation.navigate('SongDetails', { song: item })}
                         style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
                     >
-                        <Text>{item.title}</Text>
-                        <Text>{item.artist}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.artist}</Text>
                     </TouchableOpacity>
                 )}
             />

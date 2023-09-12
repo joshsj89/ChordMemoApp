@@ -1,38 +1,17 @@
 import { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LongPressGestureHandlerEvent, State } from 'react-native-gesture-handler';
-
-/*
-const songs = [
-    {
-        id: '1',
-        title: 'Song 1',
-        artist: 'Artist 1',
-        genres: ['Rock', 'Pop'],
-        sections: [
-            { sectionTitle: 'Verse', key: 'C Major', chords: ['I', 'IV', 'V'] },
-            { sectionTitle: 'Chorus', key: 'C Major', chords: ['I', 'V'] }
-        ]
-    },
-    {
-        id: '2',
-        title: 'Song 1',
-        artist: 'Artist 1',
-        genres: ['Rock', 'Pop'],
-        sections: [
-            { sectionTitle: 'Verse', key: 'C Major', chords: ['I', 'IV', 'V'] },
-            { sectionTitle: 'Chorus', key: 'C Major', chords: ['I', 'V'] }
-        ]
-    }
-]
-*/
+import { useTheme } from '../components/ThemeContext';
 
 function HomeScreen({ navigation }) {
     const [songs, setSongs] = useState([]);
     const { navigate } = useNavigation();
+
+    const darkMode = useTheme();
+
+    
 
     useEffect(() => {
         const loadSongs = async () => {
@@ -53,7 +32,7 @@ function HomeScreen({ navigation }) {
     }, [navigation]);
 
     return (
-        <View style={{ flex: 1, /*backgroundColor: !darkMode ? "#F2F2F2" : "black"*/ }}>
+        <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
@@ -62,14 +41,14 @@ function HomeScreen({ navigation }) {
                         onPress={() => navigation.navigate('SongDetails', { song: item })}
                         style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
                     >
-                        <Text>{item.title}</Text>
-                        <Text>{item.artist}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.artist}</Text>
                     </TouchableOpacity>
                 )}
             />
             <FAB 
                 style={{ position: 'absolute', right: 5, bottom: 10, backgroundColor: '#009788' }}
-                color="white" // {darkMode ? "white" : "black"}
+                color={!darkMode ? "white" : "black"}
                 icon="plus"
                 onPress={() => navigate('AddSong')}
             />
