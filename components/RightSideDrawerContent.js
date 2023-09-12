@@ -1,5 +1,6 @@
 import { Linking, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { DONATE_LINK } from '@env';
 
 function RightSideDrawerContent({ navigation }) {
     return (
@@ -11,6 +12,9 @@ function RightSideDrawerContent({ navigation }) {
                 <TouchableOpacity onPress={() => navigation.navigate('ExportImport')}>
                     <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Export/Import Songs</Text>
                 </TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => {}}>
+                    <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Dark Mode: {!darkMode ? 'Off' : 'On'} </Text>
+                </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => navigation.navigate('About')}>
                     <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>About</Text>
                 </TouchableOpacity>
@@ -26,9 +30,9 @@ function RightSideDrawerContent({ navigation }) {
                 <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
                     <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Email Me</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={() => {}}>
-                    <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Dark Mode: {!darkMode ? 'Off' : 'On'} </Text>
-                </TouchableOpacity> */}
+                <TouchableOpacity onPress={() => Linking.openURL(DONATE_LINK)}>
+                    <Text style={{ color: 'white' /* !darkMode ? "white" : "black" */, fontSize: 20 }}>Donate</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

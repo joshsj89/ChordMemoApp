@@ -40,3 +40,4 @@ deprecated/
 .vscode/
 Logo/
 private/
+.env
