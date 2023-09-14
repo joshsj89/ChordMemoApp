@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
 import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
+import SymbolPickerModal from '../components/SymbolPickerModal';
 
 function AddSongScreen() {
     const [title, setTitle] = useState('');
@@ -20,6 +21,8 @@ function AddSongScreen() {
     const [isChecked, setIsChecked] = useState(false);
     const [availableGenres, setAvailableGenres] = useState(genreOptions);
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
+    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
+    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState(null);
 
     const darkMode = useTheme();
 
@@ -36,6 +39,15 @@ function AddSongScreen() {
     //     const updatedAvailableSectionTitles = sectionTypeOptions.filter((section) => !usedSectionTitles.includes(section.value));
     //     setAvailableSectionTitles(updatedAvailableSectionTitles);
     // }, [sections]);
+
+    const toggleSymbolPickerModal = (index) => {
+        setSymbolPickerModalSectionIndex(index);
+        setShowSymbolPickerModal(prev => !prev);
+    }
+
+    const handleSymbolSelect = (symbol) => {
+        updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
+    }
 
     const addGenre = () => {
         if (availableGenres.length === 0) return;
@@ -221,12 +233,21 @@ function AddSongScreen() {
                             ))}
                         </Picker>
                         <TextInput
-                            style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 20 }}
+                            style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
                             placeholder='Chords'
                             placeholderTextColor='gray'
                             value={section.chords}
-                            onChangeText={(text) => updateSection(index, 'chords', text)}
+                            onChangeText={(text) => updateSection(index, 'chords', text.replace(/#/g, '♯'))}
                         />
+                        <View style={{ alignItems: 'center', justifyContent: 'center', height: 50, marginRight: 20 }}>
+                            <Button
+                                title="Symbols"
+                                color="#009788"
+                                onPress={() => {
+                                    toggleSymbolPickerModal(index);
+                                }}
+                            />
+                        </View>
                     </ScrollView>
                     <TouchableOpacity 
                         onPress={() => removeSection(index)}
@@ -239,6 +260,11 @@ function AddSongScreen() {
                     </TouchableOpacity>
                 </View>
             ))}
+            <SymbolPickerModal 
+                isVisible={showSymbolPickerModal} 
+                onClose={() => toggleSymbolPickerModal(null)} 
+                onSelect={handleSymbolSelect}
+            />
             <View style={{ padding: 20, marginBottom: 20 }}>
                 <Button 
                     title="Add Song"
