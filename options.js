@@ -13,7 +13,7 @@ export const keyTonicOptions = [
 // sharp symbol is unicode 266F
 export const keySymbolOptions = [
     { label: '♮', value: ''},
-    { label: '♯', value: '#'},
+    { label: '♯', value: '♯'},
     { label: '♭', value: '♭'},
 ]
 
