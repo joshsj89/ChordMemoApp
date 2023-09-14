@@ -19,7 +19,7 @@ function SymbolPickerModal({ isVisible, onClose, onSelect }) {
             onRequestClose={onClose}
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, gap: 20, borderRadius: 10 }}>
+                <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, gap: 20, borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Select a symbol</Text>
                     <View style={{ flexDirection: 'row', gap: 20, justifyContent: 'center' }}>
                         {symbols.map((symbol, index) => (

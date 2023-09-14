@@ -98,13 +98,13 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
         <Modal visible={isVisible} transparent={true} animationType='slide' onRequestClose={onClose}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', gap: 30 }}>
                 {showSearchDialog && (
-                    <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, borderRadius: 10, width: '80%', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Search</Text>
                         <TextInput 
                             placeholder='Enter search text'
                             placeholderTextColor='gray'
                             value={searchText}
-                            onChangeText={(text) => setSearchText(text)}
+                            onChangeText={(text) => setSearchText(text.replace(/#/g, '♯'))}
                             style={{ width: '100%', height: 40, borderColor: !darkMode ? 'gray' : 'white', borderWidth: 1, borderRadius: 5, padding: 5, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}
                         />
                         <Button
