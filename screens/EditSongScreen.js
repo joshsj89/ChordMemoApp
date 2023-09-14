@@ -171,67 +171,77 @@ function EditSongScreen({ route }) {
                 </View>
             )}
             {sections.map((section, index) => (
-                <ScrollView horizontal key={index} style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
-                    <Picker
-                        selectedValue={section.sectionTitle}
-                        style={{ height: 50, width: 150, color: !darkMode ? 'black' : 'white' }}
-                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
-                        onValueChange={(itemValue) => updateSection(index, 'sectionTitle', itemValue)}
+                <View key={index}>
+                    <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, zIndex: 0, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
+                        <Picker
+                            selectedValue={section.sectionTitle}
+                            style={{ height: 50, width: 150, color: !darkMode ? 'black' : 'white' }}
+                            dropdownIconColor={!darkMode ? 'gray' : 'white'}
+                            onValueChange={(itemValue) => updateSection(index, 'sectionTitle', itemValue)}
+                        >
+                            {sectionTypeOptions.map((option) => (
+                                <Picker.Item key={option.value} label={option.label} value={option.value} />
+                            ))}
+                        </Picker>
+                        <Picker
+                            selectedValue={isChecked ? sections[0].key.tonic : section.key.tonic}
+                            style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
+                            dropdownIconColor={!darkMode ? 'gray' : 'white'}
+                            onValueChange={(itemValue) => {
+                                updateSectionKey(index, 'tonic', itemValue);
+                                setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
+                            }}
+                            enabled={isChecked && index > 0 ? false : true}
+                        >
+                            {keyTonicOptions.map((option) => (
+                                <Picker.Item key={option.value} label={option.label} value={option.value} />
+                            ))}
+                        </Picker>
+                        <Picker
+                            selectedValue={isChecked ? sections[0].key.symbol : section.key.symbol}
+                            style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
+                            dropdownIconColor={!darkMode ? 'gray' : 'white'}
+                            onValueChange={(itemValue) => {
+                                updateSectionKey(index, 'symbol', itemValue);
+                                setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
+                            }}
+                            enabled={isChecked && index > 0 ? false : true}
+                        >
+                            {keySymbolOptions.map((option) => (
+                                <Picker.Item key={option.value} label={option.label} value={option.value} />
+                            ))}
+                        </Picker>
+                        <Picker
+                            selectedValue={isChecked ? sections[0].key.mode : section.key.mode}
+                            style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
+                            dropdownIconColor={!darkMode ? 'gray' : 'white'}
+                            onValueChange={(itemValue) => {
+                                updateSectionKey(index, 'mode', itemValue);
+                                setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
+                            }}
+                            enabled={isChecked && index > 0 ? false : true}
+                        >
+                            {keyModeOptions.map((option) => (
+                                <Picker.Item key={option.value} label={option.label} value={option.value} />
+                            ))}
+                        </Picker>
+                        <TextInput
+                            style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 20 }}
+                            placeholder='Chords'
+                            value={section.chords}
+                            onChangeText={(text) => updateSection(index, 'chords', text)}
+                        />
+                    </ScrollView>
+                    <TouchableOpacity 
+                        onPress={() => removeSection(index)}
+                        style={{ position: 'absolute', zIndex: 1, width: 25, height: 25, top: -3, right: -3 }}
                     >
-                        {sectionTypeOptions.map((option) => (
-                            <Picker.Item key={option.value} label={option.label} value={option.value} />
-                        ))}
-                    </Picker>
-                    <Picker
-                        selectedValue={isChecked ? sections[0].key.tonic : section.key.tonic}
-                        style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
-                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
-                        onValueChange={(itemValue) => {
-                            updateSectionKey(index, 'tonic', itemValue);
-                            setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
-                        }}
-                        enabled={isChecked && index > 0 ? false : true}
-                    >
-                        {keyTonicOptions.map((option) => (
-                            <Picker.Item key={option.value} label={option.label} value={option.value} />
-                        ))}
-                    </Picker>
-                    <Picker
-                        selectedValue={isChecked ? sections[0].key.symbol : section.key.symbol}
-                        style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
-                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
-                        onValueChange={(itemValue) => {
-                            updateSectionKey(index, 'symbol', itemValue);
-                            setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
-                        }}
-                        enabled={isChecked && index > 0 ? false : true}
-                    >
-                        {keySymbolOptions.map((option) => (
-                            <Picker.Item key={option.value} label={option.label} value={option.value} />
-                        ))}
-                    </Picker>
-                    <Picker
-                        selectedValue={isChecked ? sections[0].key.mode : section.key.mode}
-                        style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
-                        dropdownIconColor={!darkMode ? 'gray' : 'white'}
-                        onValueChange={(itemValue) => {
-                            updateSectionKey(index, 'mode', itemValue);
-                            setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
-                        }}
-                        enabled={isChecked && index > 0 ? false : true}
-                    >
-                        {keyModeOptions.map((option) => (
-                            <Picker.Item key={option.value} label={option.label} value={option.value} />
-                        ))}
-                    </Picker>
-                    <TextInput
-                        style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 20 }}
-                        placeholder='Chords'
-                        value={section.chords}
-                        onChangeText={(text) => updateSection(index, 'chords', text)}
-                    />
-                    {/* <Button title="Remove Section" onPress={() => removeSection(index)} /> */}
-                </ScrollView>
+                        <Image 
+                            source={!darkMode ? require('../assets/images/remove_icon.png') : require('../assets/images/remove_icon_black.png')}
+                            style={{ width: 25, height: 25, position: 'absolute', top: 0, right: 0 }}
+                        />
+                    </TouchableOpacity>
+                </View>
             ))}
             <View style={{ padding: 20, marginBottom: 20 }}>
                 <Button 
