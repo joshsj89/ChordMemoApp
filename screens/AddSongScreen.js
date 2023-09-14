@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text, TextInput, Button } from 'react-native';
+import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -126,12 +126,12 @@ function AddSongScreen() {
             />
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
-                <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 10, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
+                <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
                     {genres.map((genre, index) => (
-                        <View key={index}>
+                        <View key={index} style={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginHorizontal: 10, marginVertical: 10 }}>
                             <Picker
                                 selectedValue={genre}
-                                style={{ height: 50, width: 120, color: !darkMode ? 'black' : 'white' }}
+                                style={{ height: 50, width: 120, zIndex: 0, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => updateGenre(index, itemValue)}
                             >
@@ -139,6 +139,18 @@ function AddSongScreen() {
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
                                 ))}
                             </Picker>
+                            <TouchableOpacity 
+                                onPress={() => {
+                                    removeGenre(index);
+                                    setAvailableGenres([...availableGenres, { label: genre, value: genre }]);
+                                }}
+                                style={{ position: 'absolute', zIndex: 1, width: 25, height: 25, top: -10, right: -10 }}
+                            >
+                                <Image
+                                    source={!darkMode ? require('../assets/images/remove_icon.png') : require('../assets/images/remove_icon_black.png')}
+                                    style={{ width: 25, height: 25, position: 'absolute', top: 0, left: 0 }}
+                                />
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </ScrollView>)}
