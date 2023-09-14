@@ -34,17 +34,11 @@ function SocialMediaButtons({ navigation }) {
                             return song.artist.toLowerCase().includes(searchText.toLowerCase());
                         case 'genre':
                             return song.genres.some(genre => genre.toLowerCase().includes(searchText.toLowerCase()));
-                        case 'key': // TODO: Find a way to search flats and sharps (maybe b's and #'s)
+                        case 'key':
                             return song.sections.some(section => {
-                                if (section.key.tonic.toLowerCase().includes(searchText.toLowerCase())) {
-                                    return true;
-                                } else if (section.key.mode.toLowerCase().includes(searchText.toLowerCase())) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
+                                const key = section.key.tonic + section.key.symbol + ' ' + section.key.mode;
+                                return key.toLowerCase().includes(searchText.toLowerCase());
                             });
-                        //Find a way to search flats and sharps (maybe b's and #'s)
                         case 'chords': // case-sensitive
                             return song.sections.some(section => section.chords.includes(searchText));
                         default: // default to searching by title
