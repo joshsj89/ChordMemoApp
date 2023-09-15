@@ -91,8 +91,8 @@ function AddSongScreen() {
         try {
             const newSong = {
                 id: Date.now().toString(),
-                title,
-                artist,
+                title: title.trim(),
+                artist: artist.trim(),
                 genres: genres.filter((genre) => genre.trim() !== ''),
                 sections: sections.map((section) => {
                     return {

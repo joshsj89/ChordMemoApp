@@ -91,8 +91,8 @@ function EditSongScreen({ route }) {
         try {
             const updatedSong = {
                 id: song.id,
-                title,
-                artist,
+                title: title.trim(),
+                artist: artist.trim(),
                 genres,
                 sections: sections.map((section) => {
                     return {
