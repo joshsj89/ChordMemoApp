@@ -19,13 +19,13 @@ function SocialMediaButtons({ navigation }) {
         setSearchDialogVisible(false);
     }
 
-    const executeSearch = async (searchText, searchOptions) => {
+    const executeSearch = async (searchText: string, searchOptions: string) => {
         setSearchDialogVisible(false);
 
         try {
             const savedSongs = await AsyncStorage.getItem('songs');
             if (savedSongs != null) {
-                const parsedSongs = JSON.parse(savedSongs);
+                const parsedSongs: Song[] = JSON.parse(savedSongs);
                 const filteredSongs = parsedSongs.filter(song => {
                     switch (searchOptions) {
                         case 'title':

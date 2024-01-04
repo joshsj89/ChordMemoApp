@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { saveDarkModePreference, loadDarkModePreference } from './darkModeHelperFunctions';
 
-const ThemeContext = React.createContext();
-const ThemeUpdateContext = React.createContext();
+const ThemeContext = React.createContext(true);
+const ThemeUpdateContext = React.createContext(() => { });
 
 export function useTheme() {
     return useContext(ThemeContext);

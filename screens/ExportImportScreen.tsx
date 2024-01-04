@@ -45,9 +45,9 @@ function ExportImportScreen() {
             // find if there's a way to decrypt (in a sense)
             
             if (importedSongs != null && importedSongs != '[]') {
-                const savedSongs = await AsyncStorage.getItem('songs');
-                const updatedSongs = savedSongs ? JSON.parse(savedSongs) : [];
-                const parsedImportedSongs = JSON.parse(importedSongs);
+                const savedSongs: string | null = await AsyncStorage.getItem('songs');
+                const updatedSongs: Song[] = savedSongs ? JSON.parse(savedSongs) : [];
+                const parsedImportedSongs: Song[] = JSON.parse(importedSongs);
                 parsedImportedSongs.forEach((song) => {
                     // if song ID doesn't already exist in updatedSongs, add it
                     if (!updatedSongs.some((s) => s.id === song.id)) {
@@ -57,7 +57,7 @@ function ExportImportScreen() {
 
                 await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
                 
-                if (importResult) {
+                if (importResult.assets) {
                     alert(`"${importResult.assets[0].name}" imported successfully.`);
                 } else {
                     alert('File import failed.');

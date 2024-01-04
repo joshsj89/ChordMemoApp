@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const saveDarkModePreference = async (enabled) => {
+const saveDarkModePreference = async (enabled: boolean) => {
     try {
         await AsyncStorage.setItem('darkMode', JSON.stringify(enabled));
     } catch (error) {
@@ -8,7 +8,7 @@ const saveDarkModePreference = async (enabled) => {
     }
 }
 
-const loadDarkModePreference = async () => {
+const loadDarkModePreference = async (): Promise<boolean> => {
     try {
         const enabled = await AsyncStorage.getItem('darkMode');
         return enabled != null ? JSON.parse(enabled) : false;

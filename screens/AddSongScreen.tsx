@@ -7,12 +7,14 @@ import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, 
 import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
+import { AddSongScreenNavigationProp } from '../types/screens';
 
 function AddSongScreen() {
     const [title, setTitle] = useState('');
     const [artist, setArtist] = useState('');
-    const [genres, setGenres] = useState([]);
-    const [sections, setSections] = useState([]);
+    // const [genres, setGenres]: [genres: string[], React.Dispatch<React.SetStateAction<string>>] = useState([]);
+    const [genres, setGenres]: [any[], React.Dispatch<React.SetStateAction<any[]>>] = useState([]); // putting 'any' for now
+    const [sections, setSections]: [Section[], React.Dispatch<React.SetStateAction<Section[]>>] = useState([{ sectionTitle: 'Verse', key: { tonic: 'C', symbol: '', mode: 'Major' }, chords: '' }])
     const [sectionTitle, setSectionTitle] = useState('Verse');
     const [keyTonic, setKeyTonic] = useState('C');
     const [keySymbol, setKeySymbol] = useState('');
@@ -22,15 +24,15 @@ function AddSongScreen() {
     const [availableGenres, setAvailableGenres] = useState(genreOptions);
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
-    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState(null);
+    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex]: [number | null, React.Dispatch<React.SetStateAction<number | null>>] = useState(null);
 
     const darkMode = useTheme();
 
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<AddSongScreenNavigationProp>();
 
     useEffect(() => {
-        const usedGenres = genres.map((genre) => genre);
-        const updatedAvailableGenres = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
+        const usedGenres: string[] = genres.map((genre) => genre);
+        const updatedAvailableGenres: GenreOption[] = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
         setAvailableGenres(updatedAvailableGenres);
     }, [genres]);
 
@@ -40,13 +42,17 @@ function AddSongScreen() {
     //     setAvailableSectionTitles(updatedAvailableSectionTitles);
     // }, [sections]);
 
-    const toggleSymbolPickerModal = (index) => {
-        setSymbolPickerModalSectionIndex(index);
+    const toggleSymbolPickerModal = (index: number | null) => {
+        if (index != null) {
+            setSymbolPickerModalSectionIndex(index);
+        }
         setShowSymbolPickerModal(prev => !prev);
     }
 
-    const handleSymbolSelect = (symbol) => {
-        updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
+    const handleSymbolSelect = (symbol: Symbol) => {
+        if (symbolPickerModalSectionIndex != null) {
+            updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
+        }
     }
 
     const addGenre = () => {
@@ -58,30 +64,30 @@ function AddSongScreen() {
         }
     }
 
-    const updateGenre = (index, value) => {
+    const updateGenre = (index: number, value: string) => {
         const updatedGenres = [...genres];
         updatedGenres[index] = value;
         setGenres(updatedGenres);
     }
 
-    const removeGenre = (index) => {
+    const removeGenre = (index: number) => {
         const updatedGenres = [...genres];
         updatedGenres.splice(index, 1);
         setGenres(updatedGenres);
     }
 
     const addSection = () => {
-        const newSection = { sectionTitle, keyTonic, keySymbol, keyMode, chords};
+        const newSection: Section = { sectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
         setSections([...sections, newSection]);
     }
 
-    const updateSection = (index, key, value) => {
+    const updateSection = (index: number, key: string, value: string) => {
         const updatedSections = [...sections];
         updatedSections[index][key] = value;
         setSections(updatedSections);
     }
 
-    const removeSection = (index) => {
+    const removeSection = (index: number) => {
         const updatedSections = [...sections];
         updatedSections.splice(index, 1);
         setSections(updatedSections);
@@ -98,9 +104,9 @@ function AddSongScreen() {
                     return {
                         sectionTitle: section.sectionTitle,
                         key: {
-                            tonic: section.keyTonic,
-                            symbol: section.keySymbol,
-                            mode: section.keyMode
+                            tonic: section.key.tonic,
+                            symbol: section.key.symbol,
+                            mode: section.key.mode
                         },
                         chords: section.chords.trim()
                     };
@@ -191,7 +197,7 @@ function AddSongScreen() {
                             ))}
                         </Picker>
                         <Picker
-                            selectedValue={isChecked ? sections[0].keyTonic : section.keyTonic}
+                            selectedValue={isChecked ? sections[0].key.tonic : section.key.tonic}
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
@@ -205,7 +211,7 @@ function AddSongScreen() {
                             ))}
                         </Picker>
                         <Picker
-                            selectedValue={isChecked ? sections[0].keySymbol : section.keySymbol}
+                            selectedValue={isChecked ? sections[0].key.symbol : section.key.symbol}
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
@@ -219,7 +225,7 @@ function AddSongScreen() {
                             ))}
                         </Picker>
                         <Picker
-                            selectedValue={isChecked ? sections[0].keyMode : section.keyMode}
+                            selectedValue={isChecked ? sections[0].key.mode : section.key.mode}
                             style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {

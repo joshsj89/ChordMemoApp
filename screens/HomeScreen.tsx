@@ -4,14 +4,13 @@ import { FAB } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../components/ThemeContext';
+import { HomeScreenNavigationProp } from '../types/screens';
 
 function HomeScreen({ navigation }) {
     const [songs, setSongs] = useState([]);
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<HomeScreenNavigationProp>();
 
     const darkMode = useTheme();
-
-    
 
     useEffect(() => {
         const loadSongs = async () => {
@@ -35,7 +34,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item: any) => item.id} // 'any for now
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SongDetails', { song: item })}

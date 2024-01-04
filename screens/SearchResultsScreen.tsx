@@ -10,7 +10,7 @@ function SearchResultsScreen({ navigation, route }) {
         <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item: any) => item.id} // 'any' for now
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SongDetails', { song: item })}
