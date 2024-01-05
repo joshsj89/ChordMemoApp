@@ -96,7 +96,7 @@ export const sectionTypeOptions = [
     { label: 'Section D', value: 'Section D'},
 ]
 
-export const genreOptions = [
+export const genreOptions: GenreOption[] = [
     { label: 'Pop', value: 'Pop'},
     { label: 'Rock', value: 'Rock'},
     { label: 'Metal', value: 'Metal'},

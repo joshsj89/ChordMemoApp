@@ -3,19 +3,20 @@ import { FAB } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/ThemeContext';
+import { HomeScreenNavigationProp } from '../types/screens';
 
 function SongDetailsScreen({ route }) {
-    const { song } = route.params;
-    const { navigate } = useNavigation();
+    const { song }: { song: Song } = route.params;
+    const { navigate } = useNavigation<HomeScreenNavigationProp>();
     const { goBack } = useNavigation();
 
     const darkMode = useTheme();
 
-    const deleteSong = async (songId) => {
+    const deleteSong = async (songId: string) => {
         try {
             const savedSongs = await AsyncStorage.getItem('songs');
             if (savedSongs != null) {
-                const updatedSongs = JSON.parse(savedSongs).filter((s) => s.id !== songId);
+                const updatedSongs: Song[] = JSON.parse(savedSongs).filter((s: Song) => s.id !== songId);
                 await AsyncStorage.setItem('songs', JSON.stringify(updatedSongs));
                 goBack();
             }

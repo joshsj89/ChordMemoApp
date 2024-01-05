@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,8 +12,9 @@ import ExportImportScreen from './screens/ExportImportScreen';
 import SocialMediaButtons from './components/SocialMediaButtons';
 import RightSideDrawerContent from './components/RightSideDrawerContent';
 import { useTheme } from './components/ThemeContext';
+import { RootStackParamList } from './types/screens';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 const LeftDrawer = createDrawerNavigator();
 const RightDrawer = createDrawerNavigator();
 
@@ -37,7 +37,7 @@ function Navigation() {
                             headerLeft: () => (
                                 <DrawerToggleButton 
                                     tintColor={!darkMode ? "white" : "black"} 
-                                    onPress={() => navigation.toggleDrawer()} 
+                                    // onPress={() => navigation.toggleDrawer()}
                                 />
                             ),
                             headerRight: () => <SocialMediaButtons navigation={navigation} />
@@ -69,7 +69,7 @@ function Navigation() {
                         name="SongDetails" 
                         component={SongDetailsScreen} 
                         options={({ route }) => ({ 
-                            title: route.params.song.title,
+                            title: route.params?.song.title,
                             headerStyle: {
                                 backgroundColor: '#009788'
                             },

@@ -7,12 +7,13 @@ import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, 
 import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
+import { EditSongScreenNavigationProp } from '../types/screens';
 
 function EditSongScreen({ route }) {
     const { song } = route.params;
     const [title, setTitle] = useState(song.title);
     const [artist, setArtist] = useState(song.artist);
-    const [genres, setGenres] = useState(song.genres);
+    const [genres, setGenres]: [any[], React.Dispatch<React.SetStateAction<any[]>>] = useState(song.genres); // putting 'any' for now
     const [sections, setSections] = useState(song.sections);
     const [sectionTitle, setSectionTitle] = useState('Verse');
     const [keyTonic, setKeyTonic] = useState('C');
@@ -22,25 +23,29 @@ function EditSongScreen({ route }) {
     const [isChecked, setIsChecked] = useState(false);
     const [availableGenres, setAvailableGenres] = useState(genreOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
-    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState(null);
+    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex]: [number | null, React.Dispatch<React.SetStateAction<number | null>>] = useState(null);
 
     const darkMode = useTheme();
 
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<EditSongScreenNavigationProp>();
 
     useEffect(() => {
-        const usedGenres = genres.map((genre) => genre);
+        const usedGenres: string[] = genres.map((genre) => genre);
         const updatedAvailableGenres = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
         setAvailableGenres(updatedAvailableGenres);
     }, [genres]);
 
-    const toggleSymbolPickerModal = (index) => {
-        setSymbolPickerModalSectionIndex(index);
+    const toggleSymbolPickerModal = (index: number | null) => {
+        if (index != null) {
+            setSymbolPickerModalSectionIndex(index);
+        }
         setShowSymbolPickerModal(prev => !prev);
     }
 
-    const handleSymbolSelect = (symbol) => {
-        updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
+    const handleSymbolSelect = (symbol: Symbol) => {
+        if (symbolPickerModalSectionIndex != null) {
+            updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
+        }
     }
 
     const addGenre = () => {
@@ -52,13 +57,13 @@ function EditSongScreen({ route }) {
         }
     }
 
-    const updateGenre = (index, value) => {
+    const updateGenre = (index: number, value: string) => {
         const updatedGenres = [...genres];
         updatedGenres[index] = value;
         setGenres(updatedGenres);
     }
 
-    const removeGenre = (index) => {
+    const removeGenre = (index: number) => {
         const updatedGenres = [...genres];
         updatedGenres.splice(index, 1);
         setGenres(updatedGenres);

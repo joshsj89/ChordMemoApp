@@ -1,4 +1,4 @@
-import { Image, Linking, View, Text } from 'react-native';
+import { Image, View } from 'react-native';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Tooltip } from 'react-native-paper';
@@ -19,13 +19,13 @@ function SocialMediaButtons({ navigation }) {
         setSearchDialogVisible(false);
     }
 
-    const executeSearch = async (searchText, searchOptions) => {
+    const executeSearch = async (searchText: string, searchOptions: string) => {
         setSearchDialogVisible(false);
 
         try {
             const savedSongs = await AsyncStorage.getItem('songs');
             if (savedSongs != null) {
-                const parsedSongs = JSON.parse(savedSongs);
+                const parsedSongs: Song[] = JSON.parse(savedSongs);
                 const filteredSongs = parsedSongs.filter(song => {
                     switch (searchOptions) {
                         case 'title':

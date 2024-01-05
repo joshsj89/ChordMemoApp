@@ -85,7 +85,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
         setShowSymbolPickerModal(prev => !prev);
     }
 
-    const handleSymbolSelect = (symbol) => {
+    const handleSymbolSelect = (symbol: string) => {
         setSearchText(prev => prev + symbol);
     }
 
@@ -118,7 +118,11 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                             radioButtons={!darkMode ? radioButtonsData : radioButtonsDataDark}
                             onPress={(selectedId) => {
                                 setSelectedRadioButton(selectedId);
-                                setSearchOptions(radioButtonsData.find(radioButton => radioButton.id === selectedId).value);
+
+                                const selRadioButton = radioButtonsData.find(radioButton => radioButton.id === selectedId);
+                                if (selRadioButton) {
+                                    setSearchOptions(selRadioButton.value);
+                                }
                             }}
                             selectedId={selectedRadioButton}
                         />

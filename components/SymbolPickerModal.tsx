@@ -6,7 +6,7 @@ function SymbolPickerModal({ isVisible, onClose, onSelect }) {
 
     const darkMode = useTheme();
 
-    const handleSymbolSelect = (symbol) => {
+    const handleSymbolSelect = (symbol: string) => {
         onSelect(symbol);
         onClose();
     }
@@ -32,7 +32,9 @@ function SymbolPickerModal({ isVisible, onClose, onSelect }) {
                             </TouchableOpacity>
                         ))}
                     </View>
-                    <Button onPress={onClose} style={{ alignItems: 'center' }}
+                    <Button 
+                        onPress={onClose} 
+                        //style={{ alignItems: 'center' }} //Button doesn't support style prop
                         title="Close"
                         color="#009788"
                     />
