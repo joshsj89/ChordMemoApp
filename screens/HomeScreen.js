@@ -11,8 +11,6 @@ function HomeScreen({ navigation }) {
 
     const darkMode = useTheme();
 
-    
-
     useEffect(() => {
         const loadSongs = async () => {
             try {
