@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Navigation from './Navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import { ThemeProvider } from './components/ThemeContext';

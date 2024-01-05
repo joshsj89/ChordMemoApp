@@ -1,4 +1,4 @@
-import { Image, Linking, View, Text } from 'react-native';
+import { Image, View } from 'react-native';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Tooltip } from 'react-native-paper';

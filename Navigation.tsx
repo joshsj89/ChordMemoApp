@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { DrawerToggleButton, createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
