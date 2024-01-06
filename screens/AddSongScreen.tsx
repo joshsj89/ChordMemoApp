@@ -80,7 +80,7 @@ function AddSongScreen() {
                     // no duplicates
                     const uniqueArtists: TAutocompleteDropdownItem[] = [...new Map(artists.map(item => [item.title, item])).values()];
     
-                    setSongArtists(uniqueArtists); // 'any' for this will change
+                    setSongArtists(uniqueArtists);
                 } else {
                     setSongArtists([]);
                 }
@@ -193,8 +193,13 @@ function AddSongScreen() {
                     dataSet={songArtists}
                     onChangeText={handleArtistInputChange}
                     closeOnBlur={true}
-                    onSelectItem={setSelectedArtist}
-                    textInputProps={{
+                    onSelectItem={(artist) => {
+                        setSelectedArtist(artist)
+
+                        if (artist?.title) {
+                            setArtist(artist.title);
+                        }
+                    }}                    textInputProps={{
                         placeholder: 'Artist',
                         placeholderTextColor: 'gray',
                         style: { fontSize: 16, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' },
@@ -207,7 +212,6 @@ function AddSongScreen() {
                     )}
                     containerStyle={{ flexGrow: 1, flexShrink: 1 }}
                     suggestionsListContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                    // suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
                 />
             </View>
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
