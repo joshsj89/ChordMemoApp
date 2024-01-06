@@ -34,7 +34,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
-                keyExtractor={(item: any) => item.id} // 'any for now
+                keyExtractor={(item: Song) => item.id}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SongDetails', { song: item })}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ScrollView, Text, TextInput, Button, TouchableOpacity, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,20 +10,20 @@ import SymbolPickerModal from '../components/SymbolPickerModal';
 import { EditSongScreenNavigationProp } from '../types/screens';
 
 function EditSongScreen({ route }) {
-    const { song } = route.params;
-    const [title, setTitle] = useState(song.title);
-    const [artist, setArtist] = useState(song.artist);
-    const [genres, setGenres]: [any[], React.Dispatch<React.SetStateAction<any[]>>] = useState(song.genres); // putting 'any' for now
-    const [sections, setSections] = useState(song.sections);
-    const [sectionTitle, setSectionTitle] = useState('Verse');
-    const [keyTonic, setKeyTonic] = useState('C');
-    const [keySymbol, setKeySymbol] = useState('');
-    const [keyMode, setKeyMode] = useState('Major');
-    const [chords, setChords] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
-    const [availableGenres, setAvailableGenres] = useState(genreOptions);
-    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
-    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex]: [number | null, React.Dispatch<React.SetStateAction<number | null>>] = useState(null);
+    const { song }: { song: Song } = route.params;
+    const [title, setTitle] = useState<string>(song.title);
+    const [artist, setArtist] = useState<string>(song.artist);
+    const [genres, setGenres] = useState<string[]>(song.genres);
+    const [sections, setSections] = useState<Section[]>(song.sections);
+    const [sectionTitle, setSectionTitle] = useState<string>('Verse');
+    const [keyTonic, setKeyTonic] = useState<string>('C');
+    const [keySymbol, setKeySymbol] = useState<string>('');
+    const [keyMode, setKeyMode] = useState<string>('Major');
+    const [chords, setChords] = useState<string>('');
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
+    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
+    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
 
     const darkMode = useTheme();
 
@@ -70,23 +70,23 @@ function EditSongScreen({ route }) {
     }
 
     const addSection = () => {
-        const newSection = { sectionTitle, keyTonic, keySymbol, keyMode, chords};
+        const newSection: Section = { sectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords};
         setSections([...sections, newSection]);
     }
 
-    const updateSection = (index, key, value) => {
+    const updateSection = (index: number, key: string, value: string) => {
         const updatedSections = [...sections];
         updatedSections[index][key] = value;
         setSections(updatedSections);
     }
 
-    const updateSectionKey = (index, key, value) => {
+    const updateSectionKey = (index: number, key: string, value: string) => {
         const updatedSections = [...sections];
         updatedSections[index].key[key] = value;
         setSections(updatedSections);
     }
 
-    const removeSection = (index) => {
+    const removeSection = (index: number) => {
         const updatedSections = [...sections];
         updatedSections.splice(index, 1);
         setSections(updatedSections);
@@ -114,7 +114,7 @@ function EditSongScreen({ route }) {
 
             const savedSongs = await AsyncStorage.getItem('songs');
             if (savedSongs != null) {
-                const updatedSongs = JSON.parse(savedSongs).map((s) => {
+                const updatedSongs: Song[] = JSON.parse(savedSongs).map((s: Song) => {
                     if (s.id === song.id) {
                         return updatedSong;
                     } else {

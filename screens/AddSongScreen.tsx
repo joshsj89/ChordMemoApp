@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,21 +10,21 @@ import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
 
 function AddSongScreen() {
-    const [title, setTitle] = useState('');
-    const [artist, setArtist] = useState('');
-    // const [genres, setGenres]: [genres: string[], React.Dispatch<React.SetStateAction<string>>] = useState([]);
-    const [genres, setGenres]: [any[], React.Dispatch<React.SetStateAction<any[]>>] = useState([]); // putting 'any' for now
-    const [sections, setSections]: [Section[], React.Dispatch<React.SetStateAction<Section[]>>] = useState([{ sectionTitle: 'Verse', key: { tonic: 'C', symbol: '', mode: 'Major' }, chords: '' }])
-    const [sectionTitle, setSectionTitle] = useState('Verse');
-    const [keyTonic, setKeyTonic] = useState('C');
-    const [keySymbol, setKeySymbol] = useState('');
-    const [keyMode, setKeyMode] = useState('Major');
-    const [chords, setChords] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
-    const [availableGenres, setAvailableGenres] = useState(genreOptions);
+    const [title, setTitle] = useState<string>('');
+    const [artist, setArtist] = useState<string>('');
+    // const [genres, setGenres] = useState<string[]>([]);
+    const [genres, setGenres] = useState<string[]>([]);
+    const [sections, setSections] = useState<Section[]>([{ sectionTitle: 'Verse', key: { tonic: 'C', symbol: '', mode: 'Major' }, chords: '' }])
+    const [sectionTitle, setSectionTitle] = useState<string>('Verse');
+    const [keyTonic, setKeyTonic] = useState<string>('C');
+    const [keySymbol, setKeySymbol] = useState<string>('');
+    const [keyMode, setKeyMode] = useState<string>('Major');
+    const [chords, setChords] = useState<string>('');
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
-    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
-    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex]: [number | null, React.Dispatch<React.SetStateAction<number | null>>] = useState(null);
+    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
+    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
 
     const darkMode = useTheme();
 
