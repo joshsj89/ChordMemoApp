@@ -198,6 +198,7 @@ function EditSongScreen({ route }) {
                     initialValue={songArtists.find((artist) => artist.title === song.artist)?.id}
                     onChangeText={handleArtistInputChange}
                     closeOnBlur={true}
+                    clearOnFocus={false}
                     onSelectItem={(artist) => {
                         setSelectedArtist(artist)
 
