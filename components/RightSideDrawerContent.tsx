@@ -31,9 +31,9 @@ function RightSideDrawerContent({ navigation }) {
                 <TouchableOpacity onPress={() => Linking.openURL('https://joshsj89.github.io/#contact')}>
                     <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Contact Me</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
+                {/* <TouchableOpacity onPress={() => Linking.openURL('mailto:joshsj89@gmail.com')}>
                     <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Email Me</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => Linking.openURL(DONATE_LINK)}>
                     <Text style={{ color: !darkMode ? "white" : "black", fontSize: 20 }}>Donate</Text>
                 </TouchableOpacity>
