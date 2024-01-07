@@ -3,7 +3,6 @@ import Navigation from './Navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import { ThemeProvider } from './components/ThemeContext';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
-import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,11 +21,7 @@ function App() {
     return (
         <ThemeProvider>
             <AutocompleteDropdownContextProvider>
-                <SafeAreaView style={{ flex: 1 }}>
-                    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding': undefined} enabled>
-                        <Navigation />
-                    </KeyboardAvoidingView>
-                </SafeAreaView>
+                <Navigation />
             </AutocompleteDropdownContextProvider>
         </ThemeProvider>
     );
