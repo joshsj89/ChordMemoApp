@@ -28,7 +28,7 @@ function AddSongScreen() {
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [ artistSuggestions, setArtistSuggestions ] = useState<(string | null)[]>([]);
     const [ songArtists, setSongArtists ] = useState<TAutocompleteDropdownItem[]>([]);
-    // const [ selectedArtist, setSelectedArtist ] = useState<TAutocompleteDropdownItem | null>(null);
+    const [ selectedArtist, setSelectedArtist ] = useState<TAutocompleteDropdownItem | null>(null);
 
     const darkMode = useTheme();
 
@@ -187,26 +187,26 @@ function AddSongScreen() {
             <View style={{ marginVertical: 10 }}>
                 <AutocompleteDropdown
                     dataSet={songArtists}
-                    // onChangeText={handleArtistInputChange}
+                    onChangeText={handleArtistInputChange}
                     closeOnBlur={true}
                     clearOnFocus={false}
-                    // onSelectItem={(artist) => {
-                    //     setSelectedArtist(artist)
+                    onSelectItem={(artist) => {
+                        setSelectedArtist(artist)
 
-                    //     if (artist?.title) {
-                    //         setArtist(artist.title);
-                    //     }
-                    // }}                    textInputProps={{
-                    //     placeholder: 'Artist',
-                    //     placeholderTextColor: 'gray',
-                    //     style: { fontSize: 16, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' },
-                    // }}
+                        if (artist?.title) {
+                            setArtist(artist.title);
+                        }
+                    }}                    textInputProps={{
+                        placeholder: 'Artist',
+                        placeholderTextColor: 'gray',
+                        style: { fontSize: 16, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' },
+                    }}
                     inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                    // renderItem={(item, text) => (
-                    //     <View style={{ padding: 10 }}>
-                    //         <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
-                    //     </View>
-                    // )}
+                    renderItem={(item, text) => (
+                        <View style={{ padding: 10 }}>
+                            <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
+                        </View>
+                    )}
                     containerStyle={{ flexGrow: 1, flexShrink: 1 }}
                     suggestionsListContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
                 />
