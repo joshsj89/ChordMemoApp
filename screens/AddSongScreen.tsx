@@ -8,7 +8,7 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
@@ -27,8 +27,8 @@ function AddSongScreen() {
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [ artistSuggestions, setArtistSuggestions ] = useState<(string | null)[]>([]);
-    const [ songArtists, setSongArtists ] = useState<{ id: string, title: string | null }[]>([]);
-    const [ selectedArtist, setSelectedArtist ] = useState<{ id: string, title: string | null } | null>(null);
+    const [ songArtists, setSongArtists ] = useState<TAutocompleteDropdownItem[]>([]);
+    const [ selectedArtist, setSelectedArtist ] = useState<TAutocompleteDropdownItem | null>(null);
 
     const darkMode = useTheme();
 
@@ -74,7 +74,7 @@ function AddSongScreen() {
                     });
     
                     // no duplicates
-                    const uniqueArtists: { id: string, title: string | null }[] = [...new Map(artists.map(item => [item.title, item])).values()];
+                    const uniqueArtists: TAutocompleteDropdownItem[] = [...new Map(artists.map(item => [item.title, item])).values()];
     
                     setSongArtists(uniqueArtists);
                 } else {
@@ -92,8 +92,8 @@ function AddSongScreen() {
         setArtist(text);
 
         const updatedArtistSuggestions = songArtists
-            .filter((artist: { id: string, title: string | null }) => artist.title?.toLowerCase().includes(text.toLowerCase()))
-            .map((artist: { id: string, title: string | null }) => artist.title);
+            .filter((artist: TAutocompleteDropdownItem) => artist.title?.toLowerCase().includes(text.toLowerCase()))
+            .map((artist: TAutocompleteDropdownItem) => artist.title);
         setArtistSuggestions(updatedArtistSuggestions);
     }
 
