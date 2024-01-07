@@ -76,7 +76,7 @@ function AddSongScreen() {
                     // no duplicates
                     const uniqueArtists: { id: string, title: string | null }[] = [...new Map(artists.map(item => [item.title, item])).values()];
     
-                    setSongArtists(uniqueArtists);
+                    setSongArtists(uniqueArtists); // 'any' for this will change
                 } else {
                     setSongArtists([]);
                 }
@@ -189,13 +189,8 @@ function AddSongScreen() {
                     dataSet={songArtists}
                     onChangeText={handleArtistInputChange}
                     closeOnBlur={true}
-                    onSelectItem={(artist) => {
-                        setSelectedArtist(artist)
-
-                        if (artist?.title) {
-                            setArtist(artist.title);
-                        }
-                    }}                    textInputProps={{
+                    onSelectItem={setSelectedArtist}
+                    textInputProps={{
                         placeholder: 'Artist',
                         placeholderTextColor: 'gray',
                         style: { fontSize: 16, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' },
@@ -208,6 +203,7 @@ function AddSongScreen() {
                     )}
                     containerStyle={{ flexGrow: 1, flexShrink: 1 }}
                     suggestionsListContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
+                    // suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
                 />
             </View>
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
