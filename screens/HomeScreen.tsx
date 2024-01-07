@@ -7,7 +7,7 @@ import { useTheme } from '../components/ThemeContext';
 import { HomeScreenNavigationProp } from '../types/screens';
 
 function HomeScreen({ navigation }) {
-    const [songs, setSongs] = useState([]);
+    const [songs, setSongs] = useState<Song[]>([]);
     const { navigate } = useNavigation<HomeScreenNavigationProp>();
 
     const darkMode = useTheme();
@@ -17,7 +17,8 @@ function HomeScreen({ navigation }) {
             try {
                 const savedSongs = await AsyncStorage.getItem('songs');
                 if (savedSongs != null) {
-                    setSongs(JSON.parse(savedSongs));
+                    const parsedSongs: Song[] = JSON.parse(savedSongs);
+                    setSongs(parsedSongs);
                 }
             } catch (error) {
                 console.error('Error loading songs:', error);
@@ -34,7 +35,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <FlatList
                 data={songs}
-                keyExtractor={(item: Song) => item.id}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SongDetails', { song: item })}

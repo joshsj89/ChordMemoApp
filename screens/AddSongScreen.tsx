@@ -64,10 +64,6 @@ function AddSongScreen() {
             try {
                 const savedSongs = await AsyncStorage.getItem('songs');
     
-                // const songs: Song[] = savedSongs ? JSON.parse(savedSongs) : [];
-                // const artists = songs.map((song: Song) => song.artist);
-                // setSongArtists(artists);
-    
                 if (savedSongs != null) {
                     const parsedSongs: Song[] = JSON.parse(savedSongs);
                     const artists = parsedSongs.map((song, index) => {
