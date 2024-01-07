@@ -56,7 +56,10 @@ function SongDetailsScreen({ route }) {
                     style={{ backgroundColor: '#009788' }}
                     color={!darkMode ? "white" : "black"}
                     icon="pencil"
-                    onPress={() => navigate('EditSong', { song })}
+                    onPress={() => {
+                        alert('Editing song...');
+                        navigate('EditSong', { song })
+                    }}
                 />
                 <FAB
                     style={{ backgroundColor: '#009788' }}
