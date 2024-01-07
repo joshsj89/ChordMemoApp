@@ -8,7 +8,7 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
@@ -26,9 +26,8 @@ function AddSongScreen() {
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
-    const [ artistSuggestions, setArtistSuggestions ] = useState<(string | null)[]>([]);
-    const [ songArtists, setSongArtists ] = useState<{ id: string, title: string | null }[]>([]);
-    const [ selectedArtist, setSelectedArtist ] = useState<{ id: string, title: string | null } | null>(null);
+    const [ artistSuggestions, setArtistSuggestions ] = useState<string[]>([]);
+    const [ songArtists, setSongArtists ] = useState<any>([]); //'any' for this will change
 
     const darkMode = useTheme();
 
@@ -68,13 +67,13 @@ function AddSongScreen() {
                     const parsedSongs: Song[] = JSON.parse(savedSongs);
                     const artists = parsedSongs.map((song, index) => {
                         return {
-                            id: `${index}`,
+                            id: index,
                             title: song.artist
                         }
                     });
     
                     // no duplicates
-                    const uniqueArtists: { id: string, title: string | null }[] = [...new Map(artists.map(item => [item.title, item])).values()];
+                    const uniqueArtists: TAutocompleteDropdownItem[] = [...new Map(artists.map(item => [item.title, item])).values()];
     
                     setSongArtists(uniqueArtists); // 'any' for this will change
                 } else {
@@ -91,9 +90,7 @@ function AddSongScreen() {
     const handleArtistInputChange = (text: string) => {
         setArtist(text);
 
-        const updatedArtistSuggestions = songArtists
-            .filter((artist: { id: string, title: string | null }) => artist.title?.toLowerCase().includes(text.toLowerCase()))
-            .map((artist: { id: string, title: string | null }) => artist.title);
+        const updatedArtistSuggestions = songArtists.filter((artist: any) => artist.title.toLowerCase().includes(text.toLowerCase()));
         setArtistSuggestions(updatedArtistSuggestions);
     }
 
@@ -184,28 +181,21 @@ function AddSongScreen() {
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
             /> */}
-            <View style={{ marginVertical: 10 }}>
-                <AutocompleteDropdown
-                    dataSet={songArtists}
-                    onChangeText={handleArtistInputChange}
-                    closeOnBlur={true}
-                    onSelectItem={setSelectedArtist}
-                    textInputProps={{
-                        placeholder: 'Artist',
-                        placeholderTextColor: 'gray',
-                        style: { fontSize: 16, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' },
-                    }}
-                    inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                    renderItem={(item, text) => (
-                        <View style={{ padding: 10 }}>
-                            <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
-                        </View>
-                    )}
-                    containerStyle={{ flexGrow: 1, flexShrink: 1 }}
-                    suggestionsListContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                    // suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
-                />
-            </View>
+            <AutocompleteDropdownContextProvider>
+                <View style={{ marginVertical: 10 }}>
+                    <AutocompleteDropdown
+                        dataSet={songArtists}
+                        onChangeText={handleArtistInputChange}
+                        closeOnBlur={true}
+                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
+                        containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
+                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
+                        // suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }} // when container is fixed for dark mode
+                        suggestionsListTextStyle={{ color: !darkMode ? 'white' : 'black' }} // temporary
+
+                    />
+                </View>
+            </AutocompleteDropdownContextProvider>
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
