@@ -189,7 +189,6 @@ function AddSongScreen() {
                     dataSet={songArtists}
                     onChangeText={handleArtistInputChange}
                     closeOnBlur={true}
-                    clearOnFocus={false}
                     onSelectItem={(artist) => {
                         setSelectedArtist(artist)
 
