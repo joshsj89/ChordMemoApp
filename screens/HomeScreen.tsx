@@ -50,10 +50,7 @@ function HomeScreen({ navigation }) {
                 style={{ position: 'absolute', right: 5, bottom: 10, backgroundColor: '#009788' }}
                 color={!darkMode ? "white" : "black"}
                 icon="plus"
-                onPress={() => {
-                    alert('Adding song...');
-                    navigate('AddSong')
-                }}
+                onPress={() => navigate('AddSong')}
             />
         </View>
     );
