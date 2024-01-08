@@ -102,6 +102,7 @@ export const genreOptions: GenreOption[] = [
     { label: 'Metal', value: 'Metal'},
     { label: 'Jazz', value: 'Jazz'},
     { label: 'Jazz Standards', value: 'Jazz Standards'},
+    { label: 'Alternative/Indie', value: 'Alternative/Indie'},
     { label: 'Classical', value: 'Classical'},
     { label: 'Country', value: 'Country'},
     { label: 'R&B', value: 'R&B'},
