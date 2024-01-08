@@ -16,7 +16,7 @@ function SearchResultsScreen({ navigation, route }) {
                         onPress={() => navigation.navigate('SongDetails', { song: item })}
                         style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
                     >
-                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : 'white', fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
                         <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.artist}</Text>
                     </TouchableOpacity>
                 )}
