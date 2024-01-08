@@ -41,8 +41,8 @@ function SongDetailsScreen({ route }) {
         <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
             <ScrollView style={{ padding: 20 }}>
                 <Text style={{ fontSize: 24, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>{song.title}</Text>
-                <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.artist}</Text>
-                <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.genres.join(', ')}</Text>
+                {song.artist.length > 0 && <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.artist}</Text>}
+                {song.genres.length > 0 && <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.genres.join(', ')}</Text>}
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Sections:</Text>
                 {song.sections.map((section) => (
                     <View key={section.sectionTitle}>
