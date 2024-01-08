@@ -110,8 +110,9 @@ export const genreOptions: GenreOption[] = [
     { label: 'Blues', value: 'Blues'},
     { label: 'Funk', value: 'Funk'},
     { label: 'Soul', value: 'Soul'},
-    { label: 'Reggae', value: 'Reggae'},
-    { label: 'Punk', value: 'Punk'},
     { label: 'Folk', value: 'Folk'},
     { label: 'Electronic', value: 'Electronic'},
+    { label: 'Disco', value: 'Disco'},
+    { label: 'Reggae', value: 'Reggae'},
+    { label: 'Punk', value: 'Punk'},
 ]
