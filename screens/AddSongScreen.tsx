@@ -87,6 +87,12 @@ function AddSongScreen() {
         setSections(updatedSections);
     }
 
+    const updateSectionKey = (index: number, key: string, value: string) => {
+        const updatedSections = [...sections];
+        updatedSections[index].key[key] = value;
+        setSections(updatedSections);
+    }
+
     const removeSection = (index: number) => {
         const updatedSections = [...sections];
         updatedSections.splice(index, 1);
@@ -201,7 +207,7 @@ function AddSongScreen() {
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSection(index, 'keyTonic', itemValue);
+                                updateSectionKey(index, 'tonic', itemValue);
                                 setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
                             }}
                             enabled={isChecked && index > 0 ? false : true}
@@ -215,7 +221,7 @@ function AddSongScreen() {
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSection(index, 'keySymbol', itemValue);
+                                updateSectionKey(index, 'symbol', itemValue);
                                 setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
                             }}
                             enabled={isChecked && index > 0 ? false : true}
@@ -229,7 +235,7 @@ function AddSongScreen() {
                             style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSection(index, 'keyMode', itemValue);
+                                updateSectionKey(index, 'mode', itemValue);
                                 setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
                             }}
                             enabled={isChecked && index > 0 ? false : true}
