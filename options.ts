@@ -27,6 +27,10 @@ export const keyModeOptions = [
     { label: 'Mixolydian', value: 'Mixolydian'},
     { label: 'Dorian', value: 'Dorian'},
     { label: 'Locrian', value: 'Locrian'},
+    { label: 'Minor Pentatonic', value: 'Minor Pentatonic'},
+    { label: 'Major Pentatonic', value: 'Major Pentatonic'},
+    { label: 'Lydian Dominant', value: 'Lydian Dominant'},
+    { label: 'Phrygian Dominant', value: 'Phrygian Dominant'},
 ]
 
 export const chordOptions = [
