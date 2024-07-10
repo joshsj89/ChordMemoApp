@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, Text, TextInput, Button, TouchableOpacity, Image } from 'react-native';
+import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -70,7 +70,7 @@ function EditSongScreen({ route }) {
     }
 
     const addSection = () => {
-        const newSection: Section = { sectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords};
+        const newSection: Section = { sectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
         setSections([...sections, newSection]);
     }
 
@@ -110,7 +110,7 @@ function EditSongScreen({ route }) {
                         chords: section.chords.trim()
                     };
                 })
-            }
+            };
 
             const savedSongs = await AsyncStorage.getItem('songs');
             if (savedSongs != null) {
@@ -153,7 +153,7 @@ function EditSongScreen({ route }) {
                         <View key={index} style={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginHorizontal: 10, marginVertical: 10 }}>
                             <Picker
                                 selectedValue={genre}
-                                style={{ height: 50, width: 120, zIndex: 0,  color: !darkMode ? 'black' : 'white' }}
+                                style={{ height: 50, width: 120, zIndex: 0, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => updateGenre(index, itemValue)}
                             >
@@ -181,7 +181,17 @@ function EditSongScreen({ route }) {
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, justifyContent: 'space-between' }}>
                     <CheckBox
                         checked={isChecked}
-                        onPress={() => setIsChecked(!isChecked)}
+                        onPress={() => {
+                            if (!isChecked) { // changes all section keys based on 1st section key
+                                sections.forEach((section, index) => {
+                                    updateSectionKey(index, 'tonic', sections[0].key.tonic);
+                                    updateSectionKey(index, 'symbol', sections[0].key.symbol);
+                                    updateSectionKey(index, 'mode', sections[0].key.mode);
+                                });
+                            }
+
+                            setIsChecked(!isChecked);
+                        }}
                         color='#009788'
                     />
                     <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>Same Key For All Sections</Text>
@@ -205,8 +215,22 @@ function EditSongScreen({ route }) {
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSectionKey(index, 'tonic', itemValue);
-                                setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
+                                if (isChecked) {
+                                    if (index === 0) {
+                                        updateSectionKey(index, 'tonic', itemValue);
+                                        sections.forEach((section, i) => { // change the other sections while check box is checked
+                                            if (i !== 0) { // allows one to change the first section key while check box is checked
+                                                updateSectionKey(i, 'tonic', sections[0].key.tonic);
+                                            }
+                                        })
+                                    } else {
+                                        updateSectionKey(index, 'tonic', sections[0].key.tonic);
+                                        setKeyTonic(sections[0].key.tonic);
+                                    }
+                                } else {
+                                    updateSectionKey(index, 'tonic', itemValue);
+                                    setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
+                                }
                             }}
                             enabled={isChecked && index > 0 ? false : true}
                         >
@@ -219,8 +243,22 @@ function EditSongScreen({ route }) {
                             style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSectionKey(index, 'symbol', itemValue);
-                                setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
+                                if (isChecked) {
+                                    if (index === 0) {
+                                        updateSectionKey(index, 'symbol', itemValue);
+                                        sections.forEach((section, i) => { // change the other sections while check box is checked
+                                            if (i !== 0) { // allows one to change the first section key while check box is checked
+                                                updateSectionKey(i, 'symbol', sections[0].key.symbol);
+                                            }
+                                        })
+                                    } else {
+                                        updateSectionKey(index, 'symbol', sections[0].key.symbol);
+                                        setKeySymbol(sections[0].key.symbol);
+                                    }
+                                } else {
+                                    updateSectionKey(index, 'symbol', itemValue);
+                                    setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
+                                }
                             }}
                             enabled={isChecked && index > 0 ? false : true}
                         >
@@ -233,8 +271,22 @@ function EditSongScreen({ route }) {
                             style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
                             dropdownIconColor={!darkMode ? 'gray' : 'white'}
                             onValueChange={(itemValue) => {
-                                updateSectionKey(index, 'mode', itemValue);
-                                setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
+                                if (isChecked) {
+                                    if (index === 0) {
+                                        updateSectionKey(index, 'mode', itemValue);
+                                        sections.forEach((section, i) => { // change the other sections while check box is checked
+                                            if (i !== 0) { // allows one to change the first section key while check box is checked
+                                                updateSectionKey(i, 'mode', sections[0].key.mode);
+                                            }
+                                        })
+                                    } else {
+                                        updateSectionKey(index, 'mode', sections[0].key.mode);
+                                        setKeyMode(sections[0].key.mode);
+                                    }
+                                } else {
+                                    updateSectionKey(index, 'mode', itemValue);
+                                    setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
+                                }
                             }}
                             enabled={isChecked && index > 0 ? false : true}
                         >
@@ -245,6 +297,7 @@ function EditSongScreen({ route }) {
                         <TextInput
                             style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
                             placeholder='Chords'
+                            placeholderTextColor='gray'
                             value={section.chords}
                             onChangeText={(text) => updateSection(index, 'chords', text.replace(/#/g, '♯'))}
                         />
