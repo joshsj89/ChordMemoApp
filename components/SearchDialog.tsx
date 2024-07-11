@@ -229,57 +229,72 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
 
     return (
         <Modal visible={isVisible} transparent={true} animationType='slide' onRequestClose={onClose}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', gap: 30 }}>
-                {showSearchDialog && (
-                    <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Search</Text>
-                        {/* <TextInput 
-                            placeholder='Enter search text'
-                            placeholderTextColor='gray'
-                            value={searchText}
-                            onChangeText={(text) => setSearchText(text.replace(/#/g, '♯'))}
-                            style={{ width: '100%', height: 40, borderColor: !darkMode ? 'gray' : 'white', borderWidth: 1, borderRadius: 5, padding: 5, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}
-                        /> */}
-                        <AutocompleteDropdownContextProvider>
-                            <View style={{ width: '100%', marginVertical: 10 }}>
-                                <AutocompleteDropdown
-                                    dataSet={suggestions}
-                                />
+            <AutocompleteDropdownContextProvider>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', gap: 30 }}>
+                    {showSearchDialog && (
+                        <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Search</Text>
+                            {/* <TextInput 
+                                placeholder='Enter search text'
+                                placeholderTextColor='gray'
+                                value={searchText}
+                                onChangeText={(text) => setSearchText(text.replace(/#/g, '♯'))}
+                                style={{ width: '100%', height: 40, borderColor: !darkMode ? 'gray' : 'white', borderWidth: 1, borderRadius: 5, padding: 5, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}
+                            /> */}
+                            <View style={{ width: '100%', marginVertical: 10, zIndex: 10 }}>
+                                <View>
+                                    <AutocompleteDropdown
+                                        dataSet={suggestions}
+                                        initialValue={searchText}
+                                        onChangeText={(text) => setSearchText(text.replace(/#/g, '♯'))}
+                                        onSelectItem={(item) => {
+                                            if (item?.title) {
+                                                setSearchText(item.title);
+                                            }
+                                        }}
+                                        closeOnBlur={true}
+                                        containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
+                                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
+                                        textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color
+                                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
+                                        suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }} // suggestion text color
+                                    />
+                                </View>
                             </View>
-                        </AutocompleteDropdownContextProvider>
-                        <Button
-                            title="Insert Symbol"
-                            color="#009788"
-                            onPress={toggleLayer}
-                        />
-                        <RadioButtonsGroup
-                            layout='row'
-                            containerStyle={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }} 
-                            radioButtons={!darkMode ? radioButtonsData : radioButtonsDataDark}
-                            onPress={(selectedId) => {
-                                setSelectedRadioButton(selectedId);
+                            <Button
+                                title="Insert Symbol"
+                                color="#009788"
+                                onPress={toggleLayer}
+                            />
+                            <RadioButtonsGroup
+                                layout='row'
+                                containerStyle={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }} 
+                                radioButtons={!darkMode ? radioButtonsData : radioButtonsDataDark}
+                                onPress={(selectedId) => {
+                                    setSelectedRadioButton(selectedId);
 
-                                const selRadioButton = radioButtonsData.find(radioButton => radioButton.id === selectedId);
-                                if (selRadioButton) {
-                                    setSearchOptions(selRadioButton.value);
-                                }
-                            }}
-                            selectedId={selectedRadioButton}
-                        />
-                        <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
-                            <Button title="Close" onPress={onClose} color="#009788" />
-                            <Button title="Search" onPress={handleSearch} color="#009788" />
+                                    const selRadioButton = radioButtonsData.find(radioButton => radioButton.id === selectedId);
+                                    if (selRadioButton) {
+                                        setSearchOptions(selRadioButton.value);
+                                    }
+                                }}
+                                selectedId={selectedRadioButton}
+                            />
+                            <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
+                                <Button title="Close" onPress={onClose} color="#009788" />
+                                <Button title="Search" onPress={handleSearch} color="#009788" />
+                            </View>
                         </View>
-                    </View>
-                )}
-                {showSymbolPickerModal && (
-                    <SymbolPickerModal 
-                        isVisible={showSymbolPickerModal} 
-                        onClose={toggleLayer} 
-                        onSelect={handleSymbolSelect} 
-                    />
-                )}
-            </View>
+                    )}
+                    {showSymbolPickerModal && (
+                        <SymbolPickerModal 
+                            isVisible={showSymbolPickerModal} 
+                            onClose={toggleLayer} 
+                            onSelect={handleSymbolSelect} 
+                        />
+                    )}
+                </View>
+            </AutocompleteDropdownContextProvider>
         </Modal>
     )
 }
