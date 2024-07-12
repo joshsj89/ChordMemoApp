@@ -8,7 +8,7 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, AutocompleteDropdownContextProvider, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
@@ -54,9 +54,9 @@ function AddSongScreen() {
                     const parsedSongs: Song[] = JSON.parse(savedSongs);
                     const artists = parsedSongs.map((song, index) => {
                         return {
-                            id: index.toString(),
+                            id: index,
                             title: song.artist
-                        };
+                        }
                     });
 
                     // no duplicates
@@ -85,6 +85,7 @@ function AddSongScreen() {
             }
         });
 
+        console.log('updatedArtistSuggestions:', updatedArtistSuggestions);
         setArtistSuggestions(updatedArtistSuggestions);
     }
 
@@ -194,37 +195,32 @@ function AddSongScreen() {
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
             /> */}
-            <View style={{ marginVertical: 10 }}>
-                <AutocompleteDropdown 
-                    dataSet={artistSuggestions}
-                    onChangeText={handleArtistInputChange}
-                    onSelectItem={(item) => {
-                        if (item?.title) {
-                            setArtist(item.title);
-                        }
-                    }}
-                    closeOnBlur={true}
-                    inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                    textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }}
-                    containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                    suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
-                    suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
-                    EmptyResultComponent={(
-                        <View style={{ padding: 15, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>
-                            <Text style={{ fontSize: 16, flexGrow: 1, flexShrink: 0, color: !darkMode ? 'black' : 'white' }}>{artist}</Text>
-                        </View>
-                    )}
-                    // renderItem={(item, text) => (
-                    //     <TouchableOpacity onPress={() => {
-                    //         if (item.title) {
-                    //             setArtist(item.title)
-                    //         }
-                    //     }}>
-                    //         <Text style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
-                    //     </TouchableOpacity>
-                    // )}
-                />
-            </View>
+            <AutocompleteDropdownContextProvider>
+                <View style={{ marginVertical: 10 }}>
+                    <AutocompleteDropdown 
+                        dataSet={artistSuggestions}
+                        onChangeText={handleArtistInputChange}
+                        onSelectItem={(item) => {
+                            if (item?.title) {
+                                setArtist(item.title);
+                            }
+                        }}
+                        closeOnBlur={true}
+                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
+                        containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
+                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
+                        renderItem={(item, text) => (
+                            <TouchableOpacity onPress={() => {
+                                if (item.title) {
+                                    setArtist(item.title)
+                                }
+                            }}>
+                                <Text style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>{item.title}</Text>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </View>
+            </AutocompleteDropdownContextProvider>
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
