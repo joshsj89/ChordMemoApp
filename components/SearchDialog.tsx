@@ -258,11 +258,6 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                         textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color
                                         suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
                                         suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }} // suggestion text color
-                                        EmptyResultComponent={(
-                                            <View style={{ padding: 15, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>
-                                                <Text style={{ fontSize: 16, flexGrow: 1, flexShrink: 0, color: !darkMode ? 'black' : 'white' }}>{searchText}</Text>
-                                            </View>
-                                        )}
                                     />
                                 </View>
                             </View>
