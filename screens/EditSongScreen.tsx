@@ -8,7 +8,6 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { EditSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
 function EditSongScreen({ route }) {
     const { song }: { song: Song } = route.params;
@@ -25,65 +24,16 @@ function EditSongScreen({ route }) {
     const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
-    const [artistSuggestions, setArtistSuggestions] = useState<TAutocompleteDropdownItem[]>([]);
-    const [songArtists, setSongArtists] = useState<string[]>([]);
 
     const darkMode = useTheme();
 
     const { navigate } = useNavigation<EditSongScreenNavigationProp>();
 
     useEffect(() => {
-        const usedGenres = genres.map((genre) => genre);
+        const usedGenres: string[] = genres.map((genre) => genre);
         const updatedAvailableGenres = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
         setAvailableGenres(updatedAvailableGenres);
     }, [genres]);
-
-    useEffect(() => { // load artists from saved songs
-        const loadArtists = async () => {
-            try {
-                const savedSongs = await AsyncStorage.getItem('songs');
-
-                if (savedSongs != null) {
-                    const parsedSongs: Song[] = JSON.parse(savedSongs);
-                    const artists = parsedSongs.map((song, index) => {
-                        return {
-                            id: index.toString(),
-                            title: song.artist
-                        };
-                    });
-
-                    // no duplicates
-                    const uniqueArtists = [...new Map(artists.map(item => [item.title, item])).values()];
-
-                    setSongArtists(uniqueArtists.map((artist) => artist.title));
-                }
-            } catch (error) {
-                console.error('Error loading artists:', error);
-            }
-        }
-
-        loadArtists();
-    }, []);
-
-    const handleArtistInputChange = (text: string) => {
-        setArtist(text);
-        
-        const updatedArtistSuggestions = songArtists.filter((songArtist) => songArtist.toLowerCase().includes(text.toLowerCase())).map((songArtist, index) => {
-            return {
-                id: index.toString(),
-                title: songArtist
-            }
-        });
-
-        setArtistSuggestions(updatedArtistSuggestions);
-    }
-
-    useEffect(() => { // set initial value of dropdown to the current song's artist
-        setArtistSuggestions([{
-            id: artist,
-            title: artist
-        }]);
-    }, []);
 
     const toggleSymbolPickerModal = (index: number | null) => {
         if (index != null) {
@@ -189,36 +139,13 @@ function EditSongScreen({ route }) {
                 value={title}
                 onChangeText={(text) => setTitle(text)}
             />
-            {/* <TextInput
+            <TextInput
                 style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
                 placeholder='Artist'
                 placeholderTextColor='gray'
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
-            /> */}
-            <View style={{ marginVertical: 10 }}>
-                <AutocompleteDropdown 
-                    dataSet={artistSuggestions}
-                    initialValue={artist}
-                    onChangeText={handleArtistInputChange}
-                    onSelectItem={(item) => {
-                        if (item?.title) {
-                            setArtist(item.title);
-                        }
-                    }}
-                    closeOnBlur={true}
-                    inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                    textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }}
-                    containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                    suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
-                    suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
-                    EmptyResultComponent={(
-                        <View style={{ padding: 15, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>
-                            <Text style={{ fontSize: 16, flexGrow: 1, flexShrink: 0, color: !darkMode ? 'black' : 'white' }}>{artist}</Text>
-                        </View>
-                    )}
-                />
-            </View>
+            />
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
