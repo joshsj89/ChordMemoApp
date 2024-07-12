@@ -2,7 +2,7 @@
     "expo": {
         "name": "ChordMemo",
         "slug": "ChordMemo",
-        "version": "1.2.3",
+        "version": "1.2.4",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
                 "backgroundColor": "#00a7a0"
             },
             "package": "com.joshsj89.ChordMemo",
-            "versionCode": 24,
+            "versionCode": 25,
             "permissions": [
                 "WRITE_EXTERNAL_STORAGE",
                 "READ_EXTERNAL_STORAGE"
