@@ -8,7 +8,6 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown, AutocompleteDropdownContextProvider, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
@@ -26,8 +25,6 @@ function AddSongScreen() {
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
-    const [artistSuggestions, setArtistSuggestions] = useState<TAutocompleteDropdownItem[]>([]);
-    const [songArtists, setSongArtists] = useState<string[]>([]);
 
     const darkMode = useTheme();
 
@@ -44,50 +41,6 @@ function AddSongScreen() {
     //     const updatedAvailableSectionTitles = sectionTypeOptions.filter((section) => !usedSectionTitles.includes(section.value));
     //     setAvailableSectionTitles(updatedAvailableSectionTitles);
     // }, [sections]);
-
-    useEffect(() => {
-        const loadArtists = async () => {
-            try {
-                const savedSongs = await AsyncStorage.getItem('songs');
-
-                if (savedSongs != null) {
-                    const parsedSongs: Song[] = JSON.parse(savedSongs);
-                    const artists = parsedSongs.map((song, index) => {
-                        return {
-                            id: index,
-                            title: song.artist
-                        }
-                    });
-
-                    // no duplicates
-                    const uniqueArtists = [...new Map(artists.map(item => [item.title, item])).values()];
-
-                    setSongArtists(uniqueArtists.map((artist) => artist.title));
-                }
-            } catch (error) {
-                console.error('Error loading artists:', error);
-            }
-        }
-
-        loadArtists();
-    }, []);
-
-    const handleArtistInputChange = (text: string) => {
-        setArtist(text);
-        // const updatedArtistSuggestions = songArtists.filter((songArtist) => songArtist.toLowerCase().includes(text.toLowerCase()));
-
-        // updatedArtistSuggestions needs to have the format of an array of objects with id and title properties - [{ id: '1, title: 'artist 1' }, { id: '2', title: 'artist 2' }]
-        // do this by mapping over updatedArtistSuggestions and returning an object with id and title properties
-        const updatedArtistSuggestions = songArtists.filter((songArtist) => songArtist.toLowerCase().includes(text.toLowerCase())).map((songArtist, index) => {
-            return {
-                id: index.toString(),
-                title: songArtist
-            }
-        });
-
-        console.log('updatedArtistSuggestions:', updatedArtistSuggestions);
-        setArtistSuggestions(updatedArtistSuggestions);
-    }
 
     const toggleSymbolPickerModal = (index: number | null) => {
         if (index != null) {
@@ -188,39 +141,13 @@ function AddSongScreen() {
                 value={title}
                 onChangeText={(text) => setTitle(text)}
             />
-            {/* <TextInput
+            <TextInput
                 style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
                 placeholder='Artist'
                 placeholderTextColor='gray'
                 value={artist}
                 onChangeText={(text) => setArtist(text)}
-            /> */}
-            <AutocompleteDropdownContextProvider>
-                <View style={{ marginVertical: 10 }}>
-                    <AutocompleteDropdown 
-                        dataSet={artistSuggestions}
-                        onChangeText={handleArtistInputChange}
-                        onSelectItem={(item) => {
-                            if (item?.title) {
-                                setArtist(item.title);
-                            }
-                        }}
-                        closeOnBlur={true}
-                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                        containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                        renderItem={(item, text) => (
-                            <TouchableOpacity onPress={() => {
-                                if (item.title) {
-                                    setArtist(item.title)
-                                }
-                            }}>
-                                <Text style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>{item.title}</Text>
-                            </TouchableOpacity>
-                        )}
-                    />
-                </View>
-            </AutocompleteDropdownContextProvider>
+            />
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
