@@ -34,8 +34,8 @@ function AddSongScreen() {
     const { navigate } = useNavigation<AddSongScreenNavigationProp>();
 
     useEffect(() => {
-        const usedGenres: string[] = genres.map((genre) => genre);
-        const updatedAvailableGenres: GenreOption[] = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
+        const usedGenres = genres.map((genre) => genre);
+        const updatedAvailableGenres = genreOptions.filter((genre) => !usedGenres.includes(genre.value));
         setAvailableGenres(updatedAvailableGenres);
     }, [genres]);
 
@@ -45,7 +45,7 @@ function AddSongScreen() {
     //     setAvailableSectionTitles(updatedAvailableSectionTitles);
     // }, [sections]);
 
-    useEffect(() => {
+    useEffect(() => { // load artists from saved songs
         const loadArtists = async () => {
             try {
                 const savedSongs = await AsyncStorage.getItem('songs');
@@ -74,10 +74,7 @@ function AddSongScreen() {
 
     const handleArtistInputChange = (text: string) => {
         setArtist(text);
-        // const updatedArtistSuggestions = songArtists.filter((songArtist) => songArtist.toLowerCase().includes(text.toLowerCase()));
-
-        // updatedArtistSuggestions needs to have the format of an array of objects with id and title properties - [{ id: '1, title: 'artist 1' }, { id: '2', title: 'artist 2' }]
-        // do this by mapping over updatedArtistSuggestions and returning an object with id and title properties
+        
         const updatedArtistSuggestions = songArtists.filter((songArtist) => songArtist.toLowerCase().includes(text.toLowerCase())).map((songArtist, index) => {
             return {
                 id: index.toString(),
@@ -214,15 +211,6 @@ function AddSongScreen() {
                             <Text style={{ fontSize: 16, flexGrow: 1, flexShrink: 0, color: !darkMode ? 'black' : 'white' }}>{artist}</Text>
                         </View>
                     )}
-                    // renderItem={(item, text) => (
-                    //     <TouchableOpacity onPress={() => {
-                    //         if (item.title) {
-                    //             setArtist(item.title)
-                    //         }
-                    //     }}>
-                    //         <Text style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}>{item.title}</Text>
-                    //     </TouchableOpacity>
-                    // )}
                 />
             </View>
             <Button title='Add Genre'onPress={addGenre} color='#009788' />
