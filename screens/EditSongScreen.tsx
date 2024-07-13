@@ -201,6 +201,7 @@ function EditSongScreen({ route }) {
                     }}
                     closeOnBlur={true}
                     clearOnFocus={false}
+                    direction='down'
                     inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                     textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }}
                     containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
