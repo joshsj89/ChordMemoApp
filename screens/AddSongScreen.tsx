@@ -8,7 +8,7 @@ import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, AutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
@@ -26,7 +26,7 @@ function AddSongScreen() {
     // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
-    const [artistSuggestions, setArtistSuggestions] = useState<TAutocompleteDropdownItem[]>([]);
+    const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
 
     const darkMode = useTheme();
