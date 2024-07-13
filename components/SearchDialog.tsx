@@ -247,6 +247,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                         closeOnBlur={true}
                                         clearOnFocus={false}
                                         direction='down'
+                                        caseSensitive={searchOptions === 'chords' ? true : false}
                                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
                                         inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                                         textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color
