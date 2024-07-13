@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Modal, Text, View, TextInput, Button } from 'react-native';
+import { Modal, Text, View, Button } from 'react-native';
 import RadioButtonsGroup from 'react-native-radio-buttons-group';
 import { useTheme } from './ThemeContext';
 import SymbolPickerModal from './SymbolPickerModal';
 import { AutocompleteDropdown, AutocompleteDropdownContextProvider, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { title } from 'process';
 
 const radioButtonsData = [
     {
@@ -234,13 +233,6 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                     {showSearchDialog && (
                         <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Search</Text>
-                            {/* <TextInput 
-                                placeholder='Enter search text'
-                                placeholderTextColor='gray'
-                                value={searchText}
-                                onChangeText={(text) => setSearchText(text.replace(/#/g, '♯'))}
-                                style={{ width: '100%', height: 40, borderColor: !darkMode ? 'gray' : 'white', borderWidth: 1, borderRadius: 5, padding: 5, marginVertical: 10, color: !darkMode ? 'black' : 'white' }}
-                            /> */}
                             <View style={{ width: '100%', marginVertical: 10, zIndex: 10 }}>
                                 <View>
                                     <AutocompleteDropdown
@@ -253,6 +245,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                             }
                                         }}
                                         closeOnBlur={true}
+                                        clearOnFocus={false}
                                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
                                         inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                                         textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color

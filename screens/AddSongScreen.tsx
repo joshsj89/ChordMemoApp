@@ -184,13 +184,6 @@ function AddSongScreen() {
                 value={title}
                 onChangeText={(text) => setTitle(text)}
             />
-            {/* <TextInput
-                style={{ fontSize: 16, padding: 10, marginVertical: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                placeholder='Artist'
-                placeholderTextColor='gray'
-                value={artist}
-                onChangeText={(text) => setArtist(text)}
-            /> */}
             <View style={{ marginVertical: 10 }}>
                 <AutocompleteDropdown 
                     dataSet={artistSuggestions}
@@ -201,6 +194,7 @@ function AddSongScreen() {
                         }
                     }}
                     closeOnBlur={true}
+                    clearOnFocus={false}
                     inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                     textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }}
                     containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
