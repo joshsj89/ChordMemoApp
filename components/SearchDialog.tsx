@@ -3,7 +3,7 @@ import { Modal, Text, View, Button } from 'react-native';
 import RadioButtonsGroup from 'react-native-radio-buttons-group';
 import { useTheme } from './ThemeContext';
 import SymbolPickerModal from './SymbolPickerModal';
-import { AutocompleteDropdown, AutocompleteDropdownContextProvider, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, AutocompleteDropdownContextProvider, AutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const radioButtonsData = [
@@ -80,7 +80,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
     const [showSearchDialog, setShowSearchDialog] = useState(true);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState(false);
 
-    const [suggestions, setSuggestions] = useState<TAutocompleteDropdownItem[]>([]);
+    const [suggestions, setSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songTitles, setSongTitles] = useState<string[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
     const [songGenres, setSongGenres] = useState<string[]>([]);
@@ -104,7 +104,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
     }
 
     const changeSuggestionList = (searchOptionsVal: string) => {
-        let newSuggestions: TAutocompleteDropdownItem[] = [];
+        let newSuggestions: AutocompleteDropdownItem[] = [];
 
         switch (searchOptionsVal) {
             case 'title':
@@ -247,6 +247,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                         closeOnBlur={true}
                                         clearOnFocus={false}
                                         direction='down'
+                                        caseSensitive={searchOptions === 'chords' ? true : false}
                                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
                                         inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                                         textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color
