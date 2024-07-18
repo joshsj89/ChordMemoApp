@@ -23,7 +23,7 @@ function AddSongScreen() {
     const [chords, setChords] = useState<string>('');
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
-    // const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
+    const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
     const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
@@ -39,11 +39,11 @@ function AddSongScreen() {
         setAvailableGenres(updatedAvailableGenres);
     }, [genres]);
 
-    // useEffect(() => {
-    //     const usedSectionTitles = sections.map((section) => section.sectionTitle);
-    //     const updatedAvailableSectionTitles = sectionTypeOptions.filter((section) => !usedSectionTitles.includes(section.value));
-    //     setAvailableSectionTitles(updatedAvailableSectionTitles);
-    // }, [sections]);
+    useEffect(() => {
+        const usedSectionTitles = sections.map((section) => section.sectionTitle);
+        const updatedAvailableSectionTitles = sectionTypeOptions.filter((section) => !usedSectionTitles.includes(section.value));
+        setAvailableSectionTitles(updatedAvailableSectionTitles);
+    }, [sections]);
 
     useEffect(() => { // load artists from saved songs
         const loadArtists = async () => {
@@ -120,8 +120,13 @@ function AddSongScreen() {
     }
 
     const addSection = () => {
-        const newSection: Section = { sectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
-        setSections([...sections, newSection]);
+        if (availableSectionTitles.length === 0) return;
+
+        if (availableSectionTitles.length > 0) {
+            const newSectionTitle = availableSectionTitles[0].value;
+            const newSection: Section = { sectionTitle: newSectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
+            setSections([...sections, newSection]);
+        }
     }
 
     const updateSection = (index: number, key: string, value: string) => {
@@ -208,7 +213,7 @@ function AddSongScreen() {
                     )}
                 />
             </View>
-            <Button title='Add Genre'onPress={addGenre} color='#009788' />
+            <Button title='Add Genre' onPress={addGenre} color='#009788' disabled={availableGenres.length === 0} />
             {genres.length !== 0 && (
                 <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
                     {genres.map((genre, index) => (
@@ -238,7 +243,7 @@ function AddSongScreen() {
                         </View>
                     ))}
                 </ScrollView>)}
-            <Button title="Add Section" onPress={addSection} color='#009788' />
+            <Button title="Add Section" onPress={addSection} color='#009788' disabled={availableSectionTitles.length === 0} />
             {sections.length > 0 && (
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, justifyContent: 'space-between' }}>
                     <CheckBox
