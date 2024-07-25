@@ -193,10 +193,10 @@ const thirteenthTypes: ExtendedChordTypes = {
     '♯11♯9sus2': [{label: '13', alt: '13♯11♯9sus2', value: '13♯11♯9sus2'}, {label: '♭13', alt: '♭13♯11♯9sus2', value: '♭13♯11♯9sus2'}],
 }
 
-function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) => void }) {
+function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: string[], onChordComplete: (chord: string) => void }) {
     const darkMode = useTheme();
 
-    const [chords, setChords] = useState<string[]>([]);
+    const [chords, setChords] = useState<string[]>(originalChords);
     
     const [flat, setFlat] = useState<boolean>(false);
     const [sharp, setSharp] = useState<boolean>(false);
@@ -263,13 +263,13 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
 
     const handleErasePress = () => {
         setChords(chords.slice(0, -1));
-        onChordComplete(chords.slice(0, -1).join('-').replace(/-\s-/g, ' '));
+        onChordComplete(chords.slice(0, -1).join('-').replace(/-\s-/g, ' ').replace(/-\s/g, ' ')); // hide dash before space
     }
 
     const handleSpacePress = () => {
-        if (chords[chords.length - 1] !== ' ') { // prevent multiple spaces
+        if (chords[chords.length - 1] !== ' ' && chords.length > 0) { // prevent multiple spaces or space at beginning
             setChords([...chords, ' ']);
-            onChordComplete([...chords, ' '].join('-').replace(/-\s/g, ' ')); // hide dash before space
+            onChordComplete([...chords, ' '].join('-').replace(/-\s-/g, ' ').replace(/-\s/g, ' ')); // hide dash before space
         }
     }
     

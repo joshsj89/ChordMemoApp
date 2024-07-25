@@ -11,6 +11,29 @@ import { AddSongScreenNavigationProp } from '../types/screens';
 import { AutocompleteDropdown, AutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import ChordKeyboard from '../components/ChordKeyboard';
 
+const splitChordsIntoArray = (chords: string) => {
+    if (chords === '') { // return empty array if no chords
+        return [];
+    }
+    
+    // split chord string into parts
+    const chordArray = chords.split(' ');
+    const updatedChordArray: string[] = [];
+
+    chordArray.forEach((part, index) => {
+        // split each part by dashes
+        const splitChords = part.split('-');
+        updatedChordArray.push(...splitChords);
+
+        // add space back in correct positions
+        if (index < chordArray.length - 1) {
+            updatedChordArray.push(' ');
+        }
+    });
+
+    return updatedChordArray;
+}
+
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
     const [artist, setArtist] = useState<string>('');
@@ -399,13 +422,16 @@ function AddSongScreen() {
             </ScrollView>
             {isChordKeyboardVisible && (
                 <View style={styles.chordKeyboardContainer}>
-                    <ChordKeyboard onChordComplete={(chord) => {
-                        if (currentKeyboardSectionIndex != null && sections[currentKeyboardSectionIndex]) {
-                            const updatedSections = [...sections];
-                            updatedSections[currentKeyboardSectionIndex].chords = chord;
-                            setSections(updatedSections);
-                        }
-                    }} />
+                    <ChordKeyboard 
+                        originalChords={splitChordsIntoArray(sections[currentKeyboardSectionIndex!].chords)}
+                        onChordComplete={(chord) => {
+                            if (currentKeyboardSectionIndex != null && sections[currentKeyboardSectionIndex]) {
+                                const updatedSections = [...sections];
+                                updatedSections[currentKeyboardSectionIndex].chords = chord;
+                                setSections(updatedSections);
+                            }
+                        }} 
+                    />
                 </View>
             )}
         </KeyboardAvoidingView>
