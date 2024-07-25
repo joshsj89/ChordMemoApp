@@ -196,6 +196,9 @@ const thirteenthTypes: ExtendedChordTypes = {
 function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) => void }) {
     const darkMode = useTheme();
 
+    const [flat, setFlat] = useState<boolean>(false);
+    const [sharp, setSharp] = useState<boolean>(false);
+
     const [selectedRomanNumeral, setSelectedRomanNumeral] = useState<RomanNumeral | null>(null);
     const [selectedTriad, setSelectedTriad] = useState<ChordType | null>(null);
     const [selectedSeventh, setSelectedSeventh] = useState<ChordType | null>(null);
@@ -240,6 +243,20 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
 
     const handleThirteenthPress = (thirteenth: ChordType) => {
         setSelectedThirteenth(thirteenth);
+    }
+
+    const handleFlatPress = () => {
+        if (selectedRomanNumeral) {
+            setFlat(!flat);
+            setSharp(false);
+        }
+    }
+
+    const handleSharpPress = () => {
+        if (selectedRomanNumeral) {
+            setSharp(!sharp);
+            setFlat(false);
+        }
     }
     
     const handleChordComplete = () => {
@@ -289,7 +306,16 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
                 }
             }
 
+            if (flat) {
+                completeChord = '♭' + completeChord;
+            } else if (sharp) {
+                completeChord = '♯' + completeChord;
+            }
+
             onChordComplete(completeChord);
+
+            setFlat(false);
+            setSharp(false);
 
             setSelectedRomanNumeral(null);
             setSelectedTriad(null);
@@ -368,26 +394,62 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
                     ))}
                 </ScrollView>
             </View>
-            <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'row', gap: 10 }}>
-                <FAB
-                    style={{ backgroundColor: '#009788' }}
-                    color={!darkMode ? "white" : "black"}
-                    icon='eraser'
-                    onPress={() => {}}
-                />
-                <FAB
-                    style={{ backgroundColor: '#009788' }}
-                    color={!darkMode ? "white" : "black"}
-                    label='SPACE'
-                    uppercase={true}
-                    onPress={() => {}}
-                />
-                <FAB
-                    style={{ backgroundColor: '#009788' }}
-                    color={!darkMode ? "white" : "black"}
-                    icon="arrow-right"
-                    onPress={handleChordComplete}
-                />
+            <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'column', gap: 10 }}>
+                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label='('
+                        onPress={() => {}}
+                        size='small'
+                        customSize={40}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label=')'
+                        onPress={() => {}}
+                        size='small'
+                        customSize={40}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label='♭'
+                        onPress={handleFlatPress}
+                        size='small'
+                        customSize={40}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label='♯'
+                        onPress={handleSharpPress}
+                        size='small'
+                        customSize={40}
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        icon='eraser'
+                        onPress={() => {}}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label='SPACE'
+                        uppercase={true}
+                        onPress={() => {}}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        icon="arrow-right"
+                        onPress={handleChordComplete}
+                    />
+                </View>
             </View>
         </View>
     );
