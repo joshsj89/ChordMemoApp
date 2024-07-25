@@ -29,7 +29,7 @@ function AddSongScreen() {
     const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
-    const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(true);
+    const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(false);
 
     const darkMode = useTheme();
 
@@ -85,19 +85,6 @@ function AddSongScreen() {
         });
 
         setArtistSuggestions(updatedArtistSuggestions);
-    }
-
-    const toggleSymbolPickerModal = (index: number | null) => {
-        if (index != null) {
-            setSymbolPickerModalSectionIndex(index);
-        }
-        setShowSymbolPickerModal(prev => !prev);
-    }
-
-    const handleSymbolSelect = (symbol: Symbol) => {
-        if (symbolPickerModalSectionIndex != null) {
-            updateSection(symbolPickerModalSectionIndex, 'chords', sections[symbolPickerModalSectionIndex].chords + symbol);
-        }
     }
 
     const addGenre = () => {
@@ -179,6 +166,10 @@ function AddSongScreen() {
         } catch (error) {
             console.error('Error adding song:', error);
         }
+    }
+
+    const handleKeyboardToggle = (index: number) => {
+        setIsChordKeyboardVisible(!isChordKeyboardVisible);
     }
 
     return (
@@ -378,11 +369,9 @@ function AddSongScreen() {
                             />
                             <View style={{ alignItems: 'center', justifyContent: 'center', height: 50, marginRight: 20 }}>
                                 <Button
-                                    title="Symbols"
+                                    title="Keyboard"
                                     color="#009788"
-                                    onPress={() => {
-                                        toggleSymbolPickerModal(index);
-                                    }}
+                                    onPress={() => handleKeyboardToggle(index)}
                                 />
                             </View>
                         </ScrollView>
@@ -397,11 +386,6 @@ function AddSongScreen() {
                         </TouchableOpacity>
                     </View>
                 ))}
-                <SymbolPickerModal 
-                    isVisible={showSymbolPickerModal} 
-                    onClose={() => toggleSymbolPickerModal(null)} 
-                    onSelect={handleSymbolSelect}
-                />
                 <View style={{ padding: 20, marginBottom: 20 }}>
                     <Button 
                         title="Add Song"
@@ -421,15 +405,6 @@ function AddSongScreen() {
 }
 
 const styles = StyleSheet.create({
-    chordKeyboardToggle: {
-        backgroundColor: '#2089dc',
-        padding: 10,
-        borderRadius: 5,
-        position: 'absolute',
-        bottom: 20,
-        left: '50%',
-        transform: [{ translateX: '-50%' }],
-    },
     chordKeyboardContainer: {
         position: 'absolute',
         bottom: 0,
