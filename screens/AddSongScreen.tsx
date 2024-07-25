@@ -413,7 +413,7 @@ function AddSongScreen() {
             </ScrollView>
             {isChordKeyboardVisible && (
                 <View style={styles.chordKeyboardContainer}>
-                    <ChordKeyboard /*onChordComplete={(chord) => setChords(chords + chord)}*/ onChordComplete={() => {}} />
+                    <ChordKeyboard /*onChordComplete={(chord) => setChords(chords + chord)}*/ onChordComplete={(chord) => {console.log('Chord:', chord)}} />
                 </View>
             )}
         </KeyboardAvoidingView>

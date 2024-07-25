@@ -1,9 +1,9 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const ChordTypeButton = ({ chordType, onPress }) => {
+const ChordTypeButton = ({ chordType, onPress }: { chordType: ChordType, onPress: (chordType: ChordType) => void }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={() => onPress(chordType)}>
-            <Text style={styles.text} numberOfLines={1}>{chordType}</Text>
+            <Text style={styles.text} numberOfLines={1}>{chordType.label}</Text>
         </TouchableOpacity>
     );
 };

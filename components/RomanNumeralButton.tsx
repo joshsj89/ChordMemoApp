@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const RomanNumeralButton = ({ numeral, onPress }) => {
+const RomanNumeralButton = ({ numeral, onPress }: { numeral: RomanNumeral, onPress: (numeral: RomanNumeral) => void }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={() => onPress(numeral)}>
             <Text style={styles.text} numberOfLines={1}>{numeral}</Text>
