@@ -30,6 +30,7 @@ function AddSongScreen() {
     const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
     const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(false);
+    const [currentKeyboardSectionIndex, setCurrentKeyboardSectionIndex] = useState<number | null>(null);
 
     const darkMode = useTheme();
 
@@ -170,6 +171,7 @@ function AddSongScreen() {
 
     const handleKeyboardToggle = (index: number) => {
         setIsChordKeyboardVisible(!isChordKeyboardVisible);
+        setCurrentKeyboardSectionIndex(index);
     }
 
     return (
@@ -397,7 +399,13 @@ function AddSongScreen() {
             </ScrollView>
             {isChordKeyboardVisible && (
                 <View style={styles.chordKeyboardContainer}>
-                    <ChordKeyboard /*onChordComplete={(chord) => setChords(chords + chord)}*/ onChordComplete={(chord) => {console.log('Chord:', chord)}} />
+                    <ChordKeyboard onChordComplete={(chord) => {
+                        if (currentKeyboardSectionIndex != null && sections[currentKeyboardSectionIndex]) {
+                            const updatedSections = [...sections];
+                            updatedSections[currentKeyboardSectionIndex].chords = chord;
+                            setSections(updatedSections);
+                        }
+                    }} />
                 </View>
             )}
         </KeyboardAvoidingView>

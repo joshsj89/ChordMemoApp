@@ -196,6 +196,8 @@ const thirteenthTypes: ExtendedChordTypes = {
 function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) => void }) {
     const darkMode = useTheme();
 
+    const [chords, setChords] = useState<string[]>([]);
+    
     const [flat, setFlat] = useState<boolean>(false);
     const [sharp, setSharp] = useState<boolean>(false);
 
@@ -258,6 +260,11 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
             setFlat(false);
         }
     }
+
+    const handleErasePress = () => {
+        setChords(chords.slice(0, -1));
+        onChordComplete(chords.slice(0, -1).join('-'));
+    }
     
     const handleChordComplete = () => {
         let completeChord = '';
@@ -312,7 +319,8 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
                 completeChord = '♯' + completeChord;
             }
 
-            onChordComplete(completeChord);
+            setChords([...chords, completeChord]);
+            onChordComplete([...chords, completeChord].join('-'));
 
             setFlat(false);
             setSharp(false);
@@ -434,7 +442,7 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
                         style={{ backgroundColor: '#009788' }}
                         color={!darkMode ? "white" : "black"}
                         icon='eraser'
-                        onPress={() => {}}
+                        onPress={handleErasePress}
                     />
                     <FAB
                         style={{ backgroundColor: '#009788' }}
