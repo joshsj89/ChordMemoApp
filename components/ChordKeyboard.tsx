@@ -263,7 +263,14 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
 
     const handleErasePress = () => {
         setChords(chords.slice(0, -1));
-        onChordComplete(chords.slice(0, -1).join('-'));
+        onChordComplete(chords.slice(0, -1).join('-').replace(/-\s-/g, ' '));
+    }
+
+    const handleSpacePress = () => {
+        if (chords[chords.length - 1] !== ' ') { // prevent multiple spaces
+            setChords([...chords, ' ']);
+            onChordComplete([...chords, ' '].join('-').replace(/-\s/g, ' ')); // hide dash before space
+        }
     }
     
     const handleChordComplete = () => {
@@ -320,7 +327,7 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
             }
 
             setChords([...chords, completeChord]);
-            onChordComplete([...chords, completeChord].join('-'));
+            onChordComplete([...chords, completeChord].join('-').replace(/-\s-/g, ' '));
 
             setFlat(false);
             setSharp(false);
@@ -449,7 +456,7 @@ function ChordKeyboard({ onChordComplete }: { onChordComplete: (chord: string) =
                         color={!darkMode ? "white" : "black"}
                         label='SPACE'
                         uppercase={true}
-                        onPress={() => {}}
+                        onPress={handleSpacePress}
                     />
                     <FAB
                         style={{ backgroundColor: '#009788' }}
