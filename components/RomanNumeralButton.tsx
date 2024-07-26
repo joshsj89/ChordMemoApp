@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const RomanNumeralButton = ({ numeral, onPress }: { numeral: RomanNumeral, onPress: (numeral: RomanNumeral) => void }) => {
+const RomanNumeralButton = ({ numeral, selected, onPress }: { numeral: RomanNumeral, selected: boolean, onPress: (numeral: RomanNumeral) => void }) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={() => onPress(numeral)}>
+        <TouchableOpacity style={[styles.button, selected && styles.selected]} onPress={() => onPress(numeral)}>
             <Text style={styles.text} numberOfLines={1}>{numeral}</Text>
         </TouchableOpacity>
     );
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#000',
     },
+    selected: { 
+        borderColor: '#ffcc00',
+        borderWidth: 2,
+    }
 });
 
 export default RomanNumeralButton;

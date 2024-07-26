@@ -349,6 +349,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <RomanNumeralButton
                         key={numeral}
                         numeral={numeral}
+                        selected={selectedRomanNumeral === numeral}
                         onPress={handleRomanNumeralPress}
                     />
                     ))}
@@ -360,6 +361,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <ChordTypeButton
                         key={index}
                         chordType={triad}
+                        selected={selectedTriad === triad}
                         onPress={handleTriadPress}
                     />
                     ))}
@@ -371,6 +373,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <ChordTypeButton
                         key={index}
                         chordType={seventh}
+                        selected={selectedSeventh === seventh}
                         onPress={handleSeventhPress}
                     />
                     ))}
@@ -382,6 +385,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <ChordTypeButton
                         key={index}
                         chordType={ninth}
+                        selected={selectedNinth === ninth}
                         onPress={handleNinthPress}
                     />
                     ))}
@@ -393,6 +397,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <ChordTypeButton
                         key={index}
                         chordType={eleventh}
+                        selected={selectedEleventh === eleventh}
                         onPress={handleEleventhPress}
                     />
                     ))}
@@ -404,6 +409,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     <ChordTypeButton
                         key={index}
                         chordType={thirteenth}
+                        selected={selectedThirteenth === thirteenth}
                         onPress={handleThirteenthPress}
                     />
                     ))}
