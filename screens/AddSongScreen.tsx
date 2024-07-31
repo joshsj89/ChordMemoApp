@@ -48,8 +48,8 @@ function AddSongScreen() {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
     const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
-    const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
-    const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
+    // const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
+    // const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
     const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(false);
