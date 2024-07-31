@@ -17,17 +17,25 @@ const splitChordsIntoArray = (chords: string) => {
     }
     
     // split chord string into parts
-    const chordArray = chords.split(' ');
+    const chordArray = chords.split(/(\s|-|\(|\))/).filter(Boolean);
     const updatedChordArray: string[] = [];
 
-    chordArray.forEach((part, index) => {
-        // split each part by dashes
-        const splitChords = part.split('-');
-        updatedChordArray.push(...splitChords);
+    // chordArray.forEach((part, index) => {
+    //     // split each part by dashes
+    //     const splitChords = part;
+    //     updatedChordArray.push(...splitChords);
 
-        // add space back in correct positions
-        if (index < chordArray.length - 1) {
-            updatedChordArray.push(' ');
+    //     // add space back in correct positions
+    //     if (index < chordArray.length - 1) {
+    //         updatedChordArray.push(' ');
+    //     }
+    // });
+
+    chordArray.forEach((part) => {
+        if (part.trim() !== '' && part !== '-') {
+            updatedChordArray.push(part);
+        } else if (part === ' ') {
+            updatedChordArray.push(part);
         }
     });
 
