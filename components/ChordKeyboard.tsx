@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useTheme } from './ThemeContext';
@@ -247,6 +247,18 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
         setSelectedThirteenth(thirteenth);
     }
 
+    const handleLeftParenthesisPress = () => {
+        if (chords[chords.length - 1] !== '(') { // prevent multiple parentheses or parentheses at beginning
+            setChords([...chords, '(']);
+        }
+    }
+
+    const handleRightParenthesisPress = () => {
+        if (chords.length > 0 && chords[chords.length - 1] !== ')' && chords[chords.length - 1] !== ' ') { // prevent multiple right parentheses, right parentheses at beginning, or right parenthesis after space
+            setChords([...chords, ')']);
+        }
+    }
+
     const handleFlatPress = () => {
         if (selectedRomanNumeral) {
             setFlat(!flat);
@@ -263,13 +275,11 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     const handleErasePress = () => {
         setChords(chords.slice(0, -1));
-        onChordComplete(chords.slice(0, -1).join('-').replace(/-\s-/g, ' ').replace(/-\s/g, ' ')); // hide dash before space
     }
 
     const handleSpacePress = () => {
-        if (chords[chords.length - 1] !== ' ' && chords.length > 0) { // prevent multiple spaces or space at beginning
+        if (chords.length > 0 && chords[chords.length - 1] !== ' ' && chords[chords.length - 1] !== '(') { // prevent multiple spaces or space at beginning
             setChords([...chords, ' ']);
-            onChordComplete([...chords, ' '].join('-').replace(/-\s-/g, ' ').replace(/-\s/g, ' ')); // hide dash before space
         }
     }
     
@@ -327,7 +337,6 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             }
 
             setChords([...chords, completeChord]);
-            onChordComplete([...chords, completeChord].join('-').replace(/-\s-/g, ' '));
 
             setFlat(false);
             setSharp(false);
@@ -339,7 +348,18 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             setSelectedEleventh(null);
             setSelectedThirteenth(null);
         }
-    };
+    }
+
+    useEffect(() => { // update section chords when selected chords change (changes textbox value)
+        onChordComplete(chords.join('-').replace(/-\s-|-\s|\(-|-\)/g, match => {
+            if (match === '- -') return ' '; // hide dash before and after space
+            if (match === '- ') return ' '; // hide dash before space
+            if (match === '(-') return '('; // hide dash after left parenthesis
+            if (match === '-)') return ')'; // hide dash before right parenthesis
+
+            return '';
+        }));
+    }, [chords]);
 
     return (
         <View style={styles.container}>
@@ -421,7 +441,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                         style={{ backgroundColor: '#009788' }}
                         color={!darkMode ? "white" : "black"}
                         label='('
-                        onPress={() => {}}
+                        onPress={handleLeftParenthesisPress}
                         size='small'
                         customSize={40}
                     />
@@ -429,7 +449,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                         style={{ backgroundColor: '#009788' }}
                         color={!darkMode ? "white" : "black"}
                         label=')'
-                        onPress={() => {}}
+                        onPress={handleRightParenthesisPress}
                         size='small'
                         customSize={40}
                     />
