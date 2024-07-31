@@ -166,6 +166,14 @@ function AddSongScreen() {
         const updatedSections = [...sections];
         updatedSections.splice(index, 1);
         setSections(updatedSections);
+
+        if (currentKeyboardSectionIndex === index) { // close keyboard if current keyboard section is removed
+            setIsChordKeyboardVisible(false);
+            setCurrentKeyboardSectionIndex(null);
+        } else if (currentKeyboardSectionIndex! > index) { // close keyboard if keyboard section now has different index
+            setIsChordKeyboardVisible(false);
+            setCurrentKeyboardSectionIndex(null);
+        }
     }
 
     const addSong = async () => {
