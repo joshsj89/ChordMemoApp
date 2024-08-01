@@ -263,17 +263,13 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     }
 
     const handleFlatPress = () => {
-        if (selectedRomanNumeral) {
             setFlat(!flat);
             setSharp(false);
-        }
     }
 
     const handleSharpPress = () => {
-        if (selectedRomanNumeral) {
             setSharp(!sharp);
             setFlat(false);
-        }
     }
 
     const handleRepeatPress = () => {
