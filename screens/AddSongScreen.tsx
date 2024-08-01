@@ -217,7 +217,7 @@ function AddSongScreen() {
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <ScrollView 
                 style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: !darkMode ? '#fff' : 'black' }}
-                contentContainerStyle={{ paddingBottom: isChordKeyboardVisible ? '80%' : 0 }}
+                contentContainerStyle={{ paddingBottom: isChordKeyboardVisible ? '95%' : 0 }}
             >
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Add Song</Text>
                 <TextInput
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: '40%',
+        height: '46%',
         backgroundColor: '#f0f0f0',
     },
 });

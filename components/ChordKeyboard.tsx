@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Button } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useTheme } from './ThemeContext';
 import RomanNumeralButton from './RomanNumeralButton';
@@ -365,134 +365,147 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     }, [chords]);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.column}>
-                <ScrollView>
-                    {romanNumerals.map((numeral) => (
-                    <RomanNumeralButton
-                        key={numeral}
-                        numeral={numeral}
-                        selected={selectedRomanNumeral === numeral}
-                        onPress={handleRomanNumeralPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={styles.column}>
-                <ScrollView>
-                    {selectedRomanNumeral && triadTypes.map((triad, index) => (
-                    <ChordTypeButton
-                        key={index}
-                        chordType={triad}
-                        selected={selectedTriad === triad}
-                        onPress={handleTriadPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={styles.column}>
-                <ScrollView>
-                    {selectedTriad && seventhTypes[selectedTriad.alt] && seventhTypes[selectedTriad.alt].map((seventh, index) => (
-                    <ChordTypeButton
-                        key={index}
-                        chordType={seventh}
-                        selected={selectedSeventh === seventh}
-                        onPress={handleSeventhPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={styles.column}>
-                <ScrollView>
-                    {selectedSeventh && ninthTypes[selectedSeventh.alt] && ninthTypes[selectedSeventh.alt].map((ninth, index) => (
-                    <ChordTypeButton
-                        key={index}
-                        chordType={ninth}
-                        selected={selectedNinth === ninth}
-                        onPress={handleNinthPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={styles.column}>
-                <ScrollView>
-                    {selectedNinth && eleventhTypes[selectedNinth.alt] && eleventhTypes[selectedNinth.alt].map((eleventh, index) => (
-                    <ChordTypeButton
-                        key={index}
-                        chordType={eleventh}
-                        selected={selectedEleventh === eleventh}
-                        onPress={handleEleventhPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={styles.column}>
-                <ScrollView>
-                    {selectedEleventh && thirteenthTypes[selectedEleventh.alt] && thirteenthTypes[selectedEleventh.alt].map((thirteenth, index) => (
-                    <ChordTypeButton
-                        key={index}
-                        chordType={thirteenth}
-                        selected={selectedThirteenth === thirteenth}
-                        onPress={handleThirteenthPress}
-                    />
-                    ))}
-                </ScrollView>
-            </View>
-            <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'column', gap: 10 }}>
-                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        label='('
-                        onPress={handleLeftParenthesisPress}
-                        size='small'
-                        customSize={40}
-                    />
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        label=')'
-                        onPress={handleRightParenthesisPress}
-                        size='small'
-                        customSize={40}
-                    />
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        label='♭'
+        <View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 5, marginRight: 5 }}>
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title='♭'
                         onPress={handleFlatPress}
-                        size='small'
-                        customSize={40}
                     />
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        label='♯'
+                    <Button 
+                        title='♯'
                         onPress={handleSharpPress}
-                        size='small'
-                        customSize={40}
+                    /> 
+                </View>
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title='('
+                        onPress={handleLeftParenthesisPress}
+                    />
+                    <Button 
+                        title=')'
+                        onPress={handleRightParenthesisPress}
+                    /> 
+                </View>
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title='↓'
+                    />
+                    <Button 
+                        title='↑'
+                    /> 
+                </View>
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title=':|'
                     />
                 </View>
-                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        icon='eraser'
-                        onPress={handleErasePress}
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title='Inv'
                     />
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        label='SPACE'
-                        uppercase={true}
-                        onPress={handleSpacePress}
+                </View>
+                <View style={{flexDirection: 'row', gap: 10 }}>
+                    <Button 
+                        title='/'
                     />
-                    <FAB
-                        style={{ backgroundColor: '#009788' }}
-                        color={!darkMode ? "white" : "black"}
-                        icon="arrow-right"
-                        onPress={handleChordComplete}
-                    />
+                </View>
+            </View>
+            <View style={styles.container}>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {romanNumerals.map((numeral) => (
+                        <RomanNumeralButton
+                            key={numeral}
+                            numeral={numeral}
+                            selected={selectedRomanNumeral === numeral}
+                            onPress={handleRomanNumeralPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {selectedRomanNumeral && triadTypes.map((triad, index) => (
+                        <ChordTypeButton
+                            key={index}
+                            chordType={triad}
+                            selected={selectedTriad === triad}
+                            onPress={handleTriadPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {selectedTriad && seventhTypes[selectedTriad.alt] && seventhTypes[selectedTriad.alt].map((seventh, index) => (
+                        <ChordTypeButton
+                            key={index}
+                            chordType={seventh}
+                            selected={selectedSeventh === seventh}
+                            onPress={handleSeventhPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {selectedSeventh && ninthTypes[selectedSeventh.alt] && ninthTypes[selectedSeventh.alt].map((ninth, index) => (
+                        <ChordTypeButton
+                            key={index}
+                            chordType={ninth}
+                            selected={selectedNinth === ninth}
+                            onPress={handleNinthPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {selectedNinth && eleventhTypes[selectedNinth.alt] && eleventhTypes[selectedNinth.alt].map((eleventh, index) => (
+                        <ChordTypeButton
+                            key={index}
+                            chordType={eleventh}
+                            selected={selectedEleventh === eleventh}
+                            onPress={handleEleventhPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {selectedEleventh && thirteenthTypes[selectedEleventh.alt] && thirteenthTypes[selectedEleventh.alt].map((thirteenth, index) => (
+                        <ChordTypeButton
+                            key={index}
+                            chordType={thirteenth}
+                            selected={selectedThirteenth === thirteenth}
+                            onPress={handleThirteenthPress}
+                        />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={{ position: 'absolute', right: 5, bottom: 80, flexDirection: 'column', gap: 10 }}>
+                    <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
+                        <FAB
+                            style={{ backgroundColor: '#009788' }}
+                            color={!darkMode ? "white" : "black"}
+                            icon='eraser'
+                            onPress={handleErasePress}
+                        />
+                        <FAB
+                            style={{ backgroundColor: '#009788' }}
+                            color={!darkMode ? "white" : "black"}
+                            label='SPACE'
+                            uppercase={true}
+                            onPress={handleSpacePress}
+                        />
+                        <FAB
+                            style={{ backgroundColor: '#009788' }}
+                            color={!darkMode ? "white" : "black"}
+                            icon="arrow-right"
+                            onPress={handleChordComplete}
+                        />
+                    </View>
                 </View>
             </View>
         </View>
