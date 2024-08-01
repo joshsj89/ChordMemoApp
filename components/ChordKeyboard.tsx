@@ -384,10 +384,12 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='♭'
+                        color={flat ? 'yellow' : undefined}
                         onPress={handleFlatPress}
                     />
                     <Button 
                         title='♯'
+                        color={sharp ? 'yellow' : undefined}
                         onPress={handleSharpPress}
                     /> 
                 </View>
