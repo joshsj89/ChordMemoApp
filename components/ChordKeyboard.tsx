@@ -276,8 +276,26 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
         }
     }
 
+    const handleRepeatPress = () => {
+        if (chords.length > 0) {
+            if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // increment repeat bar
+                const repeatBar = chords[chords.length - 2].split(':');
+                const repeatCount = parseInt(repeatBar[1]) + 1;
+                setChords([...chords.slice(0, -2), `:${repeatCount}`, ' ']);
+            } else if (chords[chords.length - 1] === ' ') { // add repeat bar after space
+                setChords([...chords, ':1', ' ']);
+            } else if (chords[chords.length - 1] !== '(') { // add repeat bar after chord
+                setChords([...chords, ' ', ':1', ' ']);
+            }
+        }
+    }
+
     const handleErasePress = () => {
-        setChords(chords.slice(0, -1));
+        if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // erase repeat bar and spaces around it
+            setChords(chords.slice(0, -3));
+        } else { // erase last character
+            setChords(chords.slice(0, -1));
+        }
     }
 
     const handleSpacePress = () => {
@@ -398,6 +416,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title=':|'
+                        onPress={handleRepeatPress}
                     />
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
