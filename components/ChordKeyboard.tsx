@@ -254,7 +254,10 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     }
 
     const handleRightParenthesisPress = () => {
-        if (chords.length > 0 && chords[chords.length - 1] !== ')' && chords[chords.length - 1] !== ' ') { // prevent multiple right parentheses, right parentheses at beginning, or right parenthesis after space
+        if (chords.length > 0 && // prevent right parentheses at beginning
+            chords[chords.length - 1] !== ')' &&  // prevent multiple right parentheses
+            chords[chords.length - 1] !== ' ' && // prevent right parentheses after space
+            chords[chords.length - 1] !== '(') { // prevent right parentheses after left parentheses
             setChords([...chords, ')']);
         }
     }
