@@ -501,7 +501,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                         ))}
                     </ScrollView>
                 </View>
-                <View style={{ position: 'absolute', right: 5, bottom: 80, flexDirection: 'column', gap: 10 }}>
+                <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'column', gap: 10 }}>
                     <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
                         <FAB
                             style={{ backgroundColor: '#009788' }}

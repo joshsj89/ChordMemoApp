@@ -457,10 +457,11 @@ function AddSongScreen() {
 const styles = StyleSheet.create({
     chordKeyboardContainer: {
         position: 'absolute',
-        bottom: 0,
+        bottom: 0, // ensure keyboard comes up from the bottom of the screen
         left: 0,
-        right: 0,
-        height: '46%',
+        right: 0, // fill the width of the screen
+        height: '46%', // fill 46% of the screen
+        paddingBottom: '20%', // ensure bottom of keyboard is above the bottom of the screen
         backgroundColor: '#f0f0f0',
     },
 });
