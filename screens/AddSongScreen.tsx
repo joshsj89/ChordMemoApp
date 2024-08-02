@@ -44,7 +44,6 @@ const splitChordsIntoArray = (chords: string) => {
 function AddSongScreen() {
     const [title, setTitle] = useState<string>('');
     const [artist, setArtist] = useState<string>('');
-    // const [genres, setGenres] = useState<string[]>([]);
     const [genres, setGenres] = useState<string[]>([]);
     const [sections, setSections] = useState<Section[]>([{ sectionTitle: 'Verse', key: { tonic: 'C', symbol: '', mode: 'Major' }, chords: '' }])
     const [sectionTitle, setSectionTitle] = useState<string>('Verse');
@@ -123,7 +122,7 @@ function AddSongScreen() {
 
         if (availableGenres.length > 0) {
             const newGenre = availableGenres[0].value;
-            setGenres([...genres, newGenre]);
+            setGenres(genres => [...genres, newGenre]);
         }
     }
 
@@ -145,7 +144,7 @@ function AddSongScreen() {
         if (availableSectionTitles.length > 0) {
             const newSectionTitle = availableSectionTitles[0].value;
             const newSection: Section = { sectionTitle: newSectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
-            setSections([...sections, newSection]);
+            setSections(sections => [...sections, newSection]);
         }
     }
 
@@ -208,7 +207,7 @@ function AddSongScreen() {
     }
 
     const handleKeyboardToggle = (index: number) => {
-        setIsChordKeyboardVisible(!isChordKeyboardVisible);
+        setIsChordKeyboardVisible(isChordKeyboardVisible => !isChordKeyboardVisible);
         setCurrentKeyboardSectionIndex(index);
     }
 
@@ -269,7 +268,7 @@ function AddSongScreen() {
                                 <TouchableOpacity 
                                     onPress={() => {
                                         removeGenre(index);
-                                        setAvailableGenres([...availableGenres, { label: genre, value: genre }]);
+                                        setAvailableGenres(availableGenres => [...availableGenres, { label: genre, value: genre }]);
                                     }}
                                     style={{ position: 'absolute', zIndex: 1, width: 25, height: 25, top: -10, right: -10 }}
                                 >
@@ -295,7 +294,7 @@ function AddSongScreen() {
                                     });
                                 }
 
-                                setIsChecked(!isChecked);
+                                setIsChecked(isChecked => !isChecked);
                             }}
                             color='#009788'
                         />

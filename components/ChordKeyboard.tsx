@@ -314,7 +314,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     const handleLeftParenthesisPress = () => {
         if (chords[chords.length - 1] !== '(') { // prevent multiple parentheses or parentheses at beginning
-            setChords([...chords, '(']);
+            setChords(chords => [...chords, '(']);
         }
     }
 
@@ -323,7 +323,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             chords[chords.length - 1] !== ')' &&  // prevent multiple right parentheses
             chords[chords.length - 1] !== ' ' && // prevent right parentheses after space
             chords[chords.length - 1] !== '(') { // prevent right parentheses after left parentheses
-            setChords([...chords, ')']);
+            setChords(chords => [...chords, ')']);
         }
     }
 
@@ -334,11 +334,11 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 const key = keyChange[1];
                 const keyIndex = keyChangeTypes['–'].indexOf('K–' + key);
                 const newKey = keyChangeTypes['–'][(keyIndex + 1) % keyChangeTypes['–'].length];
-                setChords([...chords.slice(0, -2), newKey, ' ']);
+                setChords(chords => [...chords.slice(0, -2), newKey, ' ']);
             } else if (chords[chords.length - 1] === ' ') { // add key change after space
-                setChords([...chords, 'K–m2', ' ']);
+                setChords(chords => [...chords, 'K–m2', ' ']);
             } else if (chords[chords.length - 1] !== '(') { // add key change after chord
-                setChords([...chords, ' ', 'K–m2', ' ']);
+                setChords(chords => [...chords, ' ', 'K–m2', ' ']);
             }
         }
     }
@@ -350,22 +350,22 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 const key = keyChange[1];
                 const keyIndex = keyChangeTypes['+'].indexOf('K+' + key);
                 const newKey = keyChangeTypes['+'][(keyIndex + 1) % keyChangeTypes['+'].length];
-                setChords([...chords.slice(0, -2), newKey, ' ']);
+                setChords(chords => [...chords.slice(0, -2), newKey, ' ']);
             } else if (chords[chords.length - 1] === ' ') { // add key change after space
-                setChords([...chords, 'K+m2', ' ']);
+                setChords(chords => [...chords, 'K+m2', ' ']);
             } else if (chords[chords.length - 1] !== '(') { // add key change after chord
-                setChords([...chords, ' ', 'K+m2', ' ']);
+                setChords(chords => [...chords, ' ', 'K+m2', ' ']);
             }
         }
     }
 
     const handleFlatPress = () => {
-            setFlat(!flat);
+            setFlat(flat => !flat);
             setSharp(false);
     }
 
     const handleSharpPress = () => {
-            setSharp(!sharp);
+            setSharp(sharp => !sharp);
             setFlat(false);
     }
 
@@ -374,11 +374,11 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // increment repeat bar
                 const repeatBar = chords[chords.length - 2].split(':');
                 const repeatCount = parseInt(repeatBar[1]) + 1;
-                setChords([...chords.slice(0, -2), `:${repeatCount}`, ' ']);
+                setChords(chords => [...chords.slice(0, -2), `:${repeatCount}`, ' ']);
             } else if (chords[chords.length - 1] === ' ') { // add repeat bar after space
-                setChords([...chords, ':1', ' ']);
+                setChords(chords => [...chords, ':1', ' ']);
             } else if (chords[chords.length - 1] !== '(') { // add repeat bar after chord
-                setChords([...chords, ' ', ':1', ' ']);
+                setChords(chords => [...chords, ' ', ':1', ' ']);
             }
         }
     }
@@ -452,18 +452,18 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     const handleErasePress = () => {
         if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // erase repeat bar and spaces around it
-            setChords(chords.slice(0, -3));
+            setChords(chords => chords.slice(0, -3));
         } else if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes('K')) { // erase key change and space
-            setChords(chords.slice(0, -3));
+            setChords(chords => chords.slice(0, -3));
 
         } else { // erase last character
-            setChords(chords.slice(0, -1));
+            setChords(chords => chords.slice(0, -1));
         }
     }
 
     const handleSpacePress = () => {
         if (chords.length > 0 && chords[chords.length - 1] !== ' ' && chords[chords.length - 1] !== '(') { // prevent multiple spaces or space at beginning
-            setChords([...chords, ' ']);
+            setChords(chords => [...chords, ' ']);
         }
     }
     
@@ -524,7 +524,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 completeChord += selectedInversion.value;
             }
 
-            setChords([...chords, completeChord]);
+            setChords(chords => [...chords, completeChord]);
 
             setFlat(false);
             setSharp(false);

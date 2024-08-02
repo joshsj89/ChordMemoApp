@@ -110,7 +110,7 @@ function EditSongScreen({ route }) {
 
         if (availableGenres.length > 0) {
             const newGenre = availableGenres[0].value;
-            setGenres([...genres, newGenre]);
+            setGenres(genres => [...genres, newGenre]);
         }
     }
 
@@ -132,7 +132,7 @@ function EditSongScreen({ route }) {
         if (availableSectionTitles.length > 0) {
             const newSectionTitle = availableSectionTitles[0].value;
             const newSection: Section = { sectionTitle: newSectionTitle, key: { tonic: keyTonic, symbol: keySymbol, mode: keyMode }, chords };
-            setSections([...sections, newSection]);
+            setSections(sections => [...sections, newSection]);
         }
     }
 
@@ -244,7 +244,7 @@ function EditSongScreen({ route }) {
                             <TouchableOpacity 
                                 onPress={() => {
                                     removeGenre(index);
-                                    setAvailableGenres([...availableGenres, { label: genre, value: genre }]);
+                                    setAvailableGenres(availableGenres => [...availableGenres, { label: genre, value: genre }]);
                                 }}
                                 style={{ position: 'absolute', zIndex: 1, width: 25, height: 25, top: -10, right: -10 }}
                             >
@@ -270,7 +270,7 @@ function EditSongScreen({ route }) {
                                 });
                             }
 
-                            setIsChecked(!isChecked);
+                            setIsChecked(isChecked => !isChecked);
                         }}
                         color='#009788'
                     />
