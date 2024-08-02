@@ -193,6 +193,27 @@ const thirteenthTypes: ExtendedChordTypes = {
     '7♯9♯11sus2': [{label: '13', alt: '13♯9♯11sus2', value: '13♯9♯11sus2'}, {label: '♭13', alt: '7♯9♯11♭13sus2', value: '7♯9♯11♭13sus2'}],
 }
 
+const inversionTypes: { [key: string]: ChordType } = {
+    // Triads
+    '/2': {label: '/2', alt: '/2', value: '/2'},
+    '/3': {label: '/3', alt: '/3', value: '/3'},
+    '/4': {label: '/4', alt: '/4', value: '/4'},
+    '/5': {label: '/5', alt: '/5', value: '/5'},
+
+    // Sevenths
+    '/7': {label: '/7', alt: '/7', value: '/7'},
+    '/6': {label: '/6', alt: '/6', value: '/6'},
+
+    // Ninths
+    '/9': {label: '/9', alt: '/9', value: '/9'},
+
+    // Elevenths
+    '/11': {label: '/11', alt: '/11', value: '/11'},
+
+    // Thirteenths
+    '/13': {label: '/13', alt: '/13', value: '/13'},
+};
+
 function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: string[], onChordComplete: (chord: string) => void }) {
     const darkMode = useTheme();
 
@@ -207,6 +228,9 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     const [selectedNinth, setSelectedNinth] = useState<ChordType | null>(null);
     const [selectedEleventh, setSelectedEleventh] = useState<ChordType | null>(null);
     const [selectedThirteenth, setSelectedThirteenth] = useState<ChordType | null>(null);
+    const [selectedInversion, setSelectedInversion] = useState<ChordType | null>(null);
+
+    const [allInversions, setAllInversions] = useState<ChordType[] | null>(null);
 
     const handleRomanNumeralPress = (numeral: RomanNumeral) => {
         setSelectedRomanNumeral(numeral);
@@ -215,6 +239,8 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
         setSelectedNinth(null);
         setSelectedEleventh(null);
         setSelectedThirteenth(null);
+        setAllInversions(null);
+        setSelectedInversion(null);
     };
 
     const handleTriadPress = (triad: ChordType) => {
@@ -223,6 +249,8 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
         setSelectedNinth(triad);
         setSelectedEleventh(triad);
         setSelectedThirteenth(triad);
+        setAllInversions(null);
+        setSelectedInversion(null);
     }
 
     const handleSeventhPress = (seventh: ChordType) => {
@@ -230,21 +258,29 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
         setSelectedNinth(seventh);
         setSelectedEleventh(seventh);
         setSelectedThirteenth(seventh);
+        setAllInversions(null);
+        setSelectedInversion(null);
     }
 
     const handleNinthPress = (ninth: ChordType) => {
         setSelectedNinth(ninth);
         setSelectedEleventh(ninth);
         setSelectedThirteenth(ninth);
+        setAllInversions(null);
+        setSelectedInversion(null);
     }
 
     const handleEleventhPress = (eleventh: ChordType) => {
         setSelectedEleventh(eleventh);
         setSelectedThirteenth(eleventh);
+        setAllInversions(null);
+        setSelectedInversion(null);
     }
 
     const handleThirteenthPress = (thirteenth: ChordType) => {
         setSelectedThirteenth(thirteenth);
+        setAllInversions(null);
+        setSelectedInversion(null);
     }
 
     const handleLeftParenthesisPress = () => {
@@ -284,6 +320,73 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 setChords([...chords, ' ', ':1', ' ']);
             }
         }
+    }
+
+    const handleInversionPress = () => {
+        const inversions: ChordType[] = [];
+
+        if (selectedRomanNumeral && selectedTriad) {
+            if (selectedTriad.label === 'M' || 
+                selectedTriad.label === 'm' || 
+                selectedTriad.label === '°' || 
+                selectedTriad.label === '+') { // '/3' and '/5' inversions
+
+                inversions.push(inversionTypes['/3']);
+                inversions.push(inversionTypes['/5']);
+            } else if (selectedTriad.label === 'sus4') { // '/4' and '/5' inversions
+                inversions.push(inversionTypes['/4']);
+                inversions.push(inversionTypes['/5']);
+            } else if (selectedTriad.label === 'sus2') { // '/2' and '/5' inversions
+                inversions.push(inversionTypes['/2']);
+                inversions.push(inversionTypes['/5']);
+            } else if (selectedTriad.label === '5') { // '/5' inversion
+                inversions.push(inversionTypes['/5']);
+            } else if  (selectedTriad.label === 'no5') { // '/3' inversion
+                inversions.push(inversionTypes['/3']);
+            }
+
+            if (selectedTriad !== selectedSeventh) { // seventh chords
+                if (selectedSeventh?.label === '6') {
+                    inversions.push(inversionTypes['/6']);
+                } else {
+                    inversions.push(inversionTypes['/7']);
+                }
+            }
+
+            if (selectedSeventh === selectedNinth && 
+                selectedNinth === selectedEleventh &&
+                selectedEleventh === selectedThirteenth) {
+                
+                // do nothing
+            } else if (selectedNinth === selectedEleventh &&
+                selectedEleventh === selectedThirteenth) { // ninth chords
+                
+                inversions.push(inversionTypes['/9']);
+            } else if (selectedEleventh === selectedThirteenth) { // eleventh chords
+                
+                if (selectedEleventh?.label === 'add11') {
+                    inversions.push(inversionTypes['/11']);
+                } else {
+                    inversions.push(inversionTypes['/9']);
+                    inversions.push(inversionTypes['/11']);
+                }
+            } else if (selectedThirteenth) { // thirteenth chords
+                
+                if (selectedThirteenth.label === 'add13') {
+                    inversions.push(inversionTypes['/13']);
+                } else {
+                    inversions.push(inversionTypes['/9']);
+                    inversions.push(inversionTypes['/11']);
+                    inversions.push(inversionTypes['/13']);
+                }
+            }
+        }
+
+        setAllInversions(inversions);
+    }
+
+    const handleInversionSelect = (inversion: ChordType) => {
+        setSelectedInversion(inversion);
     }
 
     const handleErasePress = () => {
@@ -353,6 +456,10 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 completeChord = '♯' + completeChord;
             }
 
+            if (selectedInversion) { // add inversion
+                completeChord += selectedInversion.value;
+            }
+
             setChords([...chords, completeChord]);
 
             setFlat(false);
@@ -364,6 +471,8 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             setSelectedNinth(null);
             setSelectedEleventh(null);
             setSelectedThirteenth(null);
+            setAllInversions(null);
+            setSelectedInversion(null);
         }
     }
 
@@ -420,6 +529,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='Inv'
+                        onPress={handleInversionPress}
                     />
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
@@ -428,7 +538,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                     />
                 </View>
             </View>
-            <View style={styles.container}>
+            <ScrollView horizontal style={styles.container}>
                 <View style={styles.column}>
                     <ScrollView>
                         {romanNumerals.map((numeral) => (
@@ -501,28 +611,40 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                         ))}
                     </ScrollView>
                 </View>
-                <View style={{ position: 'absolute', right: 5, bottom: 10, flexDirection: 'column', gap: 10 }}>
-                    <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
-                        <FAB
-                            style={{ backgroundColor: '#009788' }}
-                            color={!darkMode ? "white" : "black"}
-                            icon='eraser'
-                            onPress={handleErasePress}
-                        />
-                        <FAB
-                            style={{ backgroundColor: '#009788' }}
-                            color={!darkMode ? "white" : "black"}
-                            label='SPACE'
-                            uppercase={true}
-                            onPress={handleSpacePress}
-                        />
-                        <FAB
-                            style={{ backgroundColor: '#009788' }}
-                            color={!darkMode ? "white" : "black"}
-                            icon="arrow-right"
-                            onPress={handleChordComplete}
-                        />
-                    </View>
+                <View style={styles.column}>
+                    <ScrollView>
+                        {allInversions && allInversions.map((inversion, index) => (
+                            <ChordTypeButton
+                                key={index}
+                                chordType={inversion}
+                                selected={selectedInversion === inversion}
+                                onPress={() => handleInversionSelect(inversion)}
+                            />
+                            ))}
+                    </ScrollView>
+                </View>
+            </ScrollView>
+            <View style={{ position: 'absolute', right: 25, bottom: 10, flexDirection: 'column', gap: 10 }}>
+                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        icon='eraser'
+                        onPress={handleErasePress}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        label='SPACE'
+                        uppercase={true}
+                        onPress={handleSpacePress}
+                    />
+                    <FAB
+                        style={{ backgroundColor: '#009788' }}
+                        color={!darkMode ? "white" : "black"}
+                        icon="arrow-right"
+                        onPress={handleChordComplete}
+                    />
                 </View>
             </View>
         </View>
@@ -532,12 +654,10 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        alignItems: 'center',
         // justifyContent: 'center',
     },
     column: {
         flexDirection: 'column',
-        // flexGrow: 1,
     },
 });
 
