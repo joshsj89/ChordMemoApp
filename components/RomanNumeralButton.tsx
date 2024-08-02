@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     selected: { 
-        borderColor: '#ffcc00',
+        borderColor: '#009788',
         borderWidth: 2,
     }
 });

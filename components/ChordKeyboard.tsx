@@ -553,16 +553,16 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 5, marginRight: 5 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5 }}>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='♭'
-                        color={flat ? 'yellow' : undefined}
+                        color={flat ? '#009788' : undefined}
                         onPress={handleFlatPress}
                     />
                     <Button 
                         title='♯'
-                        color={sharp ? 'yellow' : undefined}
+                        color={sharp ? '#009788' : undefined}
                         onPress={handleSharpPress}
                     /> 
                 </View>
