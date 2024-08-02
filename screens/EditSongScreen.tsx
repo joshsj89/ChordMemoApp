@@ -233,6 +233,24 @@ function EditSongScreen({ route }) {
         setCurrentKeyboardSectionIndex(index);
     }
 
+    useEffect(() => { // check if all sections have the same key and check the box if they do
+        let tonic = sections[0].key.tonic;
+        let symbol = sections[0].key.symbol;
+        let mode = sections[0].key.mode;
+
+        if (sections.length === 1) return; // no need to check if there's only one section
+
+        for (let i = 1; i < sections.length; i++) {
+            if (sections[i].key.tonic !== tonic || sections[i].key.symbol !== symbol || sections[i].key.mode !== mode) {
+                return;
+            } else {
+                continue;
+            }
+        }
+
+        setIsChecked(true);
+    }, []);
+
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <ScrollView 
