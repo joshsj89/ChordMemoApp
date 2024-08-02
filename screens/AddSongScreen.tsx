@@ -19,17 +19,6 @@ const splitChordsIntoArray = (chords: string) => {
     const chordArray = chords.split(/(\s|-|\(|\))/).filter(Boolean);
     const updatedChordArray: string[] = [];
 
-    // chordArray.forEach((part, index) => {
-    //     // split each part by dashes
-    //     const splitChords = part;
-    //     updatedChordArray.push(...splitChords);
-
-    //     // add space back in correct positions
-    //     if (index < chordArray.length - 1) {
-    //         updatedChordArray.push(' ');
-    //     }
-    // });
-
     chordArray.forEach((part) => {
         if (part.trim() !== '' && part !== '-') {
             updatedChordArray.push(part);
@@ -54,8 +43,6 @@ function AddSongScreen() {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
     const [availableSectionTitles, setAvailableSectionTitles] = useState(sectionTypeOptions);
-    // const [showSymbolPickerModal, setShowSymbolPickerModal] = useState<boolean>(false);
-    // const [symbolPickerModalSectionIndex, setSymbolPickerModalSectionIndex] = useState<number | null>(null);
     const [artistSuggestions, setArtistSuggestions] = useState<AutocompleteDropdownItem[]>([]);
     const [songArtists, setSongArtists] = useState<string[]>([]);
     const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(false);
