@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Button } from 'react-native';
+import { View, ScrollView, StyleSheet, Button, ToastAndroid } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useTheme } from './ThemeContext';
 import RomanNumeralButton from './RomanNumeralButton';
@@ -601,6 +601,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='/'
+                        onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
                     />
                 </View>
             </View>
