@@ -214,6 +214,35 @@ const inversionTypes: { [key: string]: ChordType } = {
     '/13': {label: '/13', alt: '/13', value: '/13'},
 };
 
+const keyChangeTypes = {
+    '–': [
+        'K–m2',
+        'K–M2',
+        'K–m3',
+        'K–M3',
+        'K–P4',
+        'K–TT',
+        'K–P5',
+        'K–m6',
+        'K–M6',
+        'K–m7',
+        'K–M7',
+    ],
+    '+': [
+        'K+m2',
+        'K+M2',
+        'K+m3',
+        'K+M3',
+        'K+P4',
+        'K+TT',
+        'K+P5',
+        'K+m6',
+        'K+M6',
+        'K+m7',
+        'K+M7',
+    ],
+}
+
 function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: string[], onChordComplete: (chord: string) => void }) {
     const darkMode = useTheme();
 
@@ -295,6 +324,38 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
             chords[chords.length - 1] !== ' ' && // prevent right parentheses after space
             chords[chords.length - 1] !== '(') { // prevent right parentheses after left parentheses
             setChords([...chords, ')']);
+        }
+    }
+
+    const handleKeyChangeDownPress = () => {
+        if (chords.length > 0) {
+            if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes('K')) { // cycle through key changes
+                const keyChange = chords[chords.length - 2].split('K–');
+                const key = keyChange[1];
+                const keyIndex = keyChangeTypes['–'].indexOf('K–' + key);
+                const newKey = keyChangeTypes['–'][(keyIndex + 1) % keyChangeTypes['–'].length];
+                setChords([...chords.slice(0, -2), newKey, ' ']);
+            } else if (chords[chords.length - 1] === ' ') { // add key change after space
+                setChords([...chords, 'K–m2', ' ']);
+            } else if (chords[chords.length - 1] !== '(') { // add key change after chord
+                setChords([...chords, ' ', 'K–m2', ' ']);
+            }
+        }
+    }
+
+    const handleKeyChangeUpPress = () => {
+        if (chords.length > 0) {
+            if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes('K')) { // cycle through key changes
+                const keyChange = chords[chords.length - 2].split('K+');
+                const key = keyChange[1];
+                const keyIndex = keyChangeTypes['+'].indexOf('K+' + key);
+                const newKey = keyChangeTypes['+'][(keyIndex + 1) % keyChangeTypes['+'].length];
+                setChords([...chords.slice(0, -2), newKey, ' ']);
+            } else if (chords[chords.length - 1] === ' ') { // add key change after space
+                setChords([...chords, 'K+m2', ' ']);
+            } else if (chords[chords.length - 1] !== '(') { // add key change after chord
+                setChords([...chords, ' ', 'K+m2', ' ']);
+            }
         }
     }
 
@@ -392,6 +453,9 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     const handleErasePress = () => {
         if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // erase repeat bar and spaces around it
             setChords(chords.slice(0, -3));
+        } else if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes('K')) { // erase key change and space
+            setChords(chords.slice(0, -3));
+
         } else { // erase last character
             setChords(chords.slice(0, -1));
         }
@@ -515,9 +579,11 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='↓'
+                        onPress={handleKeyChangeDownPress}
                     />
                     <Button 
                         title='↑'
+                        onPress={handleKeyChangeUpPress}
                     /> 
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
