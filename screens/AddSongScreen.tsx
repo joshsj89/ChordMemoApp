@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, genreOptions } from '../options';
 import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
-import SymbolPickerModal from '../components/SymbolPickerModal';
 import { AddSongScreenNavigationProp } from '../types/screens';
 import { AutocompleteDropdown, AutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import ChordKeyboard from '../components/ChordKeyboard';
