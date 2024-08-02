@@ -456,7 +456,7 @@ function AddSongScreen() {
                 </View>
             </ScrollView>
             {isChordKeyboardVisible && (
-                <View style={[styles.chordKeyboardContainer, { backgroundColor: !darkMode ? '#f0f0f0' : '#121212' }]}>
+                <View style={[styles.chordKeyboardContainer, { backgroundColor: !darkMode ? '#e6e6e6' : '#0a0a0a' }]}>
                     <ChordKeyboard 
                         originalChords={splitChordsIntoArray(sections[currentKeyboardSectionIndex!].chords)}
                         onChordComplete={(chord) => {

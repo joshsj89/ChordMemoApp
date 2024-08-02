@@ -553,54 +553,61 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, backgroundColor: !darkMode ? '#f6f6f6' : '#262626' }}>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='♭'
-                        color={flat ? '#009788' : undefined}
+                        color={flat ? '#009788' : '#505050'}
                         onPress={handleFlatPress}
                     />
                     <Button 
                         title='♯'
-                        color={sharp ? '#009788' : undefined}
+                        color={sharp ? '#009788' : '#505050'}
                         onPress={handleSharpPress}
                     /> 
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='('
+                        color={'#505050'}
                         onPress={handleLeftParenthesisPress}
                     />
                     <Button 
                         title=')'
+                        color={'#505050'}
                         onPress={handleRightParenthesisPress}
                     /> 
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='↓'
+                        color={'#505050'}
                         onPress={handleKeyChangeDownPress}
                     />
                     <Button 
                         title='↑'
+                        color={'#505050'}
                         onPress={handleKeyChangeUpPress}
                     /> 
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title=':|'
+                        color={'#505050'}
                         onPress={handleRepeatPress}
                     />
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='Inv'
+                        color={'#505050'}
                         onPress={handleInversionPress}
                     />
                 </View>
                 <View style={{flexDirection: 'row', gap: 10 }}>
                     <Button 
                         title='/'
+                        color={'#505050'}
                         onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
                     />
                 </View>
