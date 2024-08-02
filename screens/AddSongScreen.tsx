@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,6 +60,9 @@ function AddSongScreen() {
     const [songArtists, setSongArtists] = useState<string[]>([]);
     const [isChordKeyboardVisible, setIsChordKeyboardVisible] = useState<boolean>(false);
     const [currentKeyboardSectionIndex, setCurrentKeyboardSectionIndex] = useState<number | null>(null);
+    const [isCursorVisible, setIsCursorVisible] = useState<boolean>(false);
+    const [textWidth, setTextWidth] = useState<number>(0);
+    const textRefs = useRef<Text[]>([]);
 
     const darkMode = useTheme();
 
@@ -103,6 +106,24 @@ function AddSongScreen() {
 
         loadArtists();
     }, []);
+
+    useEffect(() => { // cursor blink interval
+        const cursorInterval = setInterval(() => {
+            setIsCursorVisible(previousState => !previousState);
+        }, 500);
+
+        return () => clearInterval(cursorInterval); // cleanup interval on component unmount
+    }, []);
+
+    useEffect(() => { // measure text width
+        if (currentKeyboardSectionIndex != null && textRefs.current[currentKeyboardSectionIndex]) {
+            textRefs.current[currentKeyboardSectionIndex].measure((x, y, width, height) => {
+                setTextWidth(width);
+            });
+        } else {
+            setTextWidth(0);
+        }
+    }, [currentKeyboardSectionIndex, sections]);
 
     const handleArtistInputChange = (text: string) => {
         setArtist(text);
@@ -398,14 +419,27 @@ function AddSongScreen() {
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
                                 ))}
                             </Picker>
-                            <TextInput
-                                style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
-                                placeholder='Chords'
-                                placeholderTextColor='gray'
-                                value={section.chords}
-                                onChangeText={(text) => updateSection(index, 'chords', text.replace(/#/g, '♯'))}
-                                editable={false}
-                            />
+                            <View style={{ position: 'relative' }}>
+                                <TextInput
+                                    style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
+                                    placeholder='Chords'
+                                    placeholderTextColor='gray'
+                                    value={section.chords}
+                                    onChangeText={(text) => updateSection(index, 'chords', text.replace(/#/g, '♯'))}
+                                    editable={false}
+                                />
+                                <Text
+                                    style={styles.hiddenText}
+                                    ref={(el) => textRefs.current[index] = el!}
+                                    onLayout={(event) => {
+                                        const { width } = event.nativeEvent.layout; // get width of text
+                                        setTextWidth(width);
+                                    }}
+                                >
+                                    {section.chords}
+                                </Text>
+                                {isChordKeyboardVisible && isCursorVisible && index === currentKeyboardSectionIndex && <View style={[styles.cursor, { left: textWidth + 10 }]} />}
+                            </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center', height: 50, marginRight: 20 }}>
                                 <Button
                                     title="Keyboard"
@@ -462,6 +496,19 @@ const styles = StyleSheet.create({
         paddingBottom: '10%', // ensure bottom of keyboard is above the bottom of the screen
         backgroundColor: '#f0f0f0',
     },
+    cursor: {
+        position: 'absolute',
+        right: 10,
+        top: 15,
+        width: 2,
+        height: 20,
+        backgroundColor: '#03DAC6',
+    },
+    hiddenText: {
+        position: 'absolute',
+        opacity: 0,
+        fontSize: 16,
+    }
 });
 
 export default AddSongScreen;
