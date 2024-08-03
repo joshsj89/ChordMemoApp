@@ -44,8 +44,8 @@ function SongDetailsScreen({ route }) {
                 {song.artist.length > 0 && <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.artist}</Text>}
                 {song.genres.length > 0 && <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{song.genres.join(', ')}</Text>}
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Sections:</Text>
-                {song.sections.map((section) => (
-                    <View key={section.sectionTitle}>
+                {song.sections.map((section, index) => (
+                    <View key={index}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>{section.sectionTitle}</Text>
                         <Text style={{ fontSize: 16, color: !darkMode ? 'black' : 'white' }}>{section.key.tonic}{section.key.symbol} {section.key.mode} - {section.chords}</Text>
                     </View>
