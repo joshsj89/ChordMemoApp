@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -232,6 +232,22 @@ function EditSongScreen({ route }) {
         setIsChordKeyboardVisible(isChordKeyboardVisible => !isChordKeyboardVisible);
         setCurrentKeyboardSectionIndex(index);
     }
+
+    useEffect(() => { // back handler for chord keyboard
+        const backAction = () => { // close chord keyboard on back button press
+            if (isChordKeyboardVisible) {
+                setIsChordKeyboardVisible(false);
+                setCurrentKeyboardSectionIndex(null);
+                return true; // prevent default back action
+            } else {
+                return false; // allow default back action
+            }
+        }
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove(); // cleanup back handler on component unmount
+    }, [isChordKeyboardVisible]);
 
     useEffect(() => { // check if all sections have the same key and check the box if they do
         let tonic = sections[0].key.tonic;
