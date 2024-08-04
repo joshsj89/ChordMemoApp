@@ -2,11 +2,11 @@ import { Button, Modal, Text, TouchableOpacity, View } from "react-native";
 import { useTheme } from "./ThemeContext";
 
 function SymbolPickerModal({ isVisible, onClose, onSelect }) {
-    const symbols = ['♭', '♯'];
+    const symbols: SymbolType[] = ['♭', '♯'];
 
     const darkMode = useTheme();
 
-    const handleSymbolSelect = (symbol: string) => {
+    const handleSymbolSelect = (symbol: SymbolType) => {
         onSelect(symbol);
         onClose();
     }

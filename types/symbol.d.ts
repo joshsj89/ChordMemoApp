@@ -1,1 +1,1 @@
-type Symbol = ('♭' | '♯')[]
+type SymbolType = ('♭' | '♯');
