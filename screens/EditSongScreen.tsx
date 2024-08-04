@@ -455,7 +455,10 @@ function EditSongScreen({ route }) {
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
                                 ))}
                             </Picker>
-                            <View style={{ position: 'relative' }}>
+                            <View 
+                                style={{ position: 'relative' }}
+                                onTouchEnd={() => handleKeyboardToggle(index)} 
+                            >
                                 <TextInput
                                     style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
                                     placeholder='Chords'
