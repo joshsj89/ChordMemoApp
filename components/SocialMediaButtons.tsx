@@ -40,8 +40,8 @@ function SocialMediaButtons({ navigation }) {
                                 return key.toLowerCase().includes(searchText.toLowerCase());
                             });
                         case 'chords': // case-sensitive
-                            const words = searchText.split(/[-\s]+/);
-                            const regex = new RegExp(words.map(word => `\\b${word.trim()}\\b`).join('.*'));
+                            const words = searchText.split(/-+/); // split by hyphens
+                            const regex = new RegExp(`\\b` + words.map(word => `\(${word.trim()}\)`).join('-') + `\\b`);
                             return song.sections.some(section => section.chords.match(regex) != null);
                         default: // default to searching by title
                             return song.title.toLowerCase().includes(searchText.toLowerCase());
