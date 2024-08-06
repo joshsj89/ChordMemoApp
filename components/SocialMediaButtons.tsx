@@ -6,6 +6,10 @@ import SearchDialog from './SearchDialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from './ThemeContext';
 
+const escapeRegExp = (string: string) => { // escape special characters in a string for use in a regular expression
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function SocialMediaButtons({ navigation }) {
     const [searchDialogVisible, setSearchDialogVisible] = useState(false);
 
@@ -41,7 +45,7 @@ function SocialMediaButtons({ navigation }) {
                             });
                         case 'chords': // case-sensitive
                             const words = searchText.split(/-+/); // split by hyphens
-                            const regex = new RegExp(`\\b` + words.map(word => `\(${word.trim()}\)`).join('-') + `\\b`);
+                            const regex = new RegExp(`\\b` + words.map(word => `\(${escapeRegExp(word.trim())}\)`).join('-') + `\\b`);
                             return song.sections.some(section => section.chords.match(regex) != null);
                         default: // default to searching by title
                             return song.title.toLowerCase().includes(searchText.toLowerCase());
