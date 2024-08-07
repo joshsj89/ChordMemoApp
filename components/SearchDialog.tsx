@@ -32,7 +32,7 @@ const radioButtonsData = [
         label: 'Chords',
         value: 'chords',
     }
-]
+];
 
 const radioButtonsDataDark = [
     {
@@ -70,7 +70,7 @@ const radioButtonsDataDark = [
         color: 'white',
         labelStyle: { color: 'white' }
     }
-]
+];
 
 function SearchDialog({ isVisible, onClose, onSearch }) {
     const [searchText, setSearchText] = useState('');
@@ -90,7 +90,6 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
     const darkMode = useTheme();
 
     const toggleLayer = () => {
-        setShowSearchDialog(prev => !prev);
         setShowSymbolPickerModal(prev => !prev);
     }
 
@@ -166,10 +165,10 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                     // setSongKeys(parsedSongs.flatMap(song => song.sections.map(section => section.key.tonic + section.key.symbol + ' ' + section.key.mode)));
                     // setSongChords(parsedSongs.flatMap(song => song.sections.map(section => section.chords)));
 
-                    const songNames = parsedSongs.map((song, index) => { 
+                    const songNames = parsedSongs.map((song, index) => {
                         return {
-                            id: index.toString(), 
-                            title: song.title 
+                            id: index.toString(),
+                            title: song.title
                         };
                     });
 
@@ -224,7 +223,7 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
 
     useEffect(() => {
         changeSuggestionList(searchOptions);
-    }, [searchOptions, songTitles])
+    }, [searchOptions, songTitles]);
 
     return (
         <Modal visible={isVisible} transparent={true} animationType='slide' onRequestClose={onClose}>
@@ -244,13 +243,20 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                                 setSearchText(item.title);
                                             }
                                         }}
+                                        onClear={() => setSearchText('')}
+                                        showClear={true}
                                         closeOnBlur={true}
                                         clearOnFocus={false}
                                         direction='down'
                                         caseSensitive={searchOptions === 'chords' ? true : false}
                                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
                                         inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
-                                        textInputProps={{ placeholder: 'Enter search text', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' } }} // text color
+                                        textInputProps={{
+                                            placeholder: 'Enter search text', 
+                                            placeholderTextColor: 'gray', 
+                                            // value: searchText, 
+                                            style: { color: !darkMode ? 'black' : 'white' } // text color
+                                        }}
                                         suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
                                         suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }} // suggestion text color
                                         EmptyResultComponent={(

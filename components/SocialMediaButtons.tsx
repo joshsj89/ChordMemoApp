@@ -45,7 +45,7 @@ function SocialMediaButtons({ navigation }) {
                             });
                         case 'chords': // case-sensitive
                             const words = searchText.split(/-+/); // split by hyphens
-                            const regex = new RegExp(`\\b` + words.map(word => `\(${escapeRegExp(word.trim())}\)`).join('-') + `\\b`);
+                            const regex = new RegExp(`(?<!\w)` + words.map(word => `\(${escapeRegExp(word.trim())}\)`).join('-') + `(?!\w)`);
                             return song.sections.some(section => section.chords.match(regex) != null);
                         default: // default to searching by title
                             return song.title.toLowerCase().includes(searchText.toLowerCase());
