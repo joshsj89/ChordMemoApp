@@ -7,7 +7,7 @@ import { sectionTypeOptions, keyTonicOptions, keySymbolOptions, keyModeOptions, 
 import { CheckBox } from 'react-native-btr';
 import { useTheme } from '../components/ThemeContext';
 import { EditSongScreenNavigationProp } from '../types/screens';
-import { AutocompleteDropdown, AutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
+import { AutocompleteDropdown, AutocompleteDropdownItem, IAutocompleteDropdownRef } from 'react-native-autocomplete-dropdown';
 import ChordKeyboard from '../components/ChordKeyboard';
 
 const splitChordsIntoArray = (chords: string) => {
@@ -52,6 +52,7 @@ function EditSongScreen({ route }) {
     const [isCursorVisible, setIsCursorVisible] = useState<boolean>(false);
     const [textWidth, setTextWidth] = useState<number>(0);
     const textRefs = useRef<Text[]>([]);
+    const autocompleteDropdownRef = useRef<IAutocompleteDropdownRef>(null);
 
     const darkMode = useTheme();
 
@@ -132,6 +133,10 @@ function EditSongScreen({ route }) {
             id: artist,
             title: artist
         }]);
+    }, []);
+
+    useEffect(() => { // set initial value of dropdown to the current song's artist
+        autocompleteDropdownRef.current?.setInputText(artist);
     }, []);
 
     const addGenre = () => {
@@ -292,6 +297,7 @@ function EditSongScreen({ route }) {
                                 setArtist(item.title);
                             }
                         }}
+                        controller={autocompleteDropdownRef}
                         closeOnBlur={true}
                         clearOnFocus={false}
                         direction='down'
