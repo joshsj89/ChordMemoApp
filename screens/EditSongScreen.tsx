@@ -300,6 +300,7 @@ function EditSongScreen({ route }) {
                         controller={autocompleteDropdownRef}
                         closeOnBlur={true}
                         clearOnFocus={false}
+                        onClear={() => setArtist('')}
                         direction='down'
                         inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
                         textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' }, editable: isChordKeyboardVisible ? false : true }}
