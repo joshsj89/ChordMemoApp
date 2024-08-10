@@ -59,7 +59,7 @@ function SongDetailsScreen({ route }) {
     }
 
     return (
-        <View style={[styles.screen, { backgroundColor: !darkMode ? "#F2F2F2" : "black" }]}>
+        <View style={[styles.screen, { backgroundColor: !darkMode ? "#F2F2F2" : "#171717" }]}>
             <View style={styles.upperContainer}>
                 {showSections && <>
                     <Text style={{ fontSize: 25, fontWeight: 'bold', color: !darkMode ? 'black' : 'white', textAlign: 'center' }}>{song.title}</Text>

@@ -32,7 +32,7 @@ function HomeScreen({ navigation }) {
     }, [navigation]);
 
     return (
-        <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "black" }}>
+        <View style={{ flex: 1, backgroundColor: !darkMode ? "#F2F2F2" : "#171717" }}>
             <FlatList
                 data={songs}
                 keyExtractor={(item) => item.id}
@@ -41,14 +41,14 @@ function HomeScreen({ navigation }) {
                         onPress={() => navigation.navigate('SongDetails', { song: item })}
                         style={{ padding: 10, borderBottomWidth: 1, borderColor: 'gray' }}
                     >
-                        <Text style={{ color: !darkMode ? 'black' : 'white', fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
-                        <Text style={{ color: !darkMode ? 'black' : 'white' }}>{item.artist}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : '#FAFAFF', fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
+                        <Text style={{ color: !darkMode ? 'black' : '#99999E' }}>{item.artist}</Text>
                     </TouchableOpacity>
                 )}
             />
             <FAB 
                 style={{ position: 'absolute', right: 5, bottom: 10, backgroundColor: '#009788' }}
-                color={!darkMode ? "white" : "black"}
+                color={!darkMode ? "white" : "#171717"}
                 icon="plus"
                 onPress={() => navigate('AddSong')}
             />

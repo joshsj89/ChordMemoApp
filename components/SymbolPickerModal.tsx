@@ -19,8 +19,8 @@ function SymbolPickerModal({ isVisible, onClose, onSelect }) {
             onRequestClose={onClose}
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, gap: 20, borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Select a symbol</Text>
+                <View style={{ backgroundColor: !darkMode ? 'white' : '#171717', padding: 20, gap: 20, borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : '#FAFAFF' }}>Select a symbol</Text>
                     <View style={{ flexDirection: 'row', gap: 20, justifyContent: 'center' }}>
                         {symbols.map((symbol, index) => (
                             <TouchableOpacity 
@@ -28,7 +28,7 @@ function SymbolPickerModal({ isVisible, onClose, onSelect }) {
                                 onPress={() => handleSymbolSelect(symbol)}
                                 style={{ padding: 10, borderWidth: 1, borderRadius: 10, borderColor: !darkMode ? 'black' : 'white' }}
                             >
-                                <Text style={{ fontSize: 24, color: !darkMode ? 'black' : 'white' }}>{symbol}</Text>
+                                <Text style={{ fontSize: 24, color: !darkMode ? 'black' : '#FAFAFF' }}>{symbol}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>

@@ -116,23 +116,23 @@ const stylesDark = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: 'black'
+        backgroundColor: '#171717'
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-        color: 'white'
+        color: '#FAFAFF'
     },
     description: {
         fontSize: 16,
         marginBottom: 10,
-        color: 'white'
+        color: '#FAFAFF'
     },
     boldText: {
         fontWeight: 'bold',
-        color: 'white'
+        color: '#FAFAFF'
     }
 });
 

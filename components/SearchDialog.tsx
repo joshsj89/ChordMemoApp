@@ -40,35 +40,35 @@ const radioButtonsDataDark = [
         label: 'Title',
         value: 'title',
         color: 'white',
-        labelStyle: { color: 'white' }
+        labelStyle: { color: '#FAFAFF' }
     },
     {
         id: '2',
         label: 'Artist',
         value: 'artist',
         color: 'white',
-        labelStyle: { color: 'white' }
+        labelStyle: { color: '#FAFAFF' }
     },
     {
         id: '3',
         label: 'Genre',
         value: 'genre',
         color: 'white',
-        labelStyle: { color: 'white' }
+        labelStyle: { color: '#FAFAFF' }
     },
     {
         id: '4',
         label: 'Key',
         value: 'key',
         color: 'white',
-        labelStyle: { color: 'white' }
+        labelStyle: { color: '#FAFAFF' }
     },
     {
         id: '5',
         label: 'Chords',
         value: 'chords',
         color: 'white',
-        labelStyle: { color: 'white' }
+        labelStyle: { color: '#FAFAFF' }
     }
 ];
 
@@ -230,8 +230,8 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
             <AutocompleteDropdownContextProvider>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', gap: 30 }}>
                     {showSearchDialog && (
-                        <View style={{ backgroundColor: !darkMode ? 'white' : 'black', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Search</Text>
+                        <View style={{ backgroundColor: !darkMode ? 'white' : '#171717', padding: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: !darkMode ? 0 : 1, borderColor: !darkMode ? 'white' : '#444', width: '80%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : '#FAFAFF' }}>Search</Text>
                             <View style={{ width: '100%', marginVertical: 10, zIndex: 10 }}>
                                 <View>
                                     <AutocompleteDropdown
@@ -250,14 +250,14 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                         direction='down'
                                         caseSensitive={searchOptions === 'chords' ? true : false}
                                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? 'gray' : 'white', borderRadius: 5 }}
-                                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
+                                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : '#171717' }}
                                         textInputProps={{
                                             placeholder: 'Enter search text', 
                                             placeholderTextColor: 'gray', 
                                             // value: searchText, 
                                             style: { color: !darkMode ? 'black' : 'white' } // text color
                                         }}
-                                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
+                                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : '#171717' }}
                                         suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }} // suggestion text color
                                         EmptyResultComponent={(
                                             <View style={{ padding: 15, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>

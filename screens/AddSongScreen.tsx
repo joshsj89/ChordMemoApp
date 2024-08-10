@@ -238,7 +238,7 @@ function AddSongScreen() {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <ScrollView 
-                style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: !darkMode ? '#fff' : 'black' }}
+                style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, backgroundColor: !darkMode ? '#fff' : '#171717' }}
                 contentContainerStyle={{ paddingBottom: isChordKeyboardVisible ? '95%' : 0 }}
             >
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: !darkMode ? 'black' : 'white' }}>Add Song</Text>
@@ -263,10 +263,10 @@ function AddSongScreen() {
                         clearOnFocus={false}
                         onClear={() => setArtist('')}
                         direction='down'
-                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : 'black' }}
+                        inputContainerStyle={{ backgroundColor: !darkMode ? 'white' : '#171717' }}
                         textInputProps={{ placeholder: 'Artist', placeholderTextColor: 'gray', style: { color: !darkMode ? 'black' : 'white' }, editable: isChordKeyboardVisible ? false : true }}
                         containerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}
-                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : 'black' }}
+                        suggestionsListContainerStyle={{ borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', backgroundColor: !darkMode ? 'white' : '#171717' }}
                         suggestionsListTextStyle={{ color: !darkMode ? 'black' : 'white' }}
                         EmptyResultComponent={(
                             <View style={{ padding: 15, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>

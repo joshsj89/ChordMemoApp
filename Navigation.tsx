@@ -143,7 +143,7 @@ function HomeDrawer() {
                 component={RightDrawerScreen} 
                 options={{
                     title: 'Home',
-                    drawerStyle: {backgroundColor: !darkMode ? 'white' : 'black' },
+                    drawerStyle: {backgroundColor: !darkMode ? 'white' : '#171717' },
                     drawerActiveTintColor: !darkMode ? '#0077FF' : '#009788',
                 }}
             />

@@ -84,43 +84,43 @@ const stylesDark = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: 'black'
+        backgroundColor: '#171717'
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-        color: 'white',
+        color: '#FAFAFF',
     },
     description: {
         fontSize: 16,
         marginBottom: 20,
-        color: 'white',
+        color: '#FAFAFF',
     },
     subheader: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: 'white',
+        color: '#FAFAFF',
     },
     feature: {
         fontSize: 16,
         marginBottom: 10,
-        color: 'white',
+        color: '#FAFAFF',
     },
     signature: {
         fontSize: 16,
         fontStyle: 'italic',
         marginTop: 20,
-        color: 'white',
+        color: '#FAFAFF',
     },
     signatureName: {
         fontSize: 16,
         fontStyle: 'italic',
         marginBottom: 30,
         textAlign: 'right',
-        color: 'white',
+        color: '#FAFAFF',
     },
     boldText: {
         fontWeight: 'bold',
