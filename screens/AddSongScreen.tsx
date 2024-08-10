@@ -285,6 +285,7 @@ function AddSongScreen() {
                                     style={{ height: 50, width: 120, zIndex: 0, color: !darkMode ? 'black' : 'white' }}
                                     dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                     onValueChange={(itemValue) => updateGenre(index, itemValue)}
+                                    itemStyle={{ color: !darkMode ? 'black' : 'white', height: 50 }}
                                 >
                                     {genreOptions.map((option) => (
                                         <Picker.Item key={option.value} label={option.label} value={option.value} />
@@ -334,6 +335,7 @@ function AddSongScreen() {
                                 style={{ height: 50, width: 150, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => updateSection(index, 'sectionTitle', itemValue)}
+                                itemStyle={{ color: !darkMode ? 'black' : 'white', height: 50 }}
                             >
                                 {sectionTypeOptions.map((option) => (
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
@@ -362,6 +364,7 @@ function AddSongScreen() {
                                     }
                                 }}
                                 enabled={isChecked && index > 0 ? false : true}
+                                itemStyle={{ color: !darkMode ? 'black' : 'white', height: 50 }}
                             >
                                 {keyTonicOptions.map((option) => (
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
@@ -390,6 +393,7 @@ function AddSongScreen() {
                                     }
                                 }}
                                 enabled={isChecked && index > 0 ? false : true}
+                                itemStyle={{ color: !darkMode ? 'black' : 'white', height: 50 }}
                             >
                                 {keySymbolOptions.map((option) => (
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
@@ -418,6 +422,7 @@ function AddSongScreen() {
                                     }
                                 }}
                                 enabled={isChecked && index > 0 ? false : true}
+                                itemStyle={{ color: !darkMode ? 'black' : 'white', height: 50 }}
                             >
                                 {keyModeOptions.map((option) => (
                                     <Picker.Item key={option.value} label={option.label} value={option.value} />
