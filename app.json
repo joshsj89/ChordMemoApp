@@ -15,7 +15,8 @@
             "**/*"
         ],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.joshsj89.ChordMemo"
         },
         "android": {
             "adaptiveIcon": {
