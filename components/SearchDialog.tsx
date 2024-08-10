@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Modal, Text, View, Button } from 'react-native';
+import { Modal, Text, View, Button, Platform } from 'react-native';
 import RadioButtonsGroup from 'react-native-radio-buttons-group';
 import { useTheme } from './ThemeContext';
 import SymbolPickerModal from './SymbolPickerModal';
@@ -267,11 +267,22 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                     />
                                 </View>
                             </View>
-                            <Button
-                                title="Insert Symbol"
-                                color="#009788"
-                                onPress={toggleLayer}
-                            />
+                            {Platform.OS === 'android' && (
+                                <Button
+                                    title="Insert Symbol"
+                                    color="#009788"
+                                    onPress={toggleLayer}
+                                />
+                            )}
+                            {Platform.OS === 'ios' && (
+                                <View style={{ backgroundColor: '#009788' }}>
+                                    <Button
+                                        title="Insert Symbol"
+                                        color="white"
+                                        onPress={toggleLayer}
+                                    />
+                                </View>
+                            )}
                             <RadioButtonsGroup
                                 layout='row'
                                 containerStyle={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }} 
@@ -287,8 +298,22 @@ function SearchDialog({ isVisible, onClose, onSearch }) {
                                 selectedId={selectedRadioButton}
                             />
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
-                                <Button title="Close" onPress={onClose} color="#009788" />
-                                <Button title="Search" onPress={handleSearch} color="#009788" />
+                                {Platform.OS === 'android' && (
+                                    <>
+                                        <Button title="Close" onPress={onClose} color="#009788" />
+                                        <Button title="Search" onPress={handleSearch} color="#009788" />
+                                    </>
+                                )}
+                                {Platform.OS === 'ios' && (
+                                    <>
+                                        <View style={{ backgroundColor: '#009788' }}>
+                                            <Button title="Close" onPress={onClose} color="white" />
+                                        </View>
+                                        <View style={{ backgroundColor: '#009788' }}>
+                                            <Button title="Search" onPress={handleSearch} color="white" />
+                                        </View>
+                                    </>
+                                )}
                             </View>
                         </View>
                     )}

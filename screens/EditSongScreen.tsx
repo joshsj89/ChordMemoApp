@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView, BackHandler } from 'react-native';
+import { View, ScrollView, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView, BackHandler, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -314,7 +314,12 @@ function EditSongScreen({ route }) {
                         )}
                     />
                 </View>
-                <Button title='Add Genre' onPress={addGenre} color='#009788' disabled={availableGenres.length === 0} />
+                {Platform.OS === 'android' && <Button title='Add Genre' onPress={addGenre} color='#009788' disabled={availableGenres.length === 0} />}
+                {Platform.OS === 'ios' && (
+                    <View style={{ backgroundColor: '#009788' }}>
+                        <Button title='Add Genre' onPress={addGenre} color='white' disabled={availableGenres.length === 0} />
+                    </View>
+                )}
                 {genres.length !== 0 && (
                     <ScrollView horizontal style={{ flexDirection: 'row', marginVertical: 10, padding: 5, borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white' }}>
                         {genres.map((genre, index) => (
@@ -344,8 +349,14 @@ function EditSongScreen({ route }) {
                                 </TouchableOpacity>
                             </View>
                         ))}
-                    </ScrollView>)}
-                <Button title="Add Section" onPress={addSection} color='#009788' disabled={availableSectionTitles.length === 0} />
+                    </ScrollView>
+                )}
+                {Platform.OS === 'android' && <Button title="Add Section" onPress={addSection} color='#009788' disabled={availableSectionTitles.length === 0} />}
+                {Platform.OS === 'ios' && (
+                    <View style={{ backgroundColor: '#009788' }}>
+                        <Button title="Add Section" onPress={addSection} color='white' disabled={availableSectionTitles.length === 0} />
+                    </View>
+                )}
                 {sections.length > 0 && (
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, justifyContent: 'space-between' }}>
                         <CheckBox
@@ -492,11 +503,22 @@ function EditSongScreen({ route }) {
                                 {isChordKeyboardVisible && isCursorVisible && index === currentKeyboardSectionIndex && <View style={[styles.cursor, { left: textWidth + 10 }]} />}
                             </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center', height: 50, marginRight: 20 }}>
-                                <Button
-                                    title="Keyboard"
-                                    color="#009788"
-                                    onPress={() => handleKeyboardToggle(index)}
-                                />
+                                {Platform.OS === 'android' && (
+                                    <Button
+                                        title="Keyboard"
+                                        color="#009788"
+                                        onPress={() => handleKeyboardToggle(index)}
+                                    />
+                                )}
+                                {Platform.OS === 'ios' && (
+                                    <View style={{ backgroundColor: '#009788' }}>
+                                        <Button
+                                            title="Keyboard"
+                                            color="white"
+                                            onPress={() => handleKeyboardToggle(index)}
+                                        />
+                                    </View>
+                                )}
                             </View>
                         </ScrollView>
                         <TouchableOpacity 
@@ -511,12 +533,24 @@ function EditSongScreen({ route }) {
                     </View>
                 ))}
                 <View style={{ padding: 20, marginBottom: 20 }}>
-                    <Button 
-                        title="Edit Song"
-                        disabled={!title || !sections.length}
-                        onPress={editSong}
-                        color='#009788' 
-                    />
+                    {Platform.OS === 'android' && (
+                        <Button 
+                            title="Edit Song"
+                            disabled={!title || !sections.length}
+                            onPress={editSong}
+                            color='#009788' 
+                        />
+                    )}
+                    {Platform.OS === 'ios' && (
+                        <View style={{ backgroundColor: '#009788' }}>
+                            <Button 
+                                title="Edit Song"
+                                disabled={!title || !sections.length}
+                                onPress={editSong}
+                                color='white' 
+                            />
+                        </View>
+                    )}
                 </View>
             </ScrollView>
             {isChordKeyboardVisible && (
