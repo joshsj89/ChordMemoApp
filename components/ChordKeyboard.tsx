@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Button, ToastAndroid } from 'react-native';
+import { View, ScrollView, StyleSheet, Button, ToastAndroid, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useTheme } from './ThemeContext';
 import RomanNumeralButton from './RomanNumeralButton';
@@ -553,64 +553,143 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, backgroundColor: !darkMode ? '#f6f6f6' : '#262626' }}>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title='♭'
-                        color={flat ? '#009788' : '#505050'}
-                        onPress={handleFlatPress}
-                    />
-                    <Button 
-                        title='♯'
-                        color={sharp ? '#009788' : '#505050'}
-                        onPress={handleSharpPress}
-                    /> 
-                </View>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title='('
-                        color={'#505050'}
-                        onPress={handleLeftParenthesisPress}
-                    />
-                    <Button 
-                        title=')'
-                        color={'#505050'}
-                        onPress={handleRightParenthesisPress}
-                    /> 
-                </View>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title='↓'
-                        color={'#505050'}
-                        onPress={handleKeyChangeDownPress}
-                    />
-                    <Button 
-                        title='↑'
-                        color={'#505050'}
-                        onPress={handleKeyChangeUpPress}
-                    /> 
-                </View>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title=':|'
-                        color={'#505050'}
-                        onPress={handleRepeatPress}
-                    />
-                </View>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title='Inv'
-                        color={'#505050'}
-                        onPress={handleInversionPress}
-                    />
-                </View>
-                <View style={{flexDirection: 'row', gap: 10 }}>
-                    <Button 
-                        title='/'
-                        color={'#505050'}
-                        onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
-                    />
-                </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, backgroundColor: !darkMode ? '#F6F6F6' : '#262626' }}>
+                {Platform.OS === 'android' && <>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title='♭'
+                            color={flat ? '#009788' : '#505050'}
+                            onPress={handleFlatPress}
+                        />
+                        <Button 
+                            title='♯'
+                            color={sharp ? '#009788' : '#505050'}
+                            onPress={handleSharpPress}
+                        /> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title='('
+                            color='#505050'
+                            onPress={handleLeftParenthesisPress}
+                        />
+                        <Button 
+                            title=')'
+                            color='#505050'
+                            onPress={handleRightParenthesisPress}
+                        /> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title='↓'
+                            color='#505050'
+                            onPress={handleKeyChangeDownPress}
+                        />
+                        <Button 
+                            title='↑'
+                            color='#505050'
+                            onPress={handleKeyChangeUpPress}
+                        /> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title=':|'
+                            color='#505050'
+                            onPress={handleRepeatPress}
+                        />
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title='Inv'
+                            color='#505050'
+                            onPress={handleInversionPress}
+                        />
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Button 
+                            title='/'
+                            color='#505050'
+                            onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
+                        />
+                    </View>
+                </>}
+                {Platform.OS === 'ios' && <>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: flat ? '#009788' : !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='♭'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleFlatPress}
+                            />
+                        </View>
+                        <View style={{ backgroundColor: sharp ? '#009788' :  !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='♯'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleSharpPress}
+                            />
+                        </View> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='('
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleLeftParenthesisPress}
+                            />
+                        </View>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title=')'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleRightParenthesisPress}
+                            />
+                        </View> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='↓'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleKeyChangeDownPress}
+                            />
+                        </View>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='↑'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleKeyChangeUpPress}
+                            />
+                        </View> 
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title=':|'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleRepeatPress}
+                            />
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='Inv'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={handleInversionPress}
+                            />
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ backgroundColor: !darkMode ? '#EAEAEA' : '#505050' }}>
+                            <Button 
+                                title='/'
+                                color={!darkMode ? '#262626' : 'white'}
+                                onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
+                            />
+                        </View>
+                    </View>
+                </>}
             </View>
             <ScrollView horizontal style={styles.container}>
                 <View style={styles.column}>
