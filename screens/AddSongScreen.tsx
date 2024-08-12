@@ -444,7 +444,7 @@ function AddSongScreen() {
                                 onTouchEnd={() => handleKeyboardToggle(index)} 
                             >
                                 <TextInput
-                                    style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: !darkMode ? '#ccc' : 'white', marginRight: 5 }}
+                                    style={{ fontSize: 16, height: 50, padding: 10, color: !darkMode ? 'black' : 'white', borderWidth: 1, borderColor: isChordKeyboardVisible && currentKeyboardSectionIndex === index ?  '#009788' : !darkMode ? '#ccc' : 'white', marginRight: 5 }}
                                     placeholder='Chords'
                                     placeholderTextColor='gray'
                                     value={section.chords}
