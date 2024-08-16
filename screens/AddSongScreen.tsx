@@ -353,7 +353,7 @@ function AddSongScreen() {
                                 ))}
                             </Picker>
                             <Picker
-                                selectedValue={isChecked ? sections[0].key.tonic : section.key.tonic}
+                                selectedValue={section.key.tonic}
                                 style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => {
@@ -364,7 +364,9 @@ function AddSongScreen() {
                                                 if (i !== 0) { // allows one to change the first section key while check box is checked
                                                     updateSectionKey(i, 'tonic', sections[0].key.tonic);
                                                 }
-                                            })
+                                            });
+
+                                            setKeyTonic(itemValue); // defaults new Picker to the last edited section's keyTonic
                                         } else {
                                             updateSectionKey(index, 'tonic', sections[0].key.tonic);
                                             setKeyTonic(sections[0].key.tonic);
@@ -382,7 +384,7 @@ function AddSongScreen() {
                                 ))}
                             </Picker>
                             <Picker
-                                selectedValue={isChecked ? sections[0].key.symbol : section.key.symbol}
+                                selectedValue={section.key.symbol}
                                 style={{ height: 50, width: 100, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => {
@@ -393,7 +395,9 @@ function AddSongScreen() {
                                                 if (i !== 0) { // allows one to change the first section key while check box is checked
                                                     updateSectionKey(i, 'symbol', sections[0].key.symbol);
                                                 }
-                                            })
+                                            });
+
+                                            setKeySymbol(itemValue); // defaults new Picker to the last edited section's keySymbol
                                         } else {
                                             updateSectionKey(index, 'symbol', sections[0].key.symbol);
                                             setKeySymbol(sections[0].key.symbol);
@@ -411,7 +415,7 @@ function AddSongScreen() {
                                 ))}
                             </Picker>
                             <Picker
-                                selectedValue={isChecked ? sections[0].key.mode : section.key.mode}
+                                selectedValue={section.key.mode}
                                 style={{ height: 50, width: 125, color: !darkMode ? 'black' : 'white' }}
                                 dropdownIconColor={!darkMode ? 'gray' : 'white'}
                                 onValueChange={(itemValue) => {
@@ -422,7 +426,9 @@ function AddSongScreen() {
                                                 if (i !== 0) { // allows one to change the first section key while check box is checked
                                                     updateSectionKey(i, 'mode', sections[0].key.mode);
                                                 }
-                                            })
+                                            });
+
+                                            setKeyMode(itemValue); // defaults new Picker to the last edited section's keyMode
                                         } else {
                                             updateSectionKey(index, 'mode', sections[0].key.mode);
                                             setKeyMode(sections[0].key.mode);
