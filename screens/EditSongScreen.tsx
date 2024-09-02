@@ -38,9 +38,9 @@ function EditSongScreen({ route }) {
     const [genres, setGenres] = useState<string[]>(song.genres);
     const [sections, setSections] = useState<Section[]>(song.sections);
     const [sectionTitle, setSectionTitle] = useState<string>('Verse');
-    const [keyTonic, setKeyTonic] = useState<string>('C');
-    const [keySymbol, setKeySymbol] = useState<string>('');
-    const [keyMode, setKeyMode] = useState<string>('Major');
+    const [keyTonic, setKeyTonic] = useState<string>(sections[0].key.tonic || 'C');
+    const [keySymbol, setKeySymbol] = useState<string>(sections[0].key.symbol || '');
+    const [keyMode, setKeyMode] = useState<string>(sections[0].key.mode || 'Major');
     const [chords, setChords] = useState<string>('');
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [availableGenres, setAvailableGenres] = useState<GenreOption[]>(genreOptions);
