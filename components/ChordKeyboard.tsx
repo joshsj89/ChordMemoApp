@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Button, ToastAndroid, Platform } from 'react-native';
+import { View, ScrollView, StyleSheet, Button, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { useTheme } from './ThemeContext';
 import RomanNumeralButton from './RomanNumeralButton';
@@ -386,6 +386,8 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     const handleInversionPress = () => {
         const inversions: ChordType[] = [];
 
+        if (chords[chords.length - 1].includes('/')) return; // prevent multiple inversions or inversion on a slash chord
+
         if (selectedRomanNumeral && selectedTriad) {
             if (selectedTriad.label === 'M' || 
                 selectedTriad.label === 'm' || 
@@ -448,6 +450,15 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
     const handleInversionSelect = (inversion: ChordType) => {
         setSelectedInversion(inversion);
+    }
+
+    const handleSlashPress = () => {
+        if (chords.length > 0) {
+            const lastChord = chords[chords.length - 1];
+            if (lastChord !== ' ' && lastChord !== '(' && lastChord !== ')' && !lastChord.includes('/')) { // prevent multiple slashes, slash at beginning, slash after space, or slash after parentheses
+                setChords(prev => prev.map((chord, index) => index === prev.length - 1 ? chord + '/' : chord)); // add slash to last chord
+            }
+        }
     }
 
     const handleErasePress = () => {
@@ -522,6 +533,14 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
 
             if (selectedInversion) { // add inversion
                 completeChord += selectedInversion.value;
+            }
+
+            if (chords.length > 0) { // add chord right after slash
+                const lastChord = chords[chords.length - 1];
+                if (lastChord[lastChord.length - 1] === '/') {
+                    completeChord = lastChord + completeChord;
+                    setChords(chords => chords.slice(0, -1));
+                }
             }
 
             setChords(chords => [...chords, completeChord]);
@@ -609,7 +628,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                         <Button 
                             title='/'
                             color='#505050'
-                            onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
+                            onPress={handleSlashPress}
                         />
                     </View>
                 </>}
@@ -685,7 +704,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
                             <Button 
                                 title='/'
                                 color={!darkMode ? '#262626' : 'white'}
-                                onPress={() => ToastAndroid.show('Slash chords coming soon!', ToastAndroid.SHORT)}
+                                onPress={handleSlashPress}
                             />
                         </View>
                     </View>
