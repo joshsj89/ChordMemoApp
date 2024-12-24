@@ -386,6 +386,7 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     const handleInversionPress = () => {
         const inversions: ChordType[] = [];
 
+        if (chords.length === 0) return; // prevent inversion at beginning
         if (chords[chords.length - 1].includes('/')) return; // prevent multiple inversions or inversion on a slash chord
 
         if (selectedRomanNumeral && selectedTriad) {
