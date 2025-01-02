@@ -7,7 +7,7 @@
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./assets/splash.png",
+            "image": "./assets/icon.png",
             "resizeMode": "contain",
             "backgroundColor": "#00a7a0"
         },
@@ -43,6 +43,20 @@
         },
         "updates": {
             "url": "https://u.expo.dev/2d65ac9e-072f-47a6-990d-a7cd3d113127"
-        }
+        },
+        "plugins": [
+            [
+                "expo-splash-screen",
+                {
+                "backgroundColor": "#00a7a0",
+                "image": "./assets/icon.png",
+                "dark": {
+                    "image": "./assets/icon.png",
+                    "backgroundColor": "#00a7a0"
+                },
+                "imageWidth": 200
+                }
+            ]
+        ]
     }
 }
