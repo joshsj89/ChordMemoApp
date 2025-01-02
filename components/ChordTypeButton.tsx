@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
 
     text: {
         fontSize: 12,
-        color: '#000',
     },
     selected: { 
         borderColor: '#009788',
