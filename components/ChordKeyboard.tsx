@@ -464,6 +464,8 @@ function ChordKeyboard({ originalChords, onChordComplete }: { originalChords: st
     }
 
     const handleErasePress = () => {
+        if (chords.length === 0) return; // prevent erasing when textbox is empty
+
         if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes(':')) { // erase repeat bar and spaces around it
             setChords(chords => chords.slice(0, -3));
         } else if (chords[chords.length - 1] === ' ' && chords[chords.length - 2].includes('K')) { // erase key change and space
